@@ -2,13 +2,11 @@ name: Daily ads
 
 # Makes the day's ads (photos + reels with music) and publishes them as the release tagged YYYY-MM-DD.
 # Morning: 01:30 UTC = 7:00 AM India; the 02:45 UTC run (8:15 AM) is a backup in case GitHub delays the first.
-# Evening: 11:00 UTC = 4:30 PM India adds the "Good evening" ad to the same day (12:00 UTC backup).
+# The "Good evening" ad is made only on request: Run workflow with "evening" ticked.
 on:
   schedule:
     - cron: "30 1 * * *"
     - cron: "45 2 * * *"
-    - cron: "0 11 * * *"
-    - cron: "0 12 * * *"
   workflow_dispatch:
     inputs:
       date:
@@ -42,7 +40,7 @@ jobs:
           [[ "$day" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || { echo "bad date $day"; exit 1; }
           echo "DAY=$day" >> "$GITHUB_ENV"
           evening=""
-          if [ "$INPUT_EVENING" = "true" ] || [[ "$SCHEDULE" == "0 1"[12]" * * *" ]]; then evening="--evening"; fi
+          if [ "$INPUT_EVENING" = "true" ]; then evening="--evening"; fi
           echo "EVENING=$evening" >> "$GITHUB_ENV"
           if [ -n "$SCHEDULE" ]; then
             names="$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$day" --jq '.assets[].name' 2>/dev/null || true)"

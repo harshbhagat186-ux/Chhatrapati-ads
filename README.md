@@ -14,7 +14,7 @@ that shows them.
   "today's ads are ready" notification. `.github/workflows/build-apk.yml` builds the APK on every change
   under `app/` and publishes it to the release tagged `app`; the app shows a banner when a newer build exists.
 
-A "Good evening" ad is added to the same day at 4:30 PM (backup 5:30 PM).
+A "Good evening" ad is made only on request (Run workflow with "evening" ticked).
 
 Make a specific day by hand: Actions → Daily ads → Run workflow → enter the date (tick "evening" for the evening ad).
 
