@@ -26,6 +26,9 @@ SHOP = {
 }
 PHONES = "📞 2291736 | 2290015"
 MOBILES = ["88300 50875", "97679 88351", "90964 92957"]
+BANK = {"gst": "24AATFC3039J1Z9", "bank": "Axis Bank Ltd", "branch": "Bhupendra Road, Rajkot",
+        "account": "922020062762338", "ifsc": "UTIB0003363"}
+FOOTER_TOP = 1360
 
 
 def font(lang, size):
@@ -145,21 +148,30 @@ def fit(lang, txt, max_w, start, fn=None):
 
 def footer(img, lang):
     sh = SHOP[lang]
-    top = 1395
+    top = FOOTER_TOP
     band = vgrad(W, H - top, (214, 40, 30), (250, 225, 30)).convert("RGBA")
     img.alpha_composite(band, (0, top))
     d = ImageDraw.Draw(img)
     d.line([(0, top), (W, top)], fill=(255, 215, 0), width=8)
     navy = (22, 30, 110)
-    d.text((40, top + 34), PHONES.replace("📞 ", "Ph. "), font=sans(30), fill="white")
-    d.text((W - 40, top + 34), sh["owner"], font=font(lang, 36), fill="white", anchor="ra")
-    name_f = font(lang, 118)
-    d.text((W / 2, top + 175), sh["name"], font=name_f, fill=navy, anchor="mm", stroke_width=5, stroke_fill="white")
-    d.text((W / 2, top + 275), sh["line1"] + " • " + sh["line2"], font=fit(lang, sh["line1"] + " • " + sh["line2"], W - 80, 44), fill=(200, 20, 20), anchor="mm")
-    d.text((W / 2, top + 340), sh["addr"], font=fit(lang, sh["addr"], W - 60, 34), fill=(20, 20, 20), anchor="mm")
+    d.text((40, top + 26), PHONES.replace("📞 ", "Ph. "), font=sans(30), fill="white")
+    d.text((W - 40, top + 26), sh["owner"], font=font(lang, 36), fill="white", anchor="ra")
+    name_f = font(lang, 108)
+    d.text((W / 2, top + 140), sh["name"], font=name_f, fill=navy, anchor="mm", stroke_width=5, stroke_fill="white")
+    d.text((W / 2, top + 228), sh["line1"] + " • " + sh["line2"], font=fit(lang, sh["line1"] + " • " + sh["line2"], W - 80, 42), fill=(200, 20, 20), anchor="mm")
+    d.text((W / 2, top + 282), sh["addr"], font=fit(lang, sh["addr"], W - 60, 32), fill=(20, 20, 20), anchor="mm")
     # mobile strip
-    d.rounded_rectangle([30, top + 385, W - 30, top + 495], radius=28, fill=navy)
-    d.text((W / 2, top + 440), "M. " + "  |  ".join(MOBILES), font=fit(lang, "M. " + "  |  ".join(MOBILES), W - 100, 46, fn=sans), fill="white", anchor="mm")
+    d.rounded_rectangle([30, top + 318, W - 30, top + 403], radius=26, fill=navy)
+    d.text((W / 2, top + 360), "M. " + "  |  ".join(MOBILES), font=fit(lang, "M. " + "  |  ".join(MOBILES), W - 100, 44, fn=sans), fill="white", anchor="mm")
+    # GST + bank box
+    d.rounded_rectangle([30, top + 414, W - 30, H - 12], radius=22, fill=(255, 255, 255, 215), outline=navy, width=3)
+    rows = [f"GST No: {BANK['gst']}",
+            f"{BANK['bank']}, {BANK['branch']}",
+            f"A/c No: {BANK['account']}   |   IFSC: {BANK['ifsc']}"]
+    y = top + 445
+    for i, r in enumerate(rows):
+        d.text((W / 2, y), r, font=fit(lang, r, W - 110, 29 if i else 32, fn=sans), fill=navy if i != 0 else (170, 20, 20), anchor="mm")
+        y += 37
 
 
 def render(ev, out):
@@ -180,8 +192,8 @@ def render(ev, out):
     d = ImageDraw.Draw(bg)
     gold, cream = (255, 210, 90), (255, 244, 214)
     # top border
-    d.rectangle([24, 24, W - 24, 1370], outline=(255, 210, 90, 180), width=3)
-    d.rectangle([36, 36, W - 36, 1358], outline=(255, 210, 90, 110), width=1)
+    d.rectangle([24, 24, W - 24, FOOTER_TOP - 22], outline=(255, 210, 90, 180), width=3)
+    d.rectangle([36, 36, W - 36, FOOTER_TOP - 34], outline=(255, 210, 90, 110), width=1)
     text_c(d, 100, SHOP[lang]["blessing"], font(lang, 38), cream, shadow=False)
     text_c(d, 290, ev["title"], fit(lang, ev["title"], W - 120, 150), gold, 4, (110, 30, 0))
     if ev.get("en"):
@@ -196,7 +208,7 @@ def render(ev, out):
         d.rounded_rectangle([W / 2 - bw / 2, 1010, W / 2 + bw / 2, 1090], radius=40, fill=(255, 210, 90), outline=(120, 30, 0), width=3)
         d.text((W / 2, 1050), ev["offer"], font=f, fill=(110, 20, 10), anchor="mm")
     if ev.get("date_label"):
-        text_c(d, 1325, ev["date_label"], sans(30), (255, 230, 170), shadow=False)
+        text_c(d, 158, ev["date_label"], sans(28), (255, 230, 170), shadow=False)
     footer(bg, lang)
     bg.convert("RGB").save(out, quality=95)
     return out
