@@ -1,6 +1,7 @@
 """Makes one day's ads: a festival greeting if the date is in calendar.json, else the weekday's regular ad.
 
-Usage: python3 daily.py [YYYY-MM-DD] [out_dir]   (date defaults to today in India)
+Usage: python3 daily.py [YYYY-MM-DD] [out_dir] [--evening]   (date defaults to today in India)
+--evening makes the "Good evening" ad instead (numbered from 7 so it sits after the morning files).
 Writes <out_dir>/<date>/ with 1080x1920 photos and 8 s reels with music, in Gujarati and Hindi.
 """
 import json, subprocess, sys
@@ -21,6 +22,18 @@ DECOR = {
     "plain": {"coins": [[540, 820, 150]], "diyas": []},
 }
 REEL_SECONDS = 8
+
+
+EVENING = {"en": "Good Evening", "gu": "શુભ સંધ્યા", "hi": "शुभ संध्या"}
+
+
+def evening_plan(day):
+    cal = json.loads((HERE / "calendar.json").read_text())
+    entry = json.loads(json.dumps(cal["daily"][datetime.strptime(day, "%Y-%m-%d").weekday()]))
+    entry.update(date=day, slug="good-evening", decor="diyas", en=EVENING["en"])
+    for lang in ("gu", "hi"):
+        entry[lang]["title"] = EVENING[lang]
+    return [entry]
 
 
 def plan(day):
@@ -48,14 +61,16 @@ def reel(photo, wav, out):
 
 
 def main():
+    args = [a for a in sys.argv[1:] if a != "--evening"]
+    evening = "--evening" in sys.argv
     ist = datetime.now(timezone(timedelta(hours=5, minutes=30)))
-    day = sys.argv[1] if len(sys.argv) > 1 else ist.strftime("%Y-%m-%d")
-    out = Path(sys.argv[2] if len(sys.argv) > 2 else "out") / day
+    day = args[0] if args else ist.strftime("%Y-%m-%d")
+    out = Path(args[1] if len(args) > 1 else "out") / day
     out.mkdir(parents=True, exist_ok=True)
     wav = out / "music.wav"
-    music.write(REEL_SECONDS, wav, seed=int(day.replace("-", "")))
-    n = 0
-    for entry in plan(day):
+    music.write(REEL_SECONDS, wav, seed=int(day.replace("-", "")) + evening)
+    n = 6 if evening else 0
+    for entry in (evening_plan(day) if evening else plan(day)):
         for lang, lname in LANGS:
             n += 1
             label = datetime.strptime(entry["date"], "%Y-%m-%d").strftime("%d %B %Y")

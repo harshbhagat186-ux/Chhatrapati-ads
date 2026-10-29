@@ -14,7 +14,9 @@ that shows them.
   "today's ads are ready" notification. `.github/workflows/build-apk.yml` builds the APK on every change
   under `app/` and publishes it to the release tagged `app`; the app shows a banner when a newer build exists.
 
-Make a specific day by hand: Actions → Daily ads → Run workflow → enter the date.
+A "Good evening" ad is added to the same day at 4:30 PM (backup 5:30 PM).
+
+Make a specific day by hand: Actions → Daily ads → Run workflow → enter the date (tick "evening" for the evening ad).
 
 Change shop details (phones, address): `SHOP`, `PHONES`, `MOBILES` in `adgen/generate.py`.
 Add or fix festivals: `adgen/calendar.json` (dates come from published 2026/2027 panchang listings; check
