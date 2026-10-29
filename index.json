@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-29T11:50:15Z",
+ "updated": "2026-10-29T12:12:25Z",
  "days": [
   {
    "date": "2026-10-29",
@@ -19,6 +19,20 @@
      "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/photo2-good-morning-hindi.jpg"
     },
     {
+     "type": "photo",
+     "file": "photo7-good-evening-gujarati.jpg",
+     "title": "Good evening gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/photo7-good-evening-gujarati.jpg",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/photo7-good-evening-gujarati.jpg"
+    },
+    {
+     "type": "photo",
+     "file": "photo8-good-evening-hindi.jpg",
+     "title": "Good evening hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/photo8-good-evening-hindi.jpg",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/photo8-good-evening-hindi.jpg"
+    },
+    {
      "type": "video",
      "file": "reel1-good-morning-gujarati.mp4",
      "title": "Good morning gujarati",
@@ -31,6 +45,20 @@
      "title": "Good morning hindi",
      "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/reel2-good-morning-hindi.mp4",
      "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/reel2-good-morning-hindi.thumb.jpg"
+    },
+    {
+     "type": "video",
+     "file": "reel7-good-evening-gujarati.mp4",
+     "title": "Good evening gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/reel7-good-evening-gujarati.mp4",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/reel7-good-evening-gujarati.thumb.jpg"
+    },
+    {
+     "type": "video",
+     "file": "reel8-good-evening-hindi.mp4",
+     "title": "Good evening hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/reel8-good-evening-hindi.mp4",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/reel8-good-evening-hindi.thumb.jpg"
     }
    ]
   }
