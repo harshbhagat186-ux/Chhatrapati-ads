@@ -1,0 +1,63 @@
+name: Build APK
+
+on:
+  push:
+    branches: [main]
+    paths: ["app/**", "build.gradle", "settings.gradle", "gradle.properties", ".github/workflows/build-apk.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.14.3"
+      - name: Signing key
+        env:
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            pass="$KEYSTORE_PASSWORD"
+          else
+            # No stored key yet: sign with a one-off key (updates then need uninstall + reinstall).
+            pass="$(openssl rand -hex 16)"
+            keytool -genkeypair -keystore "$RUNNER_TEMP/release.jks" -alias chhatrapati -keyalg RSA -keysize 2048 \
+              -validity 10000 -storepass "$pass" -keypass "$pass" \
+              -dname "CN=Chhatrapati Bullion, O=Chhatrapati Bullion, L=Rajkot, C=IN"
+          fi
+          echo "::add-mask::$pass"
+          echo "SIGN_PASS=$pass" >> "$GITHUB_ENV"
+      - name: Build release APK
+        env:
+          KEYSTORE_FILE: ${{ runner.temp }}/release.jks
+        run: KEYSTORE_PASSWORD="$SIGN_PASS" gradle :app:assembleRelease -PversionCode=${{ github.run_number }} -Prepo=${{ github.repository }}
+      - name: Publish to the "app" release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cp app/build/outputs/apk/release/app-release.apk ChhatrapatiAds.apk
+          notes="Latest Chhatrapati Bullion Ads app. Install: download ChhatrapatiAds.apk on the phone and open it.
+          versionCode: ${{ github.run_number }}"
+          if gh release view app >/dev/null 2>&1; then
+            gh release upload app ChhatrapatiAds.apk --clobber
+            gh release edit app --notes "$notes"
+          else
+            gh release create app ChhatrapatiAds.apk --title "Chhatrapati Bullion Ads app" --notes "$notes" --latest
+          fi
+          gh workflow run index.yml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ChhatrapatiAds-apk
+          path: ChhatrapatiAds.apk
