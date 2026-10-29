@@ -1,4 +1,38 @@
 {
- "updated": "2026-10-29T00:00:00Z",
- "days": []
+ "updated": "2026-10-29T11:50:00Z",
+ "days": [
+  {
+   "date": "2026-10-29",
+   "items": [
+    {
+     "type": "photo",
+     "file": "photo1-good-morning-gujarati.jpg",
+     "title": "Good morning gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/photo1-good-morning-gujarati.jpg",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/photo1-good-morning-gujarati.jpg"
+    },
+    {
+     "type": "photo",
+     "file": "photo2-good-morning-hindi.jpg",
+     "title": "Good morning hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/photo2-good-morning-hindi.jpg",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/photo2-good-morning-hindi.jpg"
+    },
+    {
+     "type": "video",
+     "file": "reel1-good-morning-gujarati.mp4",
+     "title": "Good morning gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/reel1-good-morning-gujarati.mp4",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/reel1-good-morning-gujarati.thumb.jpg"
+    },
+    {
+     "type": "video",
+     "file": "reel2-good-morning-hindi.mp4",
+     "title": "Good morning hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/reel2-good-morning-hindi.mp4",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-29/reel2-good-morning-hindi.thumb.jpg"
+    }
+   ]
+  }
+ ]
 }
