@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-29T11:50:00Z",
+ "updated": "2026-10-29T11:50:15Z",
  "days": [
   {
    "date": "2026-10-29",
@@ -34,5 +34,9 @@
     }
    ]
   }
- ]
+ ],
+ "app": {
+  "versionCode": 1,
+  "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/app/ChhatrapatiAds.apk"
+ }
 }
