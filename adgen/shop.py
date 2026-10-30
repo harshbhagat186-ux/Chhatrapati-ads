@@ -17,6 +17,14 @@ SHOP = {
         "addr": "डायमंड चेम्बर्स, ग्राउन्ड फलोर, दरबार गढ चोक, सोनी बाजार, राजकोट.",
         "owner": "हर्ष अर्जुन भगत",
     },
+    "en": {
+        "blessing": "॥ Shri Siddhnath Prasanna ॥",
+        "name": "Chhatrapati Bullion",
+        "line1": "Buyer & Seller of Silver-Gold",
+        "line2": "Exchange also done.",
+        "addr": "Diamond Chambers, Ground Floor, Darbar Gadh Chowk, Soni Bazar, Rajkot.",
+        "owner": "Harsh Arjun Bhagat",
+    },
 }
 LANDLINES = ["2291736", "2290015"]
 MOBILES = ["88300 50875", "97679 88351", "90964 92957"]

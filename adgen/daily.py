@@ -1,8 +1,8 @@
 """Makes one day's ads: a festival greeting if the date is in calendar.json, else the weekday's regular ad.
 
 Usage: python3 daily.py [YYYY-MM-DD] [out_dir] [--evening]   (date defaults to today in India)
---evening makes the "Good evening" ad instead (numbered from 7 so it sits after the morning files).
-Writes <out_dir>/<date>/ with 1080x1920 photos and 8 s animated reels with music, in Gujarati and Hindi.
+--evening makes the "Good evening" ad instead (numbered from 21 so it sits after the morning files).
+Writes <out_dir>/<date>/ with 1080x1920 photos and 8 s animated reels with music, in Gujarati, Hindi and English.
 Needs node + playwright (Chromium) and ffmpeg; the design lives in template.html.
 """
 import json, subprocess, sys
@@ -13,7 +13,7 @@ import music
 from shop import BANK, LANDLINES, MOBILES, SHOP
 
 HERE = Path(__file__).resolve().parent
-LANGS = [("gu", "gujarati"), ("hi", "hindi")]
+LANGS = [("gu", "gujarati"), ("hi", "hindi"), ("en", "english")]
 # Calendar themes (by their old RGB "inner" colour) -> background palettes.
 PALETTES = {
     (150, 30, 20): ("#6b0f1a", "#160204"),  # maroon
@@ -26,15 +26,16 @@ PALETTES = {
 REEL_SECONDS = 8
 
 
-EVENING = {"en": "Good Evening", "gu": "શુભ સંધ્યા", "hi": "शुभ संध्या"}
+EVENING = {"en": "Good Evening", "gu": "શુભ સંધ્યા", "hi": "शुभ संध्या", "en_page": "Good Evening"}
 
 
 def evening_plan(day):
     cal = json.loads((HERE / "calendar.json").read_text())
     entry = json.loads(json.dumps(cal["daily"][datetime.strptime(day, "%Y-%m-%d").weekday()]))
     entry.update(date=day, slug="good-evening", decor="diyas", en=EVENING["en"])
-    for lang in ("gu", "hi"):
+    for lang in ("gu", "hi", "en_page"):
         entry[lang]["title"] = EVENING[lang]
+    entry["en_page"]["subtitle"] = "Have a peaceful evening"
     return [entry]
 
 
@@ -69,20 +70,22 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     wav = out / "music.wav"
     music.write(REEL_SECONDS, wav, seed=int(day.replace("-", "")) + evening)
-    n = 6 if evening else 0
+    n = 20 if evening else 0
     for entry in (evening_plan(day) if evening else plan(day)):
         for lang, lname in LANGS:
             n += 1
             when = datetime.strptime(entry["date"], "%Y-%m-%d")
             bg1, bg2 = PALETTES.get(tuple(entry["theme"]["inner"]), PALETTES[(150, 30, 20)])
-            spec = {"lang": lang, "title": entry[lang]["title"], "en": entry["en"], "lines": entry[lang]["lines"],
-                    "offer": entry[lang].get("offer", ""), "decor": entry["decor"],
+            # English pages keep their texts under "en_page" ("en" is the English subtitle of the other pages).
+            text = entry["en_page"] if lang == "en" else entry[lang]
+            spec = {"lang": lang, "title": text["title"], "en": text.get("subtitle", entry["en"]), "lines": text["lines"],
+                    "offer": text.get("offer", ""), "decor": entry["decor"],
                     "date_label": f"{when.day:02d} · {when.strftime('%B').upper()} · {when.year}",
                     "palette": {"bg1": bg1, "bg2": bg2, "glow": "rgba(255,170,60,.30)"},
                     "shop": SHOP[lang], "mobiles": MOBILES, "landlines": LANDLINES, "labels": {"office": "Ph."},
                     "bank": BANK, "seed": n + int(day.replace("-", "")) % 1000}
-            photo = out / f"photo{n}-{entry['slug']}-{lname}.jpg"
-            render(spec, photo, out / f"reel{n}-{entry['slug']}-{lname}.mp4", wav)
+            photo = out / f"photo{n:02d}-{entry['slug']}-{lname}.jpg"
+            render(spec, photo, out / f"reel{n:02d}-{entry['slug']}-{lname}.mp4", wav)
             print(photo)
     wav.unlink()
 

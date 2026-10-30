@@ -4,7 +4,7 @@ Daily advertisement photos and reels for Chhatrapati Bullion (Soni Bazar, Rajkot
 that shows them.
 
 - **Daily ads**: `.github/workflows/daily.yml` runs every morning at 7:00 AM India time (backup run 8:15 AM).
-  `adgen/daily.py` makes the day's ads in Gujarati and Hindi: 1080x1920 photos plus 8-second animated reels with music.
+  `adgen/daily.py` makes the day's ads in Gujarati, Hindi and English: 1080x1920 photos plus 8-second animated reels with music.
   The design is `adgen/template.html`, rendered by headless Chromium (`adgen/render.js`).
   On festival days (`adgen/calendar.json`) it makes the festival greeting; otherwise the weekday's regular ad.
   Festivals in the next 2 days are added early so they can be shared in advance.

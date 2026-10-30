@@ -32,6 +32,15 @@
      "चांदी-सोना खरीदें, माँ लक्ष्मी को घर लाएं"
     ],
     "offer": "चांदी के सिक्के और बिस्किट उपलब्ध"
+   },
+   "en_page": {
+    "title": "Happy Dhanteras",
+    "subtitle": "Wishing you wealth & prosperity",
+    "lines": [
+     "On the auspicious day of Dhanteras",
+     "buy silver & gold, welcome Goddess Lakshmi home"
+    ],
+    "offer": "Silver coins & biscuits available"
    }
   },
   {
@@ -66,6 +75,15 @@
      "और सुख-समृद्धि आए"
     ],
     "offer": "रूप चौदस की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Kali Chaudas",
+    "subtitle": "Wishing you light & strength",
+    "lines": [
+     "May every darkness leave your life",
+     "and bring happiness & prosperity"
+    ],
+    "offer": "Best wishes on Kali Chaudas"
    }
   },
   {
@@ -100,6 +118,15 @@
      "आपके घर-परिवार में सदा रहें"
     ],
     "offer": "सभी ग्राहकों को दीपावली की हार्दिक शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Diwali",
+    "subtitle": "Wishing you a radiant festival of lights",
+    "lines": [
+     "May joy as bright as the diyas",
+     "always fill your home & family"
+    ],
+    "offer": "Warm Diwali wishes to all our customers"
    }
   },
   {
@@ -134,6 +161,15 @@
      "सुख, शांति और समृद्धि लाए"
     ],
     "offer": "नववर्ष की हार्दिक शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy New Year",
+    "subtitle": "Saal Mubarak",
+    "lines": [
+     "May the new year bring you",
+     "happiness, peace & prosperity"
+    ],
+    "offer": "Nutan Varshabhinandan"
    }
   },
   {
@@ -168,6 +204,15 @@
      "बहन के लिए चांदी का सुंदर उपहार"
     ],
     "offer": "भाई दूज की हार्दिक शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Bhai Dooj",
+    "subtitle": "Celebrating the bond of love",
+    "lines": [
+     "A festival of the unbreakable bond",
+     "a beautiful silver gift for your sister"
+    ],
+    "offer": "Warm wishes on Bhai Dooj"
    }
   },
   {
@@ -202,6 +247,15 @@
      "आपको लाभ ही लाभ हो"
     ],
     "offer": "लाभ पंचमी की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Labh Pancham",
+    "subtitle": "Wishing you profit & progress",
+    "lines": [
+     "On this auspicious day for business",
+     "may you gain profit after profit"
+    ],
+    "offer": "Best wishes on Labh Pancham"
    }
   },
   {
@@ -236,6 +290,15 @@
      "शादी की खरीदारी के लिए पधारें"
     ],
     "offer": "तुलसी विवाह की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Tulsi Vivah",
+    "subtitle": "Auspicious wedding season begins",
+    "lines": [
+     "On the holy occasion of Tulsi Vivah",
+     "visit us for your wedding shopping"
+    ],
+    "offer": "Best wishes on Tulsi Vivah"
    }
   },
   {
@@ -270,6 +333,15 @@
      "आपके जीवन में प्रकाश फैले"
     ],
     "offer": "देव दीपावली की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Dev Diwali",
+    "subtitle": "Wishing you divine light",
+    "lines": [
+     "On the holy day of Kartik Purnima",
+     "may light fill your life"
+    ],
+    "offer": "Best wishes on Dev Diwali"
    }
   },
   {
@@ -302,6 +374,15 @@
     "lines": [
      "साल 2027 आपके लिए",
      "खुशियाँ और सफलता लाए"
+    ],
+    "offer": "Happy New Year 2027"
+   },
+   "en_page": {
+    "title": "Happy New Year 2027",
+    "subtitle": "Welcome 2027",
+    "lines": [
+     "May the year 2027 bring you",
+     "joy & success"
     ],
     "offer": "Happy New Year 2027"
    }
@@ -338,6 +419,15 @@
      "आसमान छुए"
     ],
     "offer": "मकर संक्रांति की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Uttarayan",
+    "subtitle": "Fly high, shine bright",
+    "lines": [
+     "Like a kite, may your progress",
+     "touch the sky"
+    ],
+    "offer": "Happy Makar Sankranti"
    }
   },
   {
@@ -372,6 +462,15 @@
      "हम भारतीय हैं"
     ],
     "offer": "जय हिंद"
+   },
+   "en_page": {
+    "title": "Happy Republic Day",
+    "subtitle": "Proud to be Indian",
+    "lines": [
+     "Say it with pride",
+     "we are Indians"
+    ],
+    "offer": "Jai Hind"
    }
   },
   {
@@ -406,6 +505,15 @@
      "आप पर सदा बनी रहे"
     ],
     "offer": "विवाह के लिए शुभ मुहूर्त"
+   },
+   "en_page": {
+    "title": "Happy Vasant Panchami",
+    "subtitle": "Blessings of Maa Saraswati",
+    "lines": [
+     "May the grace of Maa Saraswati",
+     "always be with you"
+    ],
+    "offer": "Auspicious muhurat for weddings"
    }
   },
   {
@@ -440,6 +548,15 @@
      "भोलेनाथ सबका कल्याण करें"
     ],
     "offer": "महाशिवरात्रि की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Maha Shivratri",
+    "subtitle": "Har Har Mahadev",
+    "lines": [
+     "Har Har Mahadev",
+     "may Bholenath bless everyone"
+    ],
+    "offer": "Best wishes on Maha Shivratri"
    }
   },
   {
@@ -474,6 +591,15 @@
      "आपका जीवन खुशियों से रंग जाए"
     ],
     "offer": "होली की हार्दिक शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Holi",
+    "subtitle": "Wishing you a colourful Holi",
+    "lines": [
+     "In this festival of colours",
+     "may your life be coloured with joy"
+    ],
+    "offer": "Warm Holi wishes"
    }
   },
   {
@@ -508,6 +634,15 @@
      "आप पर सदा बना रहे"
     ],
     "offer": "नवरात्रि की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Chaitra Navratri",
+    "subtitle": "Blessings of the Mother Goddess",
+    "lines": [
+     "May the blessings of Maa Amba",
+     "always be with you"
+    ],
+    "offer": "Best wishes on Navratri"
    }
   },
   {
@@ -542,6 +677,15 @@
      "प्रभु श्रीराम सबका कल्याण करें"
     ],
     "offer": "राम नवमी की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Ram Navami",
+    "subtitle": "Jai Shri Ram",
+    "lines": [
+     "Jai Shri Ram",
+     "may Lord Rama bless everyone"
+    ],
+    "offer": "Best wishes on Ram Navami"
    }
   },
   {
@@ -576,6 +720,15 @@
      "संकटमोचन सबके संकट दूर करें"
     ],
     "offer": "हनुमान जयंती की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Hanuman Jayanti",
+    "subtitle": "Jai Bajrangbali",
+    "lines": [
+     "Jai Bajrangbali",
+     "may Sankatmochan remove all troubles"
+    ],
+    "offer": "Best wishes on Hanuman Jayanti"
    }
   },
   {
@@ -610,6 +763,15 @@
      "सभी लोगों को शुभकामनाएं"
     ],
     "offer": "जय जय गरवी गुजरात"
+   },
+   "en_page": {
+    "title": "Gujarat Sthapana Divas",
+    "subtitle": "Jai Jai Garvi Gujarat",
+    "lines": [
+     "Best wishes to every Gujarati",
+     "of our proud Gujarat"
+    ],
+    "offer": "Jai Jai Garvi Gujarat"
    }
   },
   {
@@ -644,6 +806,15 @@
      "अक्षय समृद्धि पाएं"
     ],
     "offer": "चांदी के सिक्के और बिस्किट उपलब्ध"
+   },
+   "en_page": {
+    "title": "Happy Akshaya Tritiya",
+    "subtitle": "Wishing you everlasting prosperity",
+    "lines": [
+     "Buy gold & silver on Akshaya Tritiya",
+     "for prosperity that never ends"
+    ],
+    "offer": "Silver coins & biscuits available"
    }
   },
   {
@@ -678,6 +849,15 @@
      "सभी गुरुजनों को नमन"
     ],
     "offer": "गुरु पूर्णिमा की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Guru Purnima",
+    "subtitle": "Honouring our Gurus",
+    "lines": [
+     "No knowledge without a Guru",
+     "our respects to all teachers"
+    ],
+    "offer": "Best wishes on Guru Purnima"
    }
   },
   {
@@ -712,6 +892,15 @@
      "सभी देशवासियों को शुभकामनाएं"
     ],
     "offer": "जय हिंद"
+   },
+   "en_page": {
+    "title": "Happy Independence Day",
+    "subtitle": "Proud to be Indian",
+    "lines": [
+     "Warm wishes to every Indian",
+     "on the festival of freedom"
+    ],
+    "offer": "Jai Hind"
    }
   },
   {
@@ -746,6 +935,15 @@
      "बहन के लिए चांदी का सुंदर उपहार"
     ],
     "offer": "रक्षाबंधन की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Raksha Bandhan",
+    "subtitle": "Celebrating the bond of love",
+    "lines": [
+     "A festival of love between siblings",
+     "a beautiful silver gift for your sister"
+    ],
+    "offer": "Best wishes on Raksha Bandhan"
    }
   },
   {
@@ -780,6 +978,15 @@
      "जय कन्हैया लाल की"
     ],
     "offer": "जन्माष्टमी की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Janmashtami",
+    "subtitle": "Jai Kanhaiya Lal Ki",
+    "lines": [
+     "Nand ghar anand bhayo",
+     "Jai Kanhaiya Lal Ki"
+    ],
+    "offer": "Best wishes on Janmashtami"
    }
   },
   {
@@ -814,6 +1021,15 @@
      "विघ्नहर्ता सबके विघ्न दूर करें"
     ],
     "offer": "गणेश चतुर्थी की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Ganesh Chaturthi",
+    "subtitle": "Ganpati Bappa Morya",
+    "lines": [
+     "Ganpati Bappa Morya",
+     "may Vighnaharta remove all obstacles"
+    ],
+    "offer": "Best wishes on Ganesh Chaturthi"
    }
   },
   {
@@ -848,6 +1064,15 @@
      "आपके जीवन में उमंग लाएं"
     ],
     "offer": "नवरात्रि की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Navratri",
+    "subtitle": "Nine nights of devotion",
+    "lines": [
+     "May the nine days of Maa Amba",
+     "fill your life with joy"
+    ],
+    "offer": "Best wishes on Navratri"
    }
   },
   {
@@ -882,6 +1107,15 @@
      "दशहरे के शुभ दिन खरीदारी करें"
     ],
     "offer": "दशहरे की शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Dussehra",
+    "subtitle": "Victory of truth",
+    "lines": [
+     "Victory of truth over untruth",
+     "shop on the auspicious day of Dussehra"
+    ],
+    "offer": "Best wishes on Dussehra"
    }
   },
   {
@@ -916,6 +1150,15 @@
      "चांदी-सोना खरीदें, माँ लक्ष्मी को घर लाएं"
     ],
     "offer": "चांदी के सिक्के और बिस्किट उपलब्ध"
+   },
+   "en_page": {
+    "title": "Happy Dhanteras",
+    "subtitle": "Wishing you wealth & prosperity",
+    "lines": [
+     "On the auspicious day of Dhanteras",
+     "buy silver & gold, welcome Goddess Lakshmi home"
+    ],
+    "offer": "Silver coins & biscuits available"
    }
   },
   {
@@ -950,6 +1193,15 @@
      "आपके घर-परिवार में सदा रहें"
     ],
     "offer": "सभी ग्राहकों को दीपावली की हार्दिक शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Diwali",
+    "subtitle": "Wishing you a radiant festival of lights",
+    "lines": [
+     "May joy as bright as the diyas",
+     "always fill your home & family"
+    ],
+    "offer": "Warm Diwali wishes to all our customers"
    }
   },
   {
@@ -984,6 +1236,15 @@
      "सुख, शांति और समृद्धि लाए"
     ],
     "offer": "नववर्ष की हार्दिक शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy New Year",
+    "subtitle": "Saal Mubarak",
+    "lines": [
+     "May the new year bring you",
+     "happiness, peace & prosperity"
+    ],
+    "offer": "Nutan Varshabhinandan"
    }
   },
   {
@@ -1018,6 +1279,15 @@
      "बहन के लिए चांदी का सुंदर उपहार"
     ],
     "offer": "भाई दूज की हार्दिक शुभकामनाएं"
+   },
+   "en_page": {
+    "title": "Happy Bhai Dooj",
+    "subtitle": "Celebrating the bond of love",
+    "lines": [
+     "A festival of the unbreakable bond",
+     "a beautiful silver gift for your sister"
+    ],
+    "offer": "Warm wishes on Bhai Dooj"
    }
   }
  ],
@@ -1052,6 +1322,15 @@
      "विश्वास का दूसरा नाम"
     ],
     "offer": "पुराने गहनों का तबादला भी करते हैं"
+   },
+   "en_page": {
+    "title": "Good Morning",
+    "subtitle": "Have a blessed day",
+    "lines": [
+     "Pure silver, real gold, true price",
+     "another name for trust"
+    ],
+    "offer": "Exchange of old jewellery also done"
    }
   },
   {
@@ -1084,6 +1363,15 @@
      "एक ही भरोसेमंद जगह"
     ],
     "offer": "चांदी के सिक्के और बिस्किट उपलब्ध"
+   },
+   "en_page": {
+    "title": "Good Morning",
+    "subtitle": "Have a blessed day",
+    "lines": [
+     "To buy & sell silver and gold",
+     "one trusted place"
+    ],
+    "offer": "Silver coins & biscuits available"
    }
   },
   {
@@ -1116,6 +1404,15 @@
      "सालों का भरोसा"
     ],
     "offer": "आज ही पधारें"
+   },
+   "en_page": {
+    "title": "Good Morning",
+    "subtitle": "Have a blessed day",
+    "lines": [
+     "In Soni Bazar, Rajkot",
+     "trusted for years"
+    ],
+    "offer": "Visit us today"
    }
   },
   {
@@ -1148,6 +1445,15 @@
      "चांदी और सोना"
     ],
     "offer": "चांदी-सोना लेनार और विक्रेता"
+   },
+   "en_page": {
+    "title": "Good Morning",
+    "subtitle": "Have a blessed day",
+    "lines": [
+     "The true investment for savings",
+     "silver & gold"
+    ],
+    "offer": "Buyer & seller of silver-gold"
    }
   },
   {
@@ -1180,6 +1486,15 @@
      "सही भाव पर बेचें"
     ],
     "offer": "आज ही पधारें"
+   },
+   "en_page": {
+    "title": "Good Morning",
+    "subtitle": "Have a blessed day",
+    "lines": [
+     "Your old gold & silver",
+     "sell at the right price"
+    ],
+    "offer": "Visit us today"
    }
   },
   {
@@ -1212,6 +1527,15 @@
      "चांदी-सोना यहीं से"
     ],
     "offer": "चांदी के सिक्के और बिस्किट उपलब्ध"
+   },
+   "en_page": {
+    "title": "Good Morning",
+    "subtitle": "Have a blessed day",
+    "lines": [
+     "For shopping on auspicious occasions",
+     "silver & gold, right here"
+    ],
+    "offer": "Silver coins & biscuits available"
    }
   },
   {
@@ -1244,6 +1568,15 @@
      "आप पर सदा बने रहें"
     ],
     "offer": "आपका दिन शुभ हो"
+   },
+   "en_page": {
+    "title": "Good Morning",
+    "subtitle": "Have a blessed day",
+    "lines": [
+     "Blessings of Shri Siddhnath Dada",
+     "always be with you"
+    ],
+    "offer": "Have a blessed day"
    }
   }
  ]
