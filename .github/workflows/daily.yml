@@ -16,6 +16,10 @@ on:
         description: "Make the Good evening ad"
         type: boolean
         default: false
+      replace:
+        description: "Remove that day's existing files first (use after a design change)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -67,6 +71,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           files=(out/"$DAY"/*)
+          if [ "${{ inputs.replace }}" = "true" ]; then
+            for id in $(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$DAY" --jq '.assets[].id' 2>/dev/null); do
+              gh api -X DELETE "repos/$GITHUB_REPOSITORY/releases/assets/$id"
+            done
+          fi
           if gh release view "$DAY" >/dev/null 2>&1; then
             gh release upload "$DAY" "${files[@]}" --clobber
           else
