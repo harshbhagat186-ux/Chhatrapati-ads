@@ -2,24 +2,26 @@
 
 Usage: python3 daily.py [YYYY-MM-DD] [out_dir] [--evening]   (date defaults to today in India)
 --evening makes the "Good evening" ad instead (numbered from 7 so it sits after the morning files).
-Writes <out_dir>/<date>/ with 1080x1920 photos and 8 s reels with music, in Gujarati and Hindi.
+Writes <out_dir>/<date>/ with 1080x1920 photos and 8 s animated reels with music, in Gujarati and Hindi.
+Needs node + playwright (Chromium) and ffmpeg; the design lives in template.html.
 """
 import json, subprocess, sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-import generate
 import music
+from shop import BANK, LANDLINES, MOBILES, SHOP
 
 HERE = Path(__file__).resolve().parent
 LANGS = [("gu", "gujarati"), ("hi", "hindi")]
-DECOR = {
-    "coins": {"coins": [[200, 760, 70], [880, 760, 70, True], [150, 960, 50, True], [930, 960, 50], [540, 820, 150]]},
-    "diyas": {"coins": [[540, 820, 140]],
-              "diyas": [[180, 1215, 70], [380, 1240, 85], [700, 1240, 85], [900, 1215, 70], [540, 1180, 100]]},
-    "both": {"coins": [[200, 760, 70], [880, 760, 70, True], [540, 820, 150, True]],
-             "diyas": [[180, 1215, 70], [380, 1240, 85], [700, 1240, 85], [900, 1215, 70], [540, 1180, 100]]},
-    "plain": {"coins": [[540, 820, 150]], "diyas": []},
+# Calendar themes (by their old RGB "inner" colour) -> background palettes.
+PALETTES = {
+    (150, 30, 20): ("#6b0f1a", "#160204"),  # maroon
+    (90, 20, 110): ("#3f1060", "#0e0317"),  # royal purple
+    (20, 70, 90): ("#0b4a55", "#02161a"),   # teal
+    (30, 100, 50): ("#0d4a33", "#021710"),  # emerald
+    (190, 90, 10): ("#7a3a06", "#1c0b02"),  # saffron
+    (30, 40, 120): ("#13306e", "#040b1e"),  # navy
 }
 REEL_SECONDS = 8
 
@@ -48,16 +50,14 @@ def plan(day):
     return fest + [f for f in cal["festivals"] if f["date"] in soon]
 
 
-def reel(photo, wav, out):
-    vf = ("scale=2160:3840,zoompan=z='min(1+0.0009*on,1.15)':x='iw/2-(iw/zoom/2)':y='ih/3-(ih/zoom/3)'"
-          f":d={REEL_SECONDS * 30}:s=1080x1920:fps=30,fade=t=in:st=0:d=0.8,"
-          f"fade=t=out:st={REEL_SECONDS - 0.8}:d=0.8,format=yuv420p")
-    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-loop", "1", "-i", str(photo), "-i", str(wav),
-                    "-vf", vf, "-t", str(REEL_SECONDS), "-c:v", "libx264", "-crf", "20", "-preset", "medium",
-                    "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", str(out)], check=True)
-    # Poster frame for the app's grid.
-    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", "1.5", "-i", str(out), "-frames:v", "1",
-                    "-vf", "scale=540:-2", "-q:v", "4", str(out.with_suffix(".thumb.jpg"))], check=True)
+def render(spec, photo, reel, wav):
+    """Photo + animated reel via headless Chromium (render.js), plus the reel's poster frame for the app."""
+    spec_file = photo.with_suffix(".json")
+    spec_file.write_text(json.dumps(spec, ensure_ascii=False))
+    subprocess.run(["node", str(HERE / "render.js"), str(spec_file), str(photo), str(reel), str(wav), str(REEL_SECONDS)], check=True)
+    spec_file.unlink()
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", "4", "-i", str(reel), "-frames:v", "1",
+                    "-vf", "scale=540:-2", "-q:v", "4", str(reel.with_suffix(".thumb.jpg"))], check=True)
 
 
 def main():
@@ -73,12 +73,16 @@ def main():
     for entry in (evening_plan(day) if evening else plan(day)):
         for lang, lname in LANGS:
             n += 1
-            label = datetime.strptime(entry["date"], "%Y-%m-%d").strftime("%d %B %Y")
-            ev = {"date": day, "lang": lang, "en": entry["en"], "theme": entry["theme"], "date_label": label,
-                  **entry[lang], **DECOR[entry["decor"]]}
+            when = datetime.strptime(entry["date"], "%Y-%m-%d")
+            bg1, bg2 = PALETTES.get(tuple(entry["theme"]["inner"]), PALETTES[(150, 30, 20)])
+            spec = {"lang": lang, "title": entry[lang]["title"], "en": entry["en"], "lines": entry[lang]["lines"],
+                    "offer": entry[lang].get("offer", ""), "decor": entry["decor"],
+                    "date_label": f"{when.day:02d} · {when.strftime('%B').upper()} · {when.year}",
+                    "palette": {"bg1": bg1, "bg2": bg2, "glow": "rgba(255,170,60,.30)"},
+                    "shop": SHOP[lang], "mobiles": MOBILES, "landlines": LANDLINES, "labels": {"office": "Ph."},
+                    "bank": BANK, "seed": n + int(day.replace("-", "")) % 1000}
             photo = out / f"photo{n}-{entry['slug']}-{lname}.jpg"
-            generate.render(ev, photo)
-            reel(photo, wav, out / f"reel{n}-{entry['slug']}-{lname}.mp4")
+            render(spec, photo, out / f"reel{n}-{entry['slug']}-{lname}.mp4", wav)
             print(photo)
     wav.unlink()
 

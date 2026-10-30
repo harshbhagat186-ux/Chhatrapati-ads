@@ -5,3 +5,4 @@ local.properties
 *.jks
 __pycache__/
 out/
+node_modules/
