@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T02:22:34Z",
+ "updated": "2026-10-31T06:47:41Z",
  "days": [
   {
    "date": "2026-10-31",
@@ -26,6 +26,27 @@
      "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/photo03-good-morning-english.jpg"
     },
     {
+     "type": "photo",
+     "file": "photo11-good-afternoon-gujarati.jpg",
+     "title": "Good afternoon gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/photo11-good-afternoon-gujarati.jpg",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/photo11-good-afternoon-gujarati.jpg"
+    },
+    {
+     "type": "photo",
+     "file": "photo12-good-afternoon-hindi.jpg",
+     "title": "Good afternoon hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/photo12-good-afternoon-hindi.jpg",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/photo12-good-afternoon-hindi.jpg"
+    },
+    {
+     "type": "photo",
+     "file": "photo13-good-afternoon-english.jpg",
+     "title": "Good afternoon english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/photo13-good-afternoon-english.jpg",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/photo13-good-afternoon-english.jpg"
+    },
+    {
      "type": "video",
      "file": "reel01-good-morning-gujarati.mp4",
      "title": "Good morning gujarati",
@@ -45,6 +66,27 @@
      "title": "Good morning english",
      "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/reel03-good-morning-english.mp4",
      "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/reel03-good-morning-english.thumb.jpg"
+    },
+    {
+     "type": "video",
+     "file": "reel11-good-afternoon-gujarati.mp4",
+     "title": "Good afternoon gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/reel11-good-afternoon-gujarati.mp4",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/reel11-good-afternoon-gujarati.thumb.jpg"
+    },
+    {
+     "type": "video",
+     "file": "reel12-good-afternoon-hindi.mp4",
+     "title": "Good afternoon hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/reel12-good-afternoon-hindi.mp4",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/reel12-good-afternoon-hindi.thumb.jpg"
+    },
+    {
+     "type": "video",
+     "file": "reel13-good-afternoon-english.mp4",
+     "title": "Good afternoon english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/reel13-good-afternoon-english.mp4",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-10-31/reel13-good-afternoon-english.thumb.jpg"
     }
    ]
   },
