@@ -3,7 +3,7 @@
 Usage: python3 daily.py [YYYY-MM-DD] [out_dir] [--afternoon | --evening]   (date defaults to today in India)
 --afternoon / --evening make that greeting instead (numbered from 11 / 21 so they sit after the morning files).
 Writes <out_dir>/<date>/ with 1080x1920 photos and 8 s animated reels with music, in Gujarati, Hindi and English.
-Needs node + playwright (Chromium) and ffmpeg; the design lives in template.html.
+Needs node + playwright (Chromium) and ffmpeg; the design lives in template.html and changes every day (see DESIGN).
 """
 import json, subprocess, sys
 from datetime import datetime, timedelta, timezone
@@ -14,18 +14,19 @@ from shop import BANK, LANDLINES, MOBILES, SHOP
 
 HERE = Path(__file__).resolve().parent
 LANGS = [("gu", "gujarati"), ("hi", "hindi"), ("en", "english")]
-# Calendar themes (by their old RGB "inner" colour) -> background palettes.
-PALETTES = {
-    (150, 30, 20): ("#6b0f1a", "#160204"),  # maroon
-    (90, 20, 110): ("#3f1060", "#0e0317"),  # royal purple
-    (20, 70, 90): ("#0b4a55", "#02161a"),   # teal
-    (30, 100, 50): ("#0d4a33", "#021710"),  # emerald
-    (190, 90, 10): ("#7a3a06", "#1c0b02"),  # saffron
-    (30, 40, 120): ("#13306e", "#040b1e"),  # navy
+# template.html builds each poster from these independent design choices. Every choice moves on each day
+# by a step that is coprime with its count, so tomorrow differs from today in all of them, the three
+# languages of one day differ from each other, and the combination doesn't repeat for years.
+DESIGN = {  # name: (number of options, step per day, step per language)
+    "layout": (7, 1, 2), "palette": (16, 5, 6), "bg": (10, 3, 4), "font": (8, 3, 1), "fx": (4, 1, 1),
+    "hero": (6, 1, 2), "header": (3, 1, 1), "panel": (4, 3, 1), "anim": (6, 5, 2),
 }
-# Looks defined in template.html. Each day moves one step through this list and each language
-# is offset by two, so no two days in a row (and no two languages on one day) share a look.
-STYLES = ["royal", "ivory", "silver", "festive", "arch", "minimal"]
+
+
+def design(day, li):
+    o = day.toordinal()
+    # The layout count (7) matches the week, so it also shifts 3 places each week to avoid a weekly repeat.
+    return {k: (o * step + li * lang + (o // n) * 3 * (k == "layout")) % n for k, (n, step, lang) in DESIGN.items()}
 REEL_SECONDS = 8
 
 
@@ -85,14 +86,12 @@ def main():
         for li, (lang, lname) in enumerate(LANGS):
             n += 1
             when = datetime.strptime(entry["date"], "%Y-%m-%d")
-            bg1, bg2 = PALETTES.get(tuple(entry["theme"]["inner"]), PALETTES[(150, 30, 20)])
             # English pages keep their texts under "en_page" ("en" is the English subtitle of the other pages).
             text = entry["en_page"] if lang == "en" else entry[lang]
-            style = STYLES[(datetime.strptime(day, "%Y-%m-%d").toordinal() + 2 * li + (n - 1) // 3) % len(STYLES)]
-            spec = {"lang": lang, "style": style, "title": text["title"], "en": text.get("subtitle", entry["en"]), "lines": text["lines"],
+            g = design(datetime.strptime(day, "%Y-%m-%d"), li + 3 * ((n - 1) // 3))
+            spec = {"lang": lang, "design": g, "title": text["title"], "en": text.get("subtitle", entry["en"]), "lines": text["lines"],
                     "offer": text.get("offer", ""), "decor": entry["decor"],
                     "date_label": f"{when.day:02d} · {when.strftime('%B').upper()} · {when.year}",
-                    "palette": {"bg1": bg1, "bg2": bg2, "glow": "rgba(255,170,60,.30)"},
                     "shop": SHOP[lang], "mobiles": MOBILES, "landlines": LANDLINES, "labels": {"office": "Ph."},
                     "bank": BANK, "seed": n + int(day.replace("-", "")) % 1000}
             photo = out / f"photo{n:02d}-{entry['slug']}-{lname}.jpg"

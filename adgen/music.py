@@ -30,12 +30,31 @@ def track(dur, seed=0):
         [("P",.5),("D",.5),("N",.5),("S'",1),("N",.5),("D",.5),("P",1),("M",.5),("G",.5),("R",.5),("S",1.5)],
     ]
     phrase = phrases[seed % len(phrases)]
+    # Lead instrument changes too: bansuri flute, santoor-like pluck, shehnai-like reed or marimba.
+    lead = (seed // 2) % 4
     t0 = 0.6
     while t0 < dur - 1:
         for note, d in phrase:
             if t0 >= dur - 0.8: break
-            s = tone(sa*r[note]*2, d*beat+0.15, (1, .3, .08), vib=3) * env(int((d*beat+0.15)*SR), .06, .15) * 0.16
-            i = int(t0*SR); out[i:i+len(s)] += s; t0 += d*beat
+            f, L = sa*r[note]*2, d*beat+0.15
+            if lead == 0:
+                s = tone(f, L, (1, .3, .08), vib=3) * env(int(L*SR), .06, .15) * 0.16
+            elif lead == 1:
+                s = tone(f, L + .5, (1, .5, .35, .2, .1)) * np.exp(-np.arange(int((L+.5)*SR))/SR*3) * 0.16
+            elif lead == 2:
+                s = tone(f, L, (1, .8, .6, .45, .3, .2), vib=5) * env(int(L*SR), .04, .12) * 0.09
+            else:
+                s = tone(f, L + .3, (1, 0, .15, 0, .05)) * np.exp(-np.arange(int((L+.3)*SR))/SR*5) * 0.2
+            i = int(t0*SR); out[i:i+len(s)] += s[:len(out)-i]; t0 += d*beat
+    # Light dholak-style beat on some days.
+    if (seed // 7) % 3:
+        pattern = [(0, 1.0, 90), (.5, .5, 180), (.75, .5, 180), (1.0, .8, 90), (1.5, .5, 180)]
+        for bar_ in np.arange(0.6, dur - 0.5, 2 * beat):
+            for off, amp, f in pattern:
+                t = np.arange(int(.25*SR))/SR
+                hit = np.sin(2*np.pi*f*t*(1 + .6*np.exp(-t*30))) * np.exp(-t*(18 if f < 120 else 30)) * amp * 0.12
+                i = int((bar_ + off*beat)*SR)
+                if i + len(hit) < len(out): out[i:i+len(hit)] += hit
     for t0 in [0.0, dur/2, dur-1.6]:
         s = bell(sa*4)*0.22; i = int(t0*SR); out[i:i+len(s)] += s
     # simple reverb

@@ -2,448 +2,596 @@
 <html>
 <head>
 <meta charset="utf-8">
+<!--
+  Daily ad designer. window.render(spec) builds a new poster from spec.design, which daily.py picks from the date:
+  layout, colour palette, background motif, display font, title effect, illustration, header, info panel and motion
+  all change from day to day (and between the three languages of one day). The shop information never changes.
+-->
 <style>
+@font-face { font-family: "BalooBhai"; src: url("fonts/BalooBhai2.ttf"); font-weight: 400 800; }
+@font-face { font-family: "Baloo"; src: url("fonts/Baloo2.ttf"); font-weight: 400 800; }
+@font-face { font-family: "AnekGu"; src: url("fonts/AnekGujarati.ttf"); font-weight: 100 800; font-stretch: 75% 125%; }
+@font-face { font-family: "AnekHi"; src: url("fonts/AnekDevanagari.ttf"); font-weight: 100 800; font-stretch: 75% 125%; }
+@font-face { font-family: "MuktaVaani"; src: url("fonts/MuktaVaani-ExtraBold.ttf"); font-weight: 800; }
+@font-face { font-family: "Mukta"; src: url("fonts/Mukta-ExtraBold.ttf"); font-weight: 800; }
+@font-face { font-family: "Shrikhand"; src: url("fonts/Shrikhand-Regular.ttf"); }
+@font-face { font-family: "KumarOne"; src: url("fonts/KumarOne-Regular.ttf"); }
+@font-face { font-family: "Farsan"; src: url("fonts/Farsan-Regular.ttf"); }
+@font-face { font-family: "Rasa"; src: url("fonts/Rasa.ttf"); font-weight: 300 700; }
+@font-face { font-family: "Rozha"; src: url("fonts/RozhaOne-Regular.ttf"); }
+@font-face { font-family: "Yatra"; src: url("fonts/YatraOne-Regular.ttf"); }
+@font-face { font-family: "Khand"; src: url("fonts/Khand-Bold.ttf"); font-weight: 700; }
+@font-face { font-family: "Teko"; src: url("fonts/Teko.ttf"); font-weight: 300 700; }
 @font-face { font-family: "SerifGu"; src: url("fonts/NotoSerifGujarati.ttf"); font-weight: 100 900; }
 @font-face { font-family: "SerifHi"; src: url("fonts/NotoSerifDevanagari.ttf"); font-weight: 100 900; }
 @font-face { font-family: "SansGu"; src: url("fonts/HindVadodara-SemiBold.ttf"); font-weight: 600; }
 @font-face { font-family: "SansGu"; src: url("fonts/HindVadodara-Bold.ttf"); font-weight: 700; }
 @font-face { font-family: "SansHi"; src: url("fonts/Hind-SemiBold.ttf"); font-weight: 600; }
 @font-face { font-family: "SansHi"; src: url("fonts/Hind-Bold.ttf"); font-weight: 700; }
-@font-face { font-family: "Cormorant"; src: url("fonts/CormorantGaramond.ttf"); font-weight: 300 700; }
-@font-face { font-family: "Cormorant"; src: url("fonts/CormorantGaramond-Italic.ttf"); font-weight: 300 700; font-style: italic; }
+@font-face { font-family: "Poppins"; src: url("fonts/Poppins-SemiBold.ttf"); font-weight: 600; }
+@font-face { font-family: "Poppins"; src: url("fonts/Poppins-ExtraBold.ttf"); font-weight: 800; }
+@font-face { font-family: "Bebas"; src: url("fonts/BebasNeue-Regular.ttf"); }
+@font-face { font-family: "Anton"; src: url("fonts/Anton-Regular.ttf"); }
+@font-face { font-family: "Righteous"; src: url("fonts/Righteous-Regular.ttf"); }
+@font-face { font-family: "Playfair"; src: url("fonts/PlayfairDisplay.ttf"); font-weight: 400 900; }
 @font-face { font-family: "Cinzel"; src: url("fonts/Cinzel.ttf"); font-weight: 400 900; }
 @font-face { font-family: "Montserrat"; src: url("fonts/Montserrat.ttf"); font-weight: 100 900; }
 
-:root {
-  --bg1: #5a0b14; --bg2: #1a0306; --glow: rgba(255, 170, 60, .28);
-  --gold: linear-gradient(180deg, #fff3c4 0%, #f5d27a 28%, #d4a23c 55%, #f7dc8e 78%, #b8862b 100%);
-  --gold-flat: #e9c46a; --cream: #fdf3dc;
-}
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
-body { font-family: var(--sans); color: var(--cream); }
-body.gu { --serif: "SerifGu", "Cormorant", serif; --sans: "SansGu", "Montserrat", sans-serif; }
-body.hi { --serif: "SerifHi", "Cormorant", serif; --sans: "SansHi", "Montserrat", sans-serif; }
-body.en { --serif: "Cormorant", serif; --sans: "Montserrat", sans-serif; }
-body.en #title, body.en #shop { font-family: "Cinzel"; font-weight: 700; letter-spacing: 2px; }
-body.en .line { font-family: "Cormorant"; font-weight: 700; font-size: 50px; }
-body.en #offer { font-family: "Montserrat"; font-weight: 700; }
-body.en #trade, body.en #addr, body.en #office { font-family: "Montserrat"; font-weight: 500; }
-body.en #mono { font-family: "Cinzel"; font-weight: 700; padding-top: 0; }
-
+html, body { width: 1080px; height: 1920px; overflow: hidden; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-weight: 600; }
+body.gu { --body: "SansGu", "Poppins", sans-serif; }
+body.hi { --body: "SansHi", "Poppins", sans-serif; }
+body.en { --body: "Poppins", sans-serif; }
 #stage { position: absolute; inset: 0; overflow: hidden; }
-#bg { position: absolute; inset: -40px;
-  background:
-    radial-gradient(ellipse 70% 38% at 50% 40%, var(--glow), transparent 70%),
-    radial-gradient(ellipse 120% 80% at 50% 30%, var(--bg1) 0%, var(--bg2) 75%);
-  animation: bgzoom 8s linear both; }
-#pattern { position: absolute; inset: 0; opacity: .13; }
-#grain { position: absolute; inset: 0; opacity: .07; mix-blend-mode: overlay; }
-@keyframes bgzoom { from { transform: scale(1); } to { transform: scale(1.06); } }
+#bg { position: absolute; inset: 0; background: radial-gradient(ellipse 90% 60% at 50% 35%, var(--bg) 0%, var(--bg2) 100%); }
+#motif { position: absolute; left: 0; top: 0; }
+.abs { position: absolute; }
+.nowrap { white-space: nowrap; }
+.ctr { text-align: center; }
 
-.frame { position: absolute; inset: 26px; border: 2px solid rgba(233, 196, 106, .75); border-radius: 6px; pointer-events: none; }
-.frame.inner { inset: 38px; border-width: 1px; border-color: rgba(233, 196, 106, .35); }
-.corner { position: absolute; width: 120px; height: 120px; }
-.corner.tl { left: 14px; top: 14px; } .corner.tr { right: 14px; top: 14px; transform: scaleX(-1); }
-.corner.bl { left: 14px; bottom: 14px; transform: scaleY(-1); } .corner.br { right: 14px; bottom: 14px; transform: scale(-1, -1); }
-
-/* Padding keeps tall matras (ि, ी) inside the painted gradient box. */
-.goldtext { background: var(--gold); -webkit-background-clip: text; background-clip: text; color: transparent; padding: .22em .06em .06em; }
-#shop.goldtext, #brand.goldtext { padding-top: .22em; margin-top: -.22em; }
-#titletext { background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.9) 50%, transparent 58%), var(--gold);
-  background-size: 300% 100%, 100% 100%; background-repeat: no-repeat; -webkit-background-clip: text; background-clip: text;
-  animation: shine 3.2s 1.6s infinite both; }
+/* Display text (padding keeps tall matras inside painted boxes) */
+.title { display: inline-block; font-family: var(--disp); font-weight: var(--dispw); line-height: 1.12; white-space: nowrap; color: var(--title); padding: .2em .08em .04em; }
+.fx0 { text-shadow: 0 .07em 0 var(--shadow), 0 .1em .25em rgba(0,0,0,.25); }
+.fx1 { -webkit-text-stroke: .045em var(--shadow); paint-order: stroke fill; text-shadow: .06em .06em 0 var(--b); }
+.fx2 { background: linear-gradient(180deg, #fff6cf 0%, #f6d36b 35%, #c8901e 62%, #f9e08f 82%, #a8741a 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 6px 0 var(--shadow)); }
+.fx3 { background: var(--hl); color: var(--hlInk); border-radius: 18px; padding: .22em .35em .06em; box-shadow: 10px 10px 0 var(--shadow); }
+.sub { display: inline-block; font-weight: 700; white-space: nowrap; color: var(--ink); }
+body.en .sub { font-family: "Playfair"; font-style: italic; font-weight: 700; }
+.line { display: inline-block; font-weight: 700; white-space: nowrap; color: var(--ink); line-height: 1.35; }
+.offer { display: inline-block; white-space: nowrap; font-weight: 700; background: var(--hl); color: var(--hlInk); border-radius: 80px; padding: .38em 1.1em .22em;
+  box-shadow: 0 10px 0 var(--shadow), 0 14px 30px rgba(0,0,0,.25); }
+body.en .offer { padding: .45em 1.1em .4em; }
 
 /* Header */
-#head { position: absolute; top: 70px; left: 0; right: 0; text-align: center; animation: fadeDown 1s .1s both; }
-#mono { width: 92px; height: 92px; margin: 0 auto; border-radius: 50%; background: var(--gold);
-  box-shadow: 0 6px 24px rgba(0,0,0,.45), inset 0 0 0 3px rgba(120, 80, 10, .55), inset 0 0 0 7px rgba(255,240,200,.5);
-  display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 800; font-size: 54px; color: #4a2a05; padding-top: 4px; }
-#brand { margin-top: 16px; font-family: "Cinzel"; font-weight: 700; font-size: 30px; letter-spacing: 11px; padding-left: 11px; }
-#bless { margin-top: 8px; font-size: 26px; color: rgba(253, 243, 220, .85); }
-#date { margin-top: 18px; font-family: "Montserrat"; font-weight: 600; font-size: 21px; letter-spacing: 7px; color: rgba(233, 196, 106, .9); }
+#head { position: absolute; left: 0; right: 0; top: 0; height: 210px; }
+.brandpill { display: inline-block; font-family: "Montserrat"; font-weight: 800; font-size: 26px; letter-spacing: 8px; padding: 12px 26px 12px 34px; border-radius: 40px;
+  background: var(--hl); color: var(--hlInk); }
+.bless { font-size: 30px; font-weight: 700; color: var(--ink); }
+.datechip { display: inline-block; font-family: "Montserrat"; font-weight: 700; font-size: 22px; letter-spacing: 5px; padding: 8px 22px 8px 27px; border-radius: 30px;
+  border: 2.5px solid var(--ink); color: var(--ink); }
+.mono { width: 118px; height: 118px; flex: none; border-radius: 50%; background: var(--hl); color: var(--hlInk); display: flex; align-items: center; justify-content: center;
+  font-family: var(--disp); font-size: 64px; box-shadow: 0 8px 0 var(--shadow); border: 5px solid var(--c2); padding-top: 8px; }
 
-/* Hero text */
-#titlewrap { position: absolute; top: 352px; left: 60px; right: 60px; text-align: center; }
-#title { position: relative; display: inline-block; font-family: var(--serif); font-weight: 800; line-height: 1.0;
-  filter: drop-shadow(0 6px 10px rgba(0,0,0,.55)); animation: rise 1.1s .35s both; white-space: nowrap; }
-@keyframes shine { 0% { background-position: 150% 0, 0 0; } 45%, 100% { background-position: -60% 0, 0 0; } }
-#en { margin-top: 2px; font-family: "Cormorant"; font-style: italic; font-weight: 500; font-size: 62px; color: var(--cream); letter-spacing: 1px;
-  animation: rise 1s .7s both; }
-#divider { width: 520px; height: 34px; margin: 14px auto 0; animation: fade 1s 1s both; }
+/* Info panel: one set of elements, four looks */
+#panel { position: absolute; left: 36px; right: 36px; bottom: 34px; height: 520px; text-align: center; color: var(--pInk); }
+#panel .pbg { position: absolute; inset: 0; }
+#panel .pin { position: absolute; inset: 0; padding: 20px 34px 0; }
+#shop { display: inline-block; font-family: var(--disp); font-weight: var(--dispw); font-size: 76px; line-height: 1.15; white-space: nowrap; color: var(--pAcc); padding-top: .14em; }
+#trade { font-size: 30px; white-space: nowrap; font-weight: 700; }
+#addr { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 27px; white-space: nowrap; margin-top: 12px; }
+#phones { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 12px; font-family: "Montserrat"; font-weight: 800; font-size: 34px; white-space: nowrap; }
+#phones .chip { background: var(--pAcc); color: var(--pChipInk); border-radius: 40px; padding: 6px 16px; }
+#office { display: flex; justify-content: center; gap: 22px; margin-top: 10px; font-size: 26px; white-space: nowrap; }
+#office .num { font-family: "Montserrat"; font-weight: 700; }
+#bank { display: grid; grid-template-columns: auto auto; justify-content: center; column-gap: 40px; row-gap: 6px; text-align: left; margin-top: 16px; padding-top: 14px; }
+.kv { font-family: "Montserrat"; font-size: 22px; font-weight: 600; white-space: nowrap; }
+.kv b { display: inline-block; min-width: 92px; font-weight: 800; font-size: 17px; letter-spacing: 2px; color: var(--pAcc); }
+.ico { width: 32px; height: 32px; flex: none; }
+.ico path { fill: var(--pAcc); }
 
-/* Illustration */
-#hero { position: absolute; top: 672px; left: 0; right: 0; height: 430px; display: flex; justify-content: center; align-items: flex-end;
-  animation: zoomIn 1.2s .8s both; }
-#hero svg { overflow: visible; }
-.flame { transform-box: fill-box; transform-origin: 50% 100%; animation: flicker 1.1s ease-in-out infinite alternate; }
-.flame.b { animation-duration: .9s; animation-delay: -.4s; } .flame.c { animation-duration: 1.3s; animation-delay: -.7s; }
-@keyframes flicker { 0% { transform: scale(1, 1) skewX(0deg); } 50% { transform: scale(.94, 1.07) skewX(2deg); } 100% { transform: scale(1.04, .95) skewX(-2deg); } }
-.coinshine { animation: coinshine 3s 1.8s infinite; }
-@keyframes coinshine { 0% { transform: translateX(-260px); } 40%, 100% { transform: translateX(260px); } }
+/* p0 card: coloured name band + white body */
+.p0 .pbg { background: #fff; border-radius: 34px; box-shadow: 0 16px 0 var(--shadow), 0 20px 50px rgba(0,0,0,.25); overflow: hidden; }
+.p0 .pbg::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 170px; background: var(--panel); }
+.p0 #shop { color: var(--pAcc2); } .p0 #trade { color: #fff; }
+.p0 #addr { margin-top: 26px; } .p0 #bank { border-top: 2px dashed #c9c9c9; } .p0 .kv b { color: var(--panel); } .p0 .ico path { fill: var(--panel); }
+.p0 #phones .chip { background: var(--panel); color: #fff; }
+/* p1 wave: full-width band with a wavy top edge */
+#panel.p1 { left: 0; right: 0; bottom: 0; height: 575px; }
+#panel.p1 .pin { padding-top: 80px; }
+.p1 #bank { border-top: 2px solid rgba(255,255,255,.25); margin-left: 60px; margin-right: 60px; }
+/* p2 ticket: inset card, dashed inner border, side notches */
+.p2 .pbg { background: var(--panel); border-radius: 26px; box-shadow: 0 14px 40px rgba(0,0,0,.3); }
+.p2 .pbg::after { content: ""; position: absolute; inset: 14px; border: 3px dashed var(--pAcc); border-radius: 18px; opacity: .65; }
+.p2 .notch { position: absolute; top: 330px; width: 54px; height: 54px; border-radius: 50%; background: var(--bg2); }
+.p2 #bank { border-top: 3px dashed rgba(255,255,255,.35); margin-left: 40px; margin-right: 40px; }
+/* p3 chips: dark slab, phone numbers as pills, bank in boxes */
+.p3 .pbg { background: var(--panel); border-radius: 46px 46px 34px 34px; border: 5px solid var(--pAcc); }
+.p3 #bank { grid-template-columns: repeat(3, auto); column-gap: 10px; row-gap: 10px; }
+.p3 .kv { border: 2px solid rgba(255,255,255,.28); border-radius: 12px; padding: 6px 12px; font-size: 19px; }
+.p3 .kv b { display: block; min-width: 0; font-size: 14px; }
+.p3 #phones { gap: 10px; }
 
-/* Message */
-#msg { position: absolute; top: 1118px; left: 70px; right: 70px; text-align: center; }
-.line { font-weight: 600; font-size: 46px; line-height: 1.35; color: var(--cream); text-shadow: 0 3px 10px rgba(0,0,0,.5); white-space: nowrap; }
-.line:nth-child(1) { animation: rise .9s 1.5s both; } .line:nth-child(2) { animation: rise .9s 1.8s both; }
-#offer { display: inline-block; margin-top: 16px; padding: 12px 44px 8px; border-radius: 60px; background: var(--gold);
-  color: #3d1d02; font-weight: 700; font-size: 38px; box-shadow: 0 8px 26px rgba(0,0,0,.45), inset 0 0 0 2px rgba(255,255,255,.35);
-  white-space: nowrap; animation: pop .8s 2.2s both; }
-
-/* Info panel */
-#panel { position: absolute; left: 50px; right: 50px; bottom: 50px; height: 494px; border-radius: 28px;
-  background: linear-gradient(180deg, rgba(10, 6, 4, .78), rgba(10, 6, 4, .9)); border: 1.5px solid rgba(233, 196, 106, .7);
-  box-shadow: 0 -10px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255, 230, 160, .15); padding: 26px 36px 0; text-align: center;
-  animation: slideUp 1s .2s both; }
-#shop { font-family: var(--serif); font-weight: 800; font-size: 78px; line-height: 1.0; white-space: nowrap; }
-#trade { margin-top: 2px; font-size: 30px; color: var(--gold-flat); white-space: nowrap; }
-.rule { height: 1px; margin: 18px 10px; background: linear-gradient(90deg, transparent, rgba(233,196,106,.7), transparent); }
-#addr { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 27px; color: var(--cream); white-space: nowrap; }
-#phones { margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 14px; font-family: "Montserrat"; font-weight: 700; font-size: 35px; color: #fff; white-space: nowrap; }
-#phones .sep { color: var(--gold-flat); font-weight: 400; }
-#office { margin-top: 8px; display: flex; justify-content: center; gap: 22px; font-size: 26px; color: rgba(253,243,220,.85); white-space: nowrap; }
-#office .num { font-family: "Montserrat"; font-weight: 600; letter-spacing: .5px; }
-#bank { display: grid; grid-template-columns: auto auto; justify-content: center; column-gap: 46px; row-gap: 6px; text-align: left; }
-.kv { font-family: "Montserrat"; font-size: 22px; color: #fff; font-weight: 600; white-space: nowrap; }
-.kv b { display: inline-block; min-width: 92px; font-weight: 700; font-size: 17px; letter-spacing: 2px; color: var(--gold-flat); }
-.icon { width: 30px; height: 30px; flex: none; }
-
-/* Sparkles */
-.spark { position: absolute; width: 22px; height: 22px; animation: twinkle 2.4s ease-in-out infinite; }
-@keyframes twinkle { 0%, 100% { opacity: .15; transform: scale(.6) rotate(0); } 50% { opacity: 1; transform: scale(1) rotate(20deg); } }
-
+/* Entrance + loop animations */
+@keyframes pop { 0% { opacity: 0; transform: scale(.4); } 65% { opacity: 1; transform: scale(1.08); } 100% { opacity: 1; transform: none; } }
+@keyframes rise { from { opacity: 0; transform: translateY(70px); } to { opacity: 1; transform: none; } }
+@keyframes fromL { from { opacity: 0; transform: translateX(-700px); } to { opacity: 1; transform: none; } }
+@keyframes fromR { from { opacity: 0; transform: translateX(700px); } to { opacity: 1; transform: none; } }
+@keyframes drop { 0% { opacity: 0; transform: translateY(-500px); } 60% { opacity: 1; transform: translateY(24px); } 80% { transform: translateY(-8px); } 100% { opacity: 1; transform: none; } }
+@keyframes flip { from { opacity: 0; transform: perspective(900px) rotateX(-95deg); } to { opacity: 1; transform: none; } }
+@keyframes spin { from { opacity: 0; transform: rotate(-200deg) scale(.2); } to { opacity: 1; transform: none; } }
+@keyframes zoom { from { opacity: 0; transform: scale(2.4); filter: blur(14px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(-50% -50% -50% -50%); } }
+@keyframes up { from { opacity: 0; transform: translateY(600px); } to { opacity: 1; transform: none; } }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes fadeDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: none; } }
-@keyframes rise { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
-@keyframes zoomIn { from { opacity: 0; transform: scale(.82); } to { opacity: 1; transform: none; } }
-@keyframes pop { 0% { opacity: 0; transform: scale(.7); } 70% { transform: scale(1.06); } 100% { opacity: 1; transform: none; } }
-@keyframes slideUp { from { opacity: 0; transform: translateY(80px); } to { opacity: 1; transform: none; } }
-
-/* ---------- Rotating styles (body.s-*) : the default rules above are "royal" ---------- */
-#toran, #arch { display: none; position: absolute; }
-@keyframes slideRight { from { opacity: 0; transform: translateX(-120px); } to { opacity: 1; transform: none; } }
-@keyframes slideLeft { from { opacity: 0; transform: translateX(120px); } to { opacity: 1; transform: none; } }
-@keyframes drop { 0% { opacity: 0; transform: translateY(-160px); } 70% { transform: translateY(10px); } 100% { opacity: 1; transform: none; } }
-@keyframes swing { 0%, 100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
-@keyframes archIn { from { opacity: 0; transform: scaleY(.6); } to { opacity: 1; transform: none; } }
-@keyframes spread { from { opacity: 0; letter-spacing: 30px; } to { opacity: 1; } }
-
-/* Ivory: light paper, maroon ink, gold-bar pyramid, text slides in from the side. */
-body.s-ivory { --cream: #4a0d12; --gold-flat: #9b6a17;
-  --gold: linear-gradient(180deg, #c48a23 0%, #8a5a10 45%, #b98022 70%, #6e440a 100%); }
-body.s-ivory #bg { background: radial-gradient(ellipse 80% 45% at 50% 42%, #fffaf0 0%, #f6e8cc 60%, #e9d3a8 100%); animation: none; }
-body.s-ivory #pattern { opacity: .16; filter: hue-rotate(-30deg) saturate(2) brightness(.45); }
-body.s-ivory #grain { opacity: .05; mix-blend-mode: multiply; }
-body.s-ivory .frame { border-color: rgba(110, 20, 28, .7); }
-body.s-ivory .frame.inner { border-color: rgba(155, 106, 23, .5); }
-body.s-ivory .corner g { stroke: #7a1420; } body.s-ivory .corner path[fill], body.s-ivory .corner circle { fill: #7a1420; }
-body.s-ivory #bless { color: #5a1a1a; } body.s-ivory #date { color: #7a1420; }
-body.s-ivory #mono { color: #fff4d6; background: linear-gradient(180deg, #8a1a24, #4a0a10); }
-body.s-ivory #title { filter: drop-shadow(0 3px 2px rgba(120, 60, 0, .25)); animation-name: slideRight; }
-body.s-ivory #en { color: #7a1420; animation-name: slideLeft; }
-body.s-ivory #divider g { stroke: #7a1420; } body.s-ivory #divider [fill] { fill: #7a1420; }
-body.s-ivory .line { color: #3d0a0e; text-shadow: none; }
-body.s-ivory #offer { background: linear-gradient(180deg, #8a1a24, #5a0b14); color: #ffe9b0; }
-body.s-ivory #panel { background: linear-gradient(180deg, #6b0f1a, #3d070d); border-color: #c9962e; }
-body.s-ivory #panel { --cream: #fdf3dc; --gold-flat: #f2cf7a;
-  --gold: linear-gradient(180deg, #fff3c4 0%, #f5d27a 40%, #d4a23c 70%, #f7dc8e 100%); }
-body.s-ivory .spark path { fill: #c48a23; }
-
-/* Arch: temple-arch window holding the illustration, title below it, curtain-like reveal. */
-body.s-arch #arch { display: block; left: 170px; top: 312px; width: 740px; height: 610px; border-radius: 390px 390px 24px 24px;
-  background: radial-gradient(ellipse 70% 60% at 50% 55%, rgba(255, 214, 140, .35), rgba(0, 0, 0, .25));
-  border: 3px solid #e9c46a; box-shadow: 0 0 0 10px rgba(233, 196, 106, .18), 0 30px 60px rgba(0,0,0,.45), inset 0 0 60px rgba(0,0,0,.35);
-  transform-origin: 50% 100%; animation: archIn 1.2s .2s both; }
-body.s-arch #pattern { opacity: .08; }
-body.s-arch #bg { background: radial-gradient(ellipse 70% 40% at 50% 40%, rgba(255, 190, 90, .22), transparent 70%), radial-gradient(ellipse 120% 80% at 50% 30%, #0e4a3a 0%, #03140f 78%); }
-body.s-arch #hero { top: 420px; transform-origin: 50% 100%; } body.s-arch #hero svg { transform: scale(.92); transform-origin: 50% 100%; }
-body.s-arch #titlewrap { top: 992px; }
-body.s-arch #title { animation-name: drop; }
-body.s-arch #en { font-size: 52px; }
-body.s-arch #divider { display: none; }
-body.s-arch #msg { top: 1212px; }
-body.s-arch .line { font-size: 38px; line-height: 1.22; }
-body.s-arch #offer { position: absolute; left: 50%; top: -350px; transform: translateX(-50%); animation: none; opacity: 1; }
-body.s-arch #head { top: 56px; }
-
-/* Silver: steel and charcoal, silver foil lettering, silver coins and bars. */
-body.s-silver { --cream: #eef2f7; --gold-flat: #c9d2dd;
-  --gold: linear-gradient(180deg, #ffffff 0%, #dfe5ec 30%, #9aa6b4 58%, #eef2f6 80%, #8792a0 100%); }
-body.s-silver #bg { background: radial-gradient(ellipse 70% 40% at 50% 42%, rgba(160, 190, 230, .25), transparent 70%),
-  radial-gradient(ellipse 120% 80% at 50% 30%, #2c3a4c 0%, #0a0e14 78%); }
-body.s-silver #pattern { filter: grayscale(1) brightness(1.6); }
-body.s-silver .frame { border-color: rgba(200, 210, 222, .75); } body.s-silver .frame.inner { border-color: rgba(200, 210, 222, .3); }
-body.s-silver .corner g { stroke: #c9d2dd; } body.s-silver .corner path[fill], body.s-silver .corner circle { fill: #c9d2dd; }
-body.s-silver #date { color: #c9d2dd; } body.s-silver #mono { color: #2b3440; }
-body.s-silver #divider g { stroke: #c9d2dd; } body.s-silver #divider [fill] { fill: #c9d2dd; }
-body.s-silver #offer { color: #1d2530; }
-body.s-silver #panel { border-color: rgba(200, 210, 222, .7); background: linear-gradient(180deg, rgba(8, 12, 18, .8), rgba(8, 12, 18, .92)); }
-body.s-silver .icon path { fill: #c9d2dd; }
-body.s-silver .spark path { fill: #e6eef8; }
-body.s-silver #hero { animation-name: zoomIn; animation-duration: 1.6s; }
-
-/* Festive: bright magenta-to-saffron sky, swinging marigold toran, rangoli wheel. */
-body.s-festive #bg { background: radial-gradient(ellipse 70% 40% at 50% 45%, rgba(255, 220, 120, .35), transparent 70%),
-  linear-gradient(170deg, #7b0f4f 0%, #b0242f 48%, #d8641a 100%); }
-body.s-festive #pattern { opacity: .2; }
-body.s-festive #toran { display: block; left: 0; top: 0; width: 1080px; height: 150px; transform-origin: 50% 0; animation: swing 4s ease-in-out infinite; }
-body.s-festive .frame, body.s-festive .frame.inner, body.s-festive .corner { display: none; }
-body.s-festive #head { top: 178px; }
-body.s-festive #mono { display: none; }
-body.s-festive #brand { margin-top: 0; }
-body.s-festive #titlewrap { top: 352px; }
-body.s-festive #title { filter: drop-shadow(0 5px 0 rgba(90, 10, 30, .65)); animation-name: pop; }
-body.s-festive #en { color: #fff3c4; }
-body.s-festive #hero { top: 672px; }
-body.s-festive #panel { background: rgba(40, 4, 18, .86); }
-
-/* Minimal: flat black, left-aligned editorial type, single large coin, info set as clean lines. */
-body.s-minimal #bg { background: radial-gradient(ellipse 60% 35% at 70% 50%, rgba(233, 196, 106, .12), transparent 70%), #0b0a09; animation: none; }
-body.s-minimal #pattern, body.s-minimal #sparks, body.s-minimal .frame.inner, body.s-minimal .corner { display: none; }
-body.s-minimal .frame { inset: 34px; border-width: 1px; border-color: rgba(233, 196, 106, .45); border-radius: 0; }
-body.s-minimal #head { left: 90px; right: 90px; text-align: left; display: grid; grid-template-columns: auto 1fr; column-gap: 24px; align-items: center; }
-body.s-minimal #mono { grid-row: span 3; margin: 0; width: 110px; height: 110px; }
-body.s-minimal #brand, body.s-minimal #bless, body.s-minimal #date { margin-top: 4px; padding-left: 0; }
-body.s-minimal #titlewrap { top: 330px; left: 90px; right: 90px; text-align: left; }
-body.s-minimal #title { animation-name: spread; animation-duration: 1.4s; }
-body.s-minimal #en { text-align: left; }
-body.s-minimal #divider { margin-left: 0; width: 360px; }
-body.s-minimal #hero { top: 650px; }
-body.s-minimal #msg { left: 90px; right: 90px; text-align: left; }
-body.s-minimal .line { text-shadow: none; animation-name: slideRight; }
-body.s-minimal #offer { border-radius: 0; background: none; color: var(--gold-flat); box-shadow: none; border: 2px solid var(--gold-flat); padding: 10px 30px 6px; }
-body.s-minimal #panel { left: 70px; right: 70px; border-radius: 0; background: none; border: none; border-top: 2px solid rgba(233, 196, 106, .8); box-shadow: none; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+@keyframes turn { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@keyframes twinkle { 0%, 100% { opacity: .2; transform: scale(.6); } 50% { opacity: 1; transform: scale(1.1); } }
+@keyframes flicker { 0% { transform: scale(1, 1); } 50% { transform: scale(.92, 1.08); } 100% { transform: scale(1.05, .95); } }
+.flame { transform-box: fill-box; transform-origin: 50% 100%; animation: flicker 1s ease-in-out infinite alternate; }
+.bob { animation: bob 3s ease-in-out infinite; }
+.spinslow { transform-box: fill-box; transform-origin: 50% 50%; animation: turn 90s linear infinite; }
+.tw { transform-box: fill-box; transform-origin: 50% 50%; animation: twinkle 2.2s ease-in-out infinite; }
+.loop { display: inline-block; }
 </style>
 </head>
 <body>
 <div id="stage">
   <div id="bg"></div>
-  <svg id="pattern" width="1080" height="1920"></svg>
-  <svg id="grain" width="1080" height="1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
-  <div id="arch"></div>
-  <svg id="toran" viewBox="0 0 1080 150"></svg>
-  <div id="sparks"></div>
-  <div class="frame"></div><div class="frame inner"></div>
-  <svg class="corner tl" viewBox="0 0 120 120"><g fill="none" stroke="#e9c46a" stroke-width="2"><path d="M12 70 V12 H70"/><path d="M22 52 Q22 22 52 22"/><circle cx="12" cy="12" r="5" fill="#e9c46a"/><path d="M30 40 q10 -10 20 0 q-10 10 -20 0z" fill="#e9c46a" stroke="none"/></g></svg>
-  <svg class="corner tr" viewBox="0 0 120 120"><g fill="none" stroke="#e9c46a" stroke-width="2"><path d="M12 70 V12 H70"/><path d="M22 52 Q22 22 52 22"/><circle cx="12" cy="12" r="5" fill="#e9c46a"/><path d="M30 40 q10 -10 20 0 q-10 10 -20 0z" fill="#e9c46a" stroke="none"/></g></svg>
-
-  <div id="head">
-    <div id="mono"></div>
-    <div id="brand" class="goldtext">CHHATRAPATI BULLION</div>
-    <div id="bless"></div>
-    <div id="date"></div>
-  </div>
-
-  <div id="titlewrap">
-    <div id="title"><span class="goldtext" id="titletext"></span></div>
-    <div id="en"></div>
-    <svg id="divider" viewBox="0 0 520 34"><g stroke="#e9c46a" fill="none" stroke-width="1.6"><path d="M10 17 H210"/><path d="M310 17 H510"/><path d="M260 3 L276 17 L260 31 L244 17 Z" fill="#e9c46a"/><circle cx="226" cy="17" r="4" fill="#e9c46a"/><circle cx="294" cy="17" r="4" fill="#e9c46a"/></g></svg>
-  </div>
-
-  <div id="hero"></div>
-
-  <div id="msg"><div id="lines"></div><div id="offer"></div></div>
-
-  <div id="panel">
-    <div id="shop" class="goldtext"></div>
+  <svg id="motif" width="1080" height="1920"></svg>
+  <div id="main"></div>
+  <div id="head"></div>
+  <div id="panel"><div class="pbg"></div><div class="pin">
+    <div id="shop"></div>
     <div id="trade"></div>
-    <div class="rule"></div>
-    <div id="addr"><svg class="icon" viewBox="0 0 24 24"><path fill="#e9c46a" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span id="addrtext"></span></div>
+    <div id="addr"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span id="addrtext"></span></div>
     <div id="phones"></div>
     <div id="office"></div>
-    <div class="rule"></div>
     <div id="bank"></div>
-  </div>
+  </div></div>
 </div>
 
 <script>
-const PHONE = '<svg class="icon" viewBox="0 0 24 24"><path fill="#e9c46a" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>';
-const STAR = '<svg viewBox="0 0 24 24"><path fill="#ffe7a3" d="M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z"/></svg>';
+function rng(seed) { seed = (Math.abs(seed) % 2147483646) + 1; return () => (seed = (seed * 16807) % 2147483647) / 2147483647; }
 
-function rng(seed) { return () => (seed = (seed * 16807) % 2147483647) / 2147483647; }
+/* ---------- Palettes: bold and colourful, light and dark ---------- */
+const PALETTES = [
+  { bg: '#ff7a1a', bg2: '#ff4d00', ink: '#ffffff', title: '#ffffff', shadow: '#8f2400', b: '#ffd23f', c2: '#ffffff', hl: '#1d2a6b', hlInk: '#ffd23f', panel: '#1d2a6b', pAcc: '#ffd23f', pAcc2: '#ffd23f', m: 'rgba(255,255,255,.16)', dark: true },
+  { bg: '#ff5fa2', bg2: '#ff3d7f', ink: '#ffffff', title: '#fff36b', shadow: '#5b1150', b: '#5b2bd6', c2: '#ffffff', hl: '#fff36b', hlInk: '#5b1150', panel: '#3b1170', pAcc: '#fff36b', pAcc2: '#fff36b', m: 'rgba(255,255,255,.18)', dark: true },
+  { bg: '#ffe23d', bg2: '#ffc800', ink: '#151515', title: '#151515', shadow: '#e63946', b: '#1d4ed8', c2: '#151515', hl: '#e63946', hlInk: '#ffffff', panel: '#151515', pAcc: '#ffe23d', pAcc2: '#ffe23d', m: 'rgba(0,0,0,.08)', dark: false },
+  { bg: '#2a9d8f', bg2: '#1d7a6f', ink: '#ffffff', title: '#ffffff', shadow: '#0f3d37', b: '#f4a261', c2: '#e9c46a', hl: '#f4a261', hlInk: '#2b1406', panel: '#12403a', pAcc: '#f4d35e', pAcc2: '#f4d35e', m: 'rgba(255,255,255,.12)', dark: true },
+  { bg: '#1d4ed8', bg2: '#0b2a8f', ink: '#ffffff', title: '#ffd23f', shadow: '#061a5c', b: '#ff5d73', c2: '#ffd23f', hl: '#ffd23f', hlInk: '#0b2a8f', panel: '#0a1a52', pAcc: '#ffd23f', pAcc2: '#ffd23f', m: 'rgba(255,255,255,.12)', dark: true, gold: true },
+  { bg: '#fff4e0', bg2: '#ffe2b3', ink: '#3a1408', title: '#c1121f', shadow: '#f4a300', b: '#f77f00', c2: '#c1121f', hl: '#c1121f', hlInk: '#fff4e0', panel: '#7a0d0d', pAcc: '#ffc94a', pAcc2: '#ffc94a', m: 'rgba(193,18,31,.10)', dark: false },
+  { bg: '#c9f2e3', bg2: '#97e0c6', ink: '#073b35', title: '#0f766e', shadow: '#f97316', b: '#7c3aed', c2: '#0f766e', hl: '#f97316', hlInk: '#ffffff', panel: '#0f3d3a', pAcc: '#fdba74', pAcc2: '#fdba74', m: 'rgba(15,118,110,.12)', dark: false },
+  { bg: '#3b0a6b', bg2: '#1a0433', ink: '#ffffff', title: '#ffb703', shadow: '#ff2e88', b: '#22d3ee', c2: '#ffb703', hl: '#ff2e88', hlInk: '#ffffff', panel: '#12021f', pAcc: '#ffb703', pAcc2: '#ffb703', m: 'rgba(255,183,3,.12)', dark: true, gold: true },
+  { bg: '#7a0f1f', bg2: '#3b050d', ink: '#fff3d6', title: '#ffc94a', shadow: '#2a0308', b: '#ff7b54', c2: '#ffc94a', hl: '#ffc94a', hlInk: '#5a0a14', panel: '#2a0308', pAcc: '#ffc94a', pAcc2: '#ffc94a', m: 'rgba(255,201,74,.12)', dark: true, gold: true },
+  { bg: '#dff3ff', bg2: '#a9dcff', ink: '#0b2545', title: '#0b5ed7', shadow: '#ffbe0b', b: '#ff6b35', c2: '#0b5ed7', hl: '#ff6b35', hlInk: '#ffffff', panel: '#0b2545', pAcc: '#ffbe0b', pAcc2: '#ffbe0b', m: 'rgba(11,94,215,.10)', dark: false },
+  { bg: '#065f46', bg2: '#022c22', ink: '#f0fdf4', title: '#fde047', shadow: '#011a14', b: '#fb923c', c2: '#fde047', hl: '#fde047', hlInk: '#064e3b', panel: '#022c22', pAcc: '#fde047', pAcc2: '#fde047', m: 'rgba(253,224,71,.10)', dark: true, gold: true },
+  { bg: '#1a1a1a', bg2: '#000000', ink: '#ffffff', title: '#f5c542', shadow: '#5c4300', b: '#ff6b35', c2: '#f5c542', hl: '#f5c542', hlInk: '#111111', panel: '#000000', pAcc: '#f5c542', pAcc2: '#f5c542', m: 'rgba(245,197,66,.10)', dark: true, gold: true },
+  { bg: '#ff6f59', bg2: '#ef476f', ink: '#ffffff', title: '#ffffff', shadow: '#6b0f2b', b: '#06d6a0', c2: '#ffd166', hl: '#ffd166', hlInk: '#6b0f2b', panel: '#3d0c1f', pAcc: '#ffd166', pAcc2: '#ffd166', m: 'rgba(255,255,255,.15)', dark: true },
+  { bg: '#ede4ff', bg2: '#cdb8ff', ink: '#2e1065', title: '#6d28d9', shadow: '#f59e0b', b: '#f43f5e', c2: '#6d28d9', hl: '#6d28d9', hlInk: '#ffffff', panel: '#2e1065', pAcc: '#fbbf24', pAcc2: '#fbbf24', m: 'rgba(109,40,217,.10)', dark: false },
+  { bg: '#ff9933', bg2: '#f97300', ink: '#ffffff', title: '#ffffff', shadow: '#0b6b06', b: '#138808', c2: '#ffffff', hl: '#138808', hlInk: '#ffffff', panel: '#4a1d00', pAcc: '#ffd27a', pAcc2: '#ffd27a', m: 'rgba(255,255,255,.16)', dark: true },
+  { bg: '#e8ebf0', bg2: '#c4ccd8', ink: '#111827', title: '#1e3a8a', shadow: '#b91c1c', b: '#ca8a04', c2: '#1e3a8a', hl: '#b91c1c', hlInk: '#ffffff', panel: '#1e293b', pAcc: '#e2e8f0', pAcc2: '#facc15', m: 'rgba(30,58,138,.09)', dark: false },
+];
 
-function coin(cx, cy, r, silver, label) {
-  const id = 'g' + Math.round(cx) + Math.round(cy) + (silver ? 's' : 'g');
-  const c = silver ? ['#ffffff', '#d9dde3', '#9aa1ab', '#eef0f3'] : ['#fff1b8', '#f2c94c', '#b7791f', '#ffe08a'];
-  return `<defs><radialGradient id="${id}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="${c[0]}"/><stop offset=".45" stop-color="${c[1]}"/><stop offset="1" stop-color="${c[2]}"/></radialGradient></defs>
-    <circle cx="${cx}" cy="${cy + r * .08}" r="${r}" fill="rgba(0,0,0,.35)"/>
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${id})" stroke="${c[3]}" stroke-width="${r * .06}"/>
-    <circle cx="${cx}" cy="${cy}" r="${r * .8}" fill="none" stroke="${silver ? '#8a919b' : '#9a6412'}" stroke-width="${r * .035}" stroke-dasharray="${r * .05} ${r * .05}"/>
-    <circle cx="${cx}" cy="${cy}" r="${r * .7}" fill="none" stroke="${silver ? '#a5acb6' : '#c28a2c'}" stroke-width="${r * .02}"/>
-    ${label ? `<text x="${cx}" y="${cy + r * .28}" text-anchor="middle" font-family="SerifHi" font-weight="800" font-size="${r * .82}" fill="${silver ? '#7d848e' : '#94600f'}">श्री</text>` : ''}`;
+/* ---------- Display fonts per language ---------- */
+const FONTS = {
+  gu: [['BalooBhai', 800], ['Shrikhand', 400], ['KumarOne', 400], ['AnekGu', 800], ['MuktaVaani', 800], ['SerifGu', 900], ['Farsan', 400], ['Rasa', 700]],
+  hi: [['Baloo', 800], ['Rozha', 400], ['Yatra', 400], ['AnekHi', 800], ['Mukta', 800], ['SerifHi', 900], ['Khand', 700], ['Teko', 600]],
+  en: [['Anton', 400], ['Playfair', 900], ['Righteous', 400], ['Bebas', 400], ['Poppins', 800], ['Cinzel', 900], ['Baloo', 800], ['Montserrat', 900]],
+};
+
+/* ---------- Metals ---------- */
+let UID = 0;
+function grad(kind) {
+  const id = 'm' + (UID++);
+  const s = kind === 'silver' ? ['#ffffff', '#dfe3e8', '#9aa3ad'] : ['#fff3c0', '#f4c84a', '#b97b16'];
+  return [id, `<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${s[0]}"/><stop offset=".45" stop-color="${s[1]}"/><stop offset="1" stop-color="${s[2]}"/></linearGradient>`];
 }
-
-function stack(cx, baseY, r, n, silver) {
+function coin(cx, cy, r, kind = 'gold', label = true) {
+  const [id, def] = grad(kind), dark = kind === 'silver' ? '#7d858f' : '#94600f';
+  return `<defs>${def}</defs><circle cx="${cx}" cy="${cy + r * .1}" r="${r}" fill="${kind === 'silver' ? '#6f7882' : '#8a5a0c'}"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${id})" stroke="${dark}" stroke-width="${r * .05}"/>
+    <circle cx="${cx}" cy="${cy}" r="${r * .78}" fill="none" stroke="${dark}" stroke-width="${r * .035}" stroke-dasharray="${r * .06} ${r * .05}"/>
+    ${label ? `<text x="${cx}" y="${cy + r * .3}" text-anchor="middle" font-family="SerifHi" font-weight="800" font-size="${r * .8}" fill="${dark}">श्री</text>` : ''}`;
+}
+function stack(cx, baseY, r, n, kind) {
+  const top = kind === 'silver' ? '#eef1f4' : '#f6d064', side = kind === 'silver' ? '#9aa1ab' : '#b47a1f', edge = kind === 'silver' ? '#7d858f' : '#8a5a0c';
   let s = '';
-  const top = silver ? '#e9ecf0' : '#f5cf62', side = silver ? '#9aa1ab' : '#b47a1f', edge = silver ? '#c3c8cf' : '#d9a63a';
   for (let i = 0; i < n; i++) {
-    const y = baseY - i * r * .28;
-    s += `<ellipse cx="${cx}" cy="${y + r * .14}" rx="${r}" ry="${r * .32}" fill="${side}"/>
-          <rect x="${cx - r}" y="${y}" width="${2 * r}" height="${r * .14}" fill="${side}"/>
-          <ellipse cx="${cx}" cy="${y}" rx="${r}" ry="${r * .32}" fill="${top}" stroke="${edge}" stroke-width="2"/>`;
+    const y = baseY - i * r * .3;
+    s += `<ellipse cx="${cx}" cy="${y + r * .15}" rx="${r}" ry="${r * .32}" fill="${side}" stroke="${edge}" stroke-width="2"/><rect x="${cx - r}" y="${y}" width="${2 * r}" height="${r * .15}" fill="${side}"/>
+      <ellipse cx="${cx}" cy="${y}" rx="${r}" ry="${r * .32}" fill="${top}" stroke="${edge}" stroke-width="2"/>`;
   }
   return s;
 }
-
-function bar(x, y, w, h) {
-  return `<defs><linearGradient id="bar" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0b3"/><stop offset=".5" stop-color="#e7b743"/><stop offset="1" stop-color="#a86d16"/></linearGradient></defs>
-    <path d="M${x + w * .12} ${y} H${x + w * .88} L${x + w} ${y + h} H${x} Z" fill="url(#bar)" stroke="#fff3c4" stroke-width="2"/>
-    <path d="M${x + w * .12} ${y} H${x + w * .88} L${x + w * .8} ${y + h * .3} H${x + w * .2} Z" fill="rgba(255,255,255,.35)"/>
-    <text x="${x + w / 2}" y="${y + h * .78}" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="${h * .32}" fill="#8a5a10">999.9</text>`;
+function bar(x, y, w, h, kind = 'gold') {
+  const [id, def] = grad(kind), dark = kind === 'silver' ? '#6f7882' : '#8a5a0c';
+  return `<defs>${def}</defs><path d="M${x + w * .14} ${y} H${x + w * .86} L${x + w} ${y + h} H${x} Z" fill="url(#${id})" stroke="${dark}" stroke-width="2.5"/>
+    <path d="M${x + w * .14} ${y} H${x + w * .86} L${x + w * .8} ${y + h * .32} H${x + w * .2} Z" fill="rgba(255,255,255,.4)"/>
+    <text x="${x + w / 2}" y="${y + h * .8}" text-anchor="middle" font-family="Montserrat" font-weight="800" font-size="${h * .3}" fill="${dark}">${kind === 'silver' ? '999' : '999.9'}</text>`;
+}
+function spark(x, y, s, col, delay = 0) {
+  return `<path class="tw" style="animation-delay:-${delay.toFixed(2)}s" d="M${x} ${y - s} L${x + s * .22} ${y - s * .22} L${x + s} ${y} L${x + s * .22} ${y + s * .22} L${x} ${y + s} L${x - s * .22} ${y + s * .22} L${x - s} ${y} L${x - s * .22} ${y - s * .22} Z" fill="${col}"/>`;
+}
+function diya(cx, cy, s) {
+  const hid = 'h' + (UID++);
+  return `<defs><radialGradient id="${hid}"><stop offset="0" stop-color="rgba(255,220,110,.75)"/><stop offset="1" stop-color="rgba(255,190,60,0)"/></radialGradient></defs>
+    <ellipse cx="${cx + s * .1}" cy="${cy - s * .7}" rx="${s * .9}" ry="${s * 1}" fill="url(#${hid})"/>
+    <path class="flame" style="animation-duration:${(0.8 + (cx % 5) / 10).toFixed(2)}s" d="M${cx + s * .1} ${cy - s * 1.2} C ${cx + s * .45} ${cy - s * .7}, ${cx + s * .32} ${cy - s * .2}, ${cx + s * .1} ${cy - s * .18} C ${cx - s * .12} ${cy - s * .2}, ${cx - s * .25} ${cy - s * .7}, ${cx + s * .1} ${cy - s * 1.2} Z" fill="#ffb21a" stroke="#e2470c" stroke-width="3"/>
+    <path d="M${cx + s * .1} ${cy - s * .75} C ${cx + s * .22} ${cy - s * .5}, ${cx + s * .18} ${cy - s * .28}, ${cx + s * .1} ${cy - s * .26} C ${cx + s * .02} ${cy - s * .28}, ${cx - s * .02} ${cy - s * .5}, ${cx + s * .1} ${cy - s * .75} Z" fill="#fff6c8"/>
+    <path d="M${cx - s} ${cy - s * .15} Q ${cx} ${cy + s * .95} ${cx + s} ${cy - s * .15} Q ${cx + s * .5} ${cy - s * .02} ${cx + s * .3} ${cy - s * .22} L ${cx - s * .3} ${cy - s * .22} Q ${cx - s * .5} ${cy - s * .02} ${cx - s} ${cy - s * .15} Z" fill="#d9622b" stroke="#6b2306" stroke-width="3.5"/>
+    <path d="M${cx - s * .7} ${cy + s * .1} Q ${cx} ${cy + s * .48} ${cx + s * .7} ${cy + s * .1}" fill="none" stroke="#ffd36b" stroke-width="5" stroke-dasharray="1 12" stroke-linecap="round"/>`;
 }
 
-function diya(cx, cy, s, cls) {
-  return `<g>
-    <ellipse cx="${cx + s * .1}" cy="${cy - s * .75}" rx="${s * .9}" ry="${s * 1.1}" fill="url(#halo)"/>
-    <path class="flame ${cls}" d="M${cx + s * .1} ${cy - s * 1.15} C ${cx + s * .42} ${cy - s * .7}, ${cx + s * .32} ${cy - s * .2}, ${cx + s * .1} ${cy - s * .18} C ${cx - s * .12} ${cy - s * .2}, ${cx - s * .22} ${cy - s * .7}, ${cx + s * .1} ${cy - s * 1.15} Z" fill="url(#flame)"/>
-    <path d="M${cx - s} ${cy - s * .12} Q ${cx} ${cy + s * .95} ${cx + s} ${cy - s * .12} Q ${cx + s * .55} ${cy - s * .02} ${cx + s * .32} ${cy - s * .2} L ${cx - s * .32} ${cy - s * .2} Q ${cx - s * .55} ${cy - s * .02} ${cx - s} ${cy - s * .12} Z" fill="url(#clay)" stroke="#ffd98a" stroke-width="2.5"/>
-    <path d="M${cx - s * .7} ${cy + s * .12} Q ${cx} ${cy + s * .5} ${cx + s * .7} ${cy + s * .12}" fill="none" stroke="#ffd98a" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
-  </g>`;
+/* ---------- Big illustrations (600 x 460 boxes) ---------- */
+const HEROES = {
+  coins: (P, r) => {
+    let s = `<circle cx="300" cy="250" r="210" fill="${P.hl}" opacity=".9"/>`;
+    s += stack(130, 400, 78, 6, 'silver') + stack(470, 400, 78, 8, 'gold') + bar(200, 360, 200, 78, 'gold');
+    s += `<g class="bob">${coin(300, 190, 120, 'gold')}</g>`;
+    for (let i = 0; i < 5; i++) s += spark(60 + r() * 480, 30 + r() * 200, 10 + r() * 14, '#fff', r() * 2);
+    return s;
+  },
+  megaphone: (P, r) => {
+    let s = '<g transform="rotate(-14 300 260)">';
+    s += `<path d="M90 230 L330 120 L330 400 L90 290 Z" fill="${P.hl}" stroke="${P.shadow}" stroke-width="8" stroke-linejoin="round"/>
+      <ellipse cx="330" cy="260" rx="44" ry="140" fill="#ffffff" stroke="${P.shadow}" stroke-width="8"/>
+      <ellipse cx="330" cy="260" rx="24" ry="96" fill="${P.b}"/>
+      <rect x="40" y="222" width="62" height="76" rx="14" fill="${P.b}" stroke="${P.shadow}" stroke-width="8"/>
+      <path d="M120 300 L150 380 L196 370 L172 316" fill="${P.hl}" stroke="${P.shadow}" stroke-width="8" stroke-linejoin="round"/></g>`;
+    const items = [[440, 110, 46, 'gold'], [520, 230, 38, 'silver'], [460, 360, 42, 'gold'], [565, 335, 26, 'silver'], [550, 85, 24, 'gold']];
+    items.forEach(([x, y, rr, k], i) => { s += `<g class="bob" style="animation-delay:-${i * .5}s">${coin(x, y, rr, k, rr > 30)}</g>`; });
+    for (let i = 0; i < 6; i++) s += spark(380 + r() * 200, 40 + r() * 380, 10 + r() * 12, i % 2 ? P.b : '#fff', r() * 2);
+    s += `<path d="M390 175 l40 -30 M400 250 h50 M392 330 l40 30" stroke="${P.dark ? '#fff' : P.shadow}" stroke-width="10" stroke-linecap="round"/>`;
+    return s;
+  },
+  scale: (P, r) => {
+    let s = `<circle cx="300" cy="240" r="200" fill="${P.hl}" opacity=".85"/><g class="bob" style="animation-duration:4s">`;
+    s += `<rect x="288" y="80" width="24" height="320" rx="10" fill="#c8901e" stroke="#7a4d08" stroke-width="5"/>
+      <rect x="210" y="390" width="180" height="34" rx="14" fill="#c8901e" stroke="#7a4d08" stroke-width="5"/>
+      <rect x="90" y="110" width="420" height="20" rx="10" fill="#e7b743" stroke="#7a4d08" stroke-width="5"/>
+      <circle cx="300" cy="100" r="24" fill="#f6d064" stroke="#7a4d08" stroke-width="5"/>
+      <path d="M110 130 L60 280 M110 130 L160 280 M490 130 L440 280 M490 130 L540 280" stroke="#7a4d08" stroke-width="4"/>
+      <path d="M40 280 H180 Q110 340 40 280 Z" fill="#f6d064" stroke="#7a4d08" stroke-width="5"/>
+      <path d="M420 280 H560 Q490 340 420 280 Z" fill="#f6d064" stroke="#7a4d08" stroke-width="5"/>`;
+    s += bar(62, 228, 96, 52, 'gold') + stack(490, 262, 46, 3, 'silver') + '</g>';
+    for (let i = 0; i < 4; i++) s += spark(40 + r() * 520, 20 + r() * 80, 10 + r() * 10, '#fff', r() * 2);
+    return s;
+  },
+  jewel: (P, r) => {
+    let s = `<circle cx="300" cy="240" r="205" fill="${P.hl}" opacity=".9"/>`;
+    s += `<path d="M130 250 L470 250 L450 420 L150 420 Z" fill="#8b1e3f" stroke="#3d0716" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M130 250 L170 160 L430 160 L470 250 Z" fill="#b8325c" stroke="#3d0716" stroke-width="7" stroke-linejoin="round"/>`;
+    for (let i = 0; i <= 16; i++) { const t = i / 16, x = 175 + 250 * t, y = 215 + 120 * Math.sin(Math.PI * t); s += `<circle cx="${x}" cy="${y}" r="13" fill="${i % 4 === 0 ? '#e11d48' : '#f6d064'}" stroke="#8a5a0c" stroke-width="3"/>`; }
+    s += `<path d="M285 335 l15 34 l15 -34 z" fill="#e11d48" stroke="#8a5a0c" stroke-width="3"/>`;
+    s += `<g class="bob"><circle cx="300" cy="110" r="58" fill="none" stroke="#e8b33a" stroke-width="16"/><circle cx="300" cy="110" r="58" fill="none" stroke="#8a5a0c" stroke-width="3"/>
+      <path d="M270 40 L330 40 L345 58 L300 92 L255 58 Z" fill="#bfe9ff" stroke="#2f7ea8" stroke-width="4"/><path d="M270 40 L300 92 L330 40 M255 58 H345" fill="none" stroke="#2f7ea8" stroke-width="3"/></g>`;
+    for (let i = 0; i < 5; i++) s += spark(60 + r() * 480, 30 + r() * 160, 10 + r() * 12, '#fff', r() * 2);
+    return s;
+  },
+  bars: (P, r) => {
+    let s = `<path d="M300 20 L580 440 H20 Z" fill="${P.hl}" opacity=".85"/>`;
+    [[3, 340, 'gold'], [2, 262, 'silver'], [1, 184, 'gold']].forEach(([n, y, k]) => {
+      for (let i = 0; i < n; i++) s += bar(300 - n * 82 + i * 164, y, 164, 80, k);
+    });
+    s += `<g class="bob">${coin(300, 110, 64, 'gold')}</g>`;
+    for (let i = 0; i < 5; i++) s += spark(40 + r() * 520, 20 + r() * 200, 10 + r() * 12, '#fff', r() * 2);
+    return s;
+  },
+  shop: (P, r) => {
+    let s = `<rect x="80" y="150" width="440" height="290" rx="10" fill="#ffffff" stroke="${P.shadow}" stroke-width="7"/>`;
+    s += `<rect x="60" y="60" width="480" height="70" rx="14" fill="${P.hl}" stroke="${P.shadow}" stroke-width="7"/>`;
+    for (let i = 0; i < 8; i++) s += `<path d="M${70 + i * 57.5} 130 h57.5 v40 a28.75 28.75 0 0 1 -57.5 0 z" fill="${i % 2 ? '#ffffff' : P.b}" stroke="${P.shadow}" stroke-width="5"/>`;
+    s += `<text x="300" y="110" text-anchor="middle" font-family="Montserrat" font-weight="900" font-size="38" fill="${P.hlInk}">₹  999.9  ₹</text>`;
+    s += `<rect x="110" y="230" width="230" height="180" rx="10" fill="#dff1ff" stroke="${P.shadow}" stroke-width="6"/>`;
+    s += bar(130, 340, 90, 50, 'gold') + bar(228, 340, 90, 50, 'silver') + bar(180, 292, 90, 50, 'gold');
+    s += `<rect x="370" y="230" width="120" height="210" rx="8" fill="${P.b}" stroke="${P.shadow}" stroke-width="6"/><circle cx="470" cy="340" r="8" fill="${P.shadow}"/>`;
+    s += `<g class="bob">${coin(520, 40, 50, 'gold')}</g>`;
+    for (let i = 0; i < 4; i++) s += spark(30 + r() * 400, 10 + r() * 40, 10 + r() * 10, '#fff', r() * 2);
+    return s;
+  },
+  diyas: (P, r) => {
+    let s = `<ellipse cx="300" cy="420" rx="290" ry="40" fill="${P.hl}" opacity=".85"/>`;
+    for (let i = 0; i < 18; i++) { const a = i / 18 * Math.PI * 2; s += `<circle cx="${300 + 270 * Math.cos(a)}" cy="${420 + 36 * Math.sin(a)}" r="9" fill="${i % 2 ? P.b : '#ffffff'}"/>`; }
+    s += `<g class="bob" style="animation-duration:5s">${coin(300, 120, 92, 'gold')}</g>`;
+    s += diya(120, 380, 76) + diya(300, 400, 98) + diya(480, 380, 76);
+    for (let i = 0; i < 6; i++) s += spark(30 + r() * 540, 20 + r() * 220, 9 + r() * 10, '#fff4b0', r() * 2);
+    return s;
+  },
+  kalash: (P, r) => {
+    let s = `<circle cx="300" cy="250" r="200" fill="${P.hl}" opacity=".85"/>`;
+    for (let i = 0; i < 7; i++) { const a = -Math.PI * (0.15 + 0.7 * i / 6), c = Math.cos(a), n = Math.sin(a);
+      s += `<path d="M300 175 q${c * 80 - n * 30} ${n * 80 + c * 30} ${c * 160} ${n * 120} q${-c * 80 - n * 30} ${-n * 40 + c * 30} ${-c * 160} ${-n * 120}" fill="#2f9e44" stroke="#14532d" stroke-width="4"/>`; }
+    s += `<ellipse cx="300" cy="120" rx="58" ry="66" fill="#a0522d" stroke="#5c2a0e" stroke-width="5"/><path d="M262 92 q38 -40 76 0" stroke="#d2a679" stroke-width="10" fill="none"/>`;
+    s += `<path d="M220 190 H380 L360 225 Q470 300 400 410 H200 Q130 300 240 225 Z" fill="#d9822b" stroke="#6b3406" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M190 300 H410" stroke="#ffd36b" stroke-width="12"/><path d="M200 335 H400" stroke="#c1121f" stroke-width="8" stroke-dasharray="14 10"/>
+      <text x="300" y="285" text-anchor="middle" font-family="SerifHi" font-weight="800" font-size="56" fill="#7a1a06">श्री</text>`;
+    s += coin(130, 400, 40, 'gold', false) + coin(470, 400, 40, 'silver', false);
+    for (let i = 0; i < 5; i++) s += spark(40 + r() * 520, 20 + r() * 120, 10 + r() * 12, '#fff', r() * 2);
+    return s;
+  },
+};
+const HERO_SETS = {
+  coins: ['coins', 'megaphone', 'scale', 'jewel', 'bars', 'shop'],
+  plain: ['shop', 'megaphone', 'jewel', 'scale', 'coins', 'bars'],
+  diyas: ['diyas', 'kalash', 'diyas', 'kalash', 'diyas', 'kalash'],
+  both: ['diyas', 'kalash', 'coins', 'bars', 'jewel', 'megaphone'],
+};
+function heroSvg(name, P, r, w) {
+  return `<svg width="${w}" height="${Math.round(w * 460 / 600)}" viewBox="0 0 600 460" style="overflow:visible">${HEROES[name](P, r)}</svg>`;
 }
 
-const DIYA_DEFS = `<defs>
-  <radialGradient id="halo"><stop offset="0" stop-color="rgba(255,200,90,.55)"/><stop offset="1" stop-color="rgba(255,160,40,0)"/></radialGradient>
-  <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff8d6"/><stop offset=".35" stop-color="#ffd24a"/><stop offset=".8" stop-color="#ff7a1a"/><stop offset="1" stop-color="#e2470c"/></linearGradient>
-  <linearGradient id="clay" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e0782a"/><stop offset="1" stop-color="#7a2a08"/></linearGradient>
-  <clipPath id="bigcoin"><circle cx="540" cy="190" r="150"/></clipPath>
-</defs>`;
-
-function barPyramid() {
-  let s = '';
-  const w = 230, h = 92;
-  [[4, 330], [3, 232], [2, 134], [1, 36]].forEach(([n, y]) => {
-    for (let i = 0; i < n; i++) s += bar(540 - (n * (w - 12)) / 2 + i * (w - 12), y, w, h);
-  });
-  return s;
+/* ---------- Small icons in round badges ---------- */
+const ICONS = {
+  coin: () => coin(32, 30, 22, 'gold', false) + '<text x="32" y="39" text-anchor="middle" font-family="Montserrat" font-weight="900" font-size="24" fill="#8a5a0c">₹</text>',
+  bar: () => bar(8, 20, 48, 26, 'gold'),
+  silver: () => stack(32, 44, 20, 4, 'silver'),
+  ring: () => '<circle cx="32" cy="38" r="15" fill="none" stroke="#e8b33a" stroke-width="6"/><path d="M24 12 H40 L45 18 L32 28 L19 18 Z" fill="#bfe9ff" stroke="#2f7ea8" stroke-width="2.5"/>',
+  diamond: () => '<path d="M14 22 L22 12 H42 L50 22 L32 52 Z" fill="#bfe9ff" stroke="#2f7ea8" stroke-width="3"/><path d="M14 22 H50 M22 12 L32 52 L42 12 M26 22 L32 12 L38 22" fill="none" stroke="#2f7ea8" stroke-width="2"/>',
+  star: () => '<path d="M32 8 L38.5 24 L56 25 L42.5 36 L47 53 L32 43.5 L17 53 L21.5 36 L8 25 L25.5 24 Z" fill="#ffd23f" stroke="#b7791f" stroke-width="3" stroke-linejoin="round"/>',
+  gift: () => '<rect x="12" y="26" width="40" height="28" rx="3" fill="#ef4444" stroke="#7f1d1d" stroke-width="3"/><rect x="9" y="18" width="46" height="11" rx="3" fill="#f87171" stroke="#7f1d1d" stroke-width="3"/><path d="M32 18 V54" stroke="#ffd23f" stroke-width="7"/><path d="M32 18 q-14 -14 -16 -2 q2 4 16 2 q14 2 16 -2 q-2 -12 -16 2" fill="#ffd23f" stroke="#b7791f" stroke-width="2.5"/>',
+  shield: () => '<path d="M32 8 L52 16 V30 C52 44 42 52 32 56 C22 52 12 44 12 30 V16 Z" fill="#22c55e" stroke="#14532d" stroke-width="3"/><path d="M22 32 L29 39 L43 24" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>',
+  swap: () => '<path d="M14 24 H46 L38 15 M50 40 H18 L26 49" fill="none" stroke="#2563eb" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>',
+  lotus: () => '<path d="M32 14 C40 24 40 38 32 48 C24 38 24 24 32 14 Z" fill="#f472b6" stroke="#9d174d" stroke-width="2.5"/><path d="M32 48 C22 46 12 38 10 26 C20 26 28 34 32 48 Z M32 48 C42 46 52 38 54 26 C44 26 36 34 32 48 Z" fill="#f9a8d4" stroke="#9d174d" stroke-width="2.5"/><path d="M12 50 H52" stroke="#16a34a" stroke-width="4" stroke-linecap="round"/>',
+  diya: () => diya(32, 46, 20),
+  crown: () => '<path d="M10 46 L14 20 L25 33 L32 14 L39 33 L50 20 L54 46 Z" fill="#ffd23f" stroke="#b7791f" stroke-width="3" stroke-linejoin="round"/><rect x="10" y="46" width="44" height="8" rx="2" fill="#f59e0b" stroke="#b7791f" stroke-width="2.5"/>',
+  heart: () => '<path d="M32 54 C10 40 8 26 14 18 C20 10 30 12 32 20 C34 12 44 10 50 18 C56 26 54 40 32 54 Z" fill="#ef4444" stroke="#7f1d1d" stroke-width="3"/>',
+  bell: () => '<path d="M32 10 C20 10 18 22 18 32 V40 L12 46 H52 L46 40 V32 C46 22 44 10 32 10 Z" fill="#fbbf24" stroke="#92400e" stroke-width="3"/><circle cx="32" cy="50" r="5" fill="#92400e"/>',
+};
+const ICON_NAMES = Object.keys(ICONS);
+function badge(name, size, bgc, ring) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 80 80" style="overflow:visible;flex:none"><circle cx="40" cy="44" r="37" fill="rgba(0,0,0,.2)"/><circle cx="40" cy="40" r="37" fill="${bgc}" stroke="${ring}" stroke-width="4"/>
+    <g transform="translate(8,8)">${ICONS[name]()}</g></svg>`;
 }
 
-function toranSvg() {
-  // Marigold garland with mango leaves hanging along the top edge.
-  let s = '<path d="M0 24 Q270 70 540 24 Q810 70 1080 24" fill="none" stroke="#2f7d32" stroke-width="6"/>';
-  for (let i = 0; i <= 26; i++) {
-    const x = i * (1080 / 26), t = (x % 540) / 540, y = 24 + 46 * 4 * t * (1 - t) * .5 + 10;
-    const len = i % 2 ? 4 : 6;
-    for (let k = 0; k < len; k++) {
-      const col = k % 2 ? '#ffb300' : '#ff7b00';
-      s += `<circle cx="${x}" cy="${y + k * 17}" r="10" fill="${col}" stroke="#c45500" stroke-width="1.5"/>`;
-    }
-    if (i % 2 === 0) s += `<path d="M${x} ${y + len * 17} q-14 22 0 44 q14 -22 0 -44z" fill="#3c9a3f" stroke="#1f5e22" stroke-width="1.5"/>`;
-  }
-  return s;
-}
+/* ---------- Background motifs ---------- */
+const MOTIFS = [
+  (m) => { let s = ''; for (let i = 0; i < 36; i++) { const a = i / 18 * Math.PI, b = (i + .5) / 18 * Math.PI; s += `<path d="M540 700 L${540 + 2200 * Math.cos(a)} ${700 + 2200 * Math.sin(a)} L${540 + 2200 * Math.cos(b)} ${700 + 2200 * Math.sin(b)} Z" fill="${m}"/>`; } return `<g class="spinslow">${s}</g>`; },
+  (m) => { let s = ''; for (let y = 0; y < 1940; y += 44) for (let x = (y / 44) % 2 ? 22 : 0; x < 1100; x += 44) s += `<circle cx="${x}" cy="${y}" r="${(3 + 6 * Math.abs(Math.sin(y / 500 + x / 700))).toFixed(1)}" fill="${m}"/>`; return s; },
+  (m, r) => { let s = ''; for (let i = 0; i < 80; i++) { const x = r() * 1080, y = r() * 1920, k = Math.floor(r() * 3), a = Math.round(r() * 180);
+      s += k === 0 ? `<rect x="${x}" y="${y}" width="28" height="12" rx="4" fill="${m}" transform="rotate(${a} ${x} ${y})"/>` : k === 1 ? `<circle cx="${x}" cy="${y}" r="9" fill="${m}"/>` : `<path d="M${x} ${y} l14 24 h-28 z" fill="${m}" transform="rotate(${a} ${x} ${y})"/>`; }
+    return `<g style="opacity:2">${s}</g>`; },
+  (m) => { let s = ''; for (let k = 0; k < 15; k++) { let d = `M0 ${100 + k * 130}`; for (let x = 0; x <= 1080; x += 40) d += ` L${x} ${(100 + k * 130 + 26 * Math.sin(x / 90 + k)).toFixed(1)}`; s += `<path d="${d}" stroke="${m}" stroke-width="16" fill="none" stroke-linecap="round"/>`; } return s; },
+  (m, r) => `<circle cx="${r() * 300}" cy="${200 + r() * 300}" r="320" fill="${m}"/><circle cx="${800 + r() * 280}" cy="${700 + r() * 300}" r="260" fill="${m}"/><circle cx="${100 + r() * 300}" cy="${1150 + r() * 200}" r="200" fill="${m}"/><circle cx="900" cy="120" r="140" fill="${m}"/>`,
+  (m) => { let s = ''; for (let x = 0; x <= 1080; x += 60) s += `<path d="M${x} 0 V1920" stroke="${m}" stroke-width="2"/>`; for (let y = 0; y <= 1920; y += 60) s += `<path d="M0 ${y} H1080" stroke="${m}" stroke-width="2"/>`; return s; },
+  (m) => { let s = ''; for (let i = -30; i < 20; i++) s += `<path d="M${i * 70} 0 L${i * 70 + 1150} 1920" stroke="${m}" stroke-width="22"/>`; return s; },
+  (m) => { let s = ''; for (let k = 1; k < 30; k++) s += `<circle cx="540" cy="700" r="${k * 70}" fill="none" stroke="${m}" stroke-width="${k % 2 ? 18 : 6}"/>`; return s; },
+  (m) => { let s = ''; for (let y = 0; y < 1920; y += 120) for (let x = (y / 120) % 2 ? 60 : 0; x < 1140; x += 120) if ((x / 60 + y / 120) % 3) s += `<path d="M${x} ${y} l44 76 h-88 z" fill="${m}" transform="rotate(${(x * 7 + y) % 360} ${x} ${y + 40})"/>`; return s; },
+  (m) => { const corner = (cx, cy) => { let g = ''; for (const [rr, n] of [[220, 24], [150, 16], [90, 10]]) { for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2, x = cx + rr * Math.cos(a), y = cy + rr * Math.sin(a);
+      g += `<ellipse cx="${x}" cy="${y}" rx="${rr * .18}" ry="${rr * .07}" fill="${m}" transform="rotate(${a * 180 / Math.PI} ${x} ${y})"/>`; } g += `<circle cx="${cx}" cy="${cy}" r="${rr}" fill="none" stroke="${m}" stroke-width="4"/>`; } return g; };
+    return corner(0, 0) + corner(1080, 0) + corner(0, 1350) + corner(1080, 1350) + corner(540, 700); },
+];
 
-function heroSvg(decor, style) {
-  let s = DIYA_DEFS;
-  // Regular-day illustrations change with the style; festival diyas stay.
-  if (decor === 'coins' || decor === 'plain') {
-    if (style === 'ivory') return `<svg width="1080" height="430" viewBox="0 0 1080 430">${s + barPyramid()}</svg>`;
-    if (style === 'silver') {
-      s += stack(250, 360, 92, 8, true) + stack(830, 360, 92, 5, true) + bar(330, 330, 160, 72) + bar(590, 330, 160, 72);
-      s += coin(540, 190, 150, true, true) + `<g clip-path="url(#bigcoin)"><rect class="coinshine" x="470" y="0" width="70" height="400" fill="rgba(255,255,255,.5)" transform="skewX(-20)"/></g>`;
-      return `<svg width="1080" height="430" viewBox="0 0 1080 430">${s}</svg>`;
-    }
-    if (style === 'minimal') {
-      s += coin(700, 200, 190, false, true) + stack(330, 380, 110, 6, true);
-      return `<svg width="1080" height="430" viewBox="0 0 1080 430">${s}</svg>`;
-    }
-    if (style === 'arch') decor = 'plain';
-  }
-  const shine = `<g clip-path="url(#bigcoin)"><rect class="coinshine" x="470" y="0" width="70" height="400" fill="rgba(255,255,255,.45)" transform="skewX(-20)"/></g>`;
-  if (decor === 'coins') {
-    s += stack(250, 360, 92, 7, true) + stack(830, 360, 92, 7, false) + bar(330, 330, 160, 72) + bar(590, 330, 160, 72);
-    s += coin(540, 190, 150, false, true) + shine;
-  } else if (decor === 'diyas') {
-    s += coin(540, 160, 132, false, true) + `<g clip-path="url(#bigcoin)" transform="translate(0,-30)"><rect class="coinshine" x="470" y="0" width="70" height="400" fill="rgba(255,255,255,.45)" transform="skewX(-20)"/></g>`;
-    s += diya(200, 380, 78, 'b') + diya(380, 400, 92, 'c') + diya(700, 400, 92, '') + diya(880, 380, 78, 'b');
-  } else if (decor === 'both') {
-    s += stack(230, 380, 80, 6, true) + stack(850, 380, 80, 6, false);
-    s += coin(540, 175, 140, false, true) + `<g clip-path="url(#bigcoin)" transform="translate(0,-15)"><rect class="coinshine" x="470" y="0" width="70" height="400" fill="rgba(255,255,255,.45)" transform="skewX(-20)"/></g>`;
-    s += diya(420, 410, 70, 'c') + diya(660, 410, 70, '');
-  } else {
-    let rays = '';
-    for (let i = 0; i < 36; i++) rays += `<rect x="538" y="-40" width="4" height="70" fill="rgba(255,215,120,.35)" transform="rotate(${i * 10} 540 190)"/>`;
-    s += rays + coin(540, 190, 160, false, true) + shine;
-  }
-  return `<svg width="1080" height="430" viewBox="0 0 1080 430">${s}</svg>`;
-}
+/* ---------- Animation sets ---------- */
+const ANIMS = [
+  { title: 'pop', sub: 'rise', hero: 'pop', line: 'rise', offer: 'pop', panel: 'up', deco: 'pop', head: 'fade' },
+  { title: 'fromL', sub: 'fromR', hero: 'fromR', line: 'alt', offer: 'pop', panel: 'up', deco: 'pop', head: 'fade' },
+  { title: 'drop', sub: 'rise', hero: 'drop', line: 'rise', offer: 'drop', panel: 'rise', deco: 'drop', head: 'drop' },
+  { title: 'flip', sub: 'flip', hero: 'spin', line: 'flip', offer: 'pop', panel: 'up', deco: 'spin', head: 'fade' },
+  { title: 'zoom', sub: 'fade', hero: 'zoom', line: 'rise', offer: 'zoom', panel: 'fade', deco: 'pop', head: 'fade' },
+  { title: 'wipe', sub: 'wipe', hero: 'rise', line: 'wipe', offer: 'pop', panel: 'up', deco: 'pop', head: 'wipe' },
+];
+function anim(el, name, delay, dur = .9) { el.style.animation = `${name} ${dur}s cubic-bezier(.2,.8,.25,1) ${delay}s both`; }
+const lineAnim = (A, i) => (A.line === 'alt' ? (i % 2 ? 'fromR' : 'fromL') : A.line);
 
-function patternSvg() {
-  // Fine mandala line-work behind the illustration.
-  let p = '';
-  const cx = 540, cy = 900;
-  for (const [r, n] of [[430, 48], [340, 36], [250, 24]]) {
-    p += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#f3d27a" stroke-width="1.2"/>`;
-    for (let i = 0; i < n; i++) {
-      const a = (i / n) * Math.PI * 2;
-      const x = cx + r * Math.cos(a), y = cy + r * Math.sin(a);
-      p += `<ellipse cx="${x}" cy="${y}" rx="${r * .09}" ry="${r * .035}" transform="rotate(${a * 180 / Math.PI} ${x} ${y})" fill="none" stroke="#f3d27a" stroke-width="1.2"/>`;
-    }
-  }
-  return p;
-}
-
-function contentWidth(el) {
-  const r = document.createRange();
-  r.selectNodeContents(el);
-  return r.getBoundingClientRect().width;
-}
-
-function fit(el, maxWidth, size) {
+/* ---------- Helpers ---------- */
+function h(tag, cls, style, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (style) e.style.cssText = style; if (html != null) e.innerHTML = html; return e; }
+function txt(tag, cls, style, text) { const e = h(tag, cls, style); e.textContent = text; return e; }
+function contentWidth(el) { const r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().width; }
+function fit(el, maxWidth, size, min = 16) {
   el.style.fontSize = size + 'px';
-  while (contentWidth(el) > maxWidth && size > 16) { size -= 2; el.style.fontSize = size + 'px'; }
+  while (contentWidth(el) > maxWidth && size > min) { size -= 2; el.style.fontSize = size + 'px'; }
+}
+function fitBox(el, maxH, size) {   // wrapping text: shrink until it fits the height
+  el.style.fontSize = size + 'px';
+  while (el.scrollHeight > maxH && size > 18) { size -= 1; el.style.fontSize = size + 'px'; }
 }
 
-window.render = async (d) => {
-  document.body.className = d.lang + ' s-' + (d.style || 'royal');
-  document.getElementById('toran').innerHTML = toranSvg();
-  const r = document.documentElement.style;
-  r.setProperty('--bg1', d.palette.bg1); r.setProperty('--bg2', d.palette.bg2); r.setProperty('--glow', d.palette.glow);
-  document.getElementById('pattern').innerHTML = patternSvg();
-  document.getElementById('mono').textContent = { gu: 'છ', hi: 'छ', en: 'C' }[d.lang];
-  document.getElementById('bless').textContent = d.shop.blessing;
-  document.getElementById('date').textContent = d.date_label;
-  document.getElementById('titletext').textContent = d.title;
-  document.getElementById('en').textContent = d.en;
-  document.getElementById('hero').innerHTML = heroSvg(d.decor, d.style || 'royal');
-  document.getElementById('lines').innerHTML = d.lines.map(l => `<div class="line"></div>`).join('');
-  [...document.querySelectorAll('.line')].forEach((el, i) => { el.textContent = d.lines[i]; });
-  const offer = document.getElementById('offer');
-  offer.textContent = d.offer || ''; offer.style.display = d.offer ? '' : 'none';
+/* ---------- Layouts: each places title, subtitle, illustration, message, offer and icons in y 210..1340 ---------- */
+const FITS = [];  // [element, maxWidth, size, boxHeight] fitted after the fonts load
+function T(d, size, maxW, style = '') { const e = txt('div', 'title ' + d.fx, style, d.title); FITS.push([e, maxW, size]); return e; }
+function S(d, size, maxW, style = '') { const e = txt('div', 'sub', style, d.en); FITS.push([e, maxW, size]); return e; }
+function L(text, size, maxW, style = '') { const e = txt('div', 'line', style, text); FITS.push([e, maxW, size]); return e; }
+function O(d, size, maxW) { const e = txt('div', 'offer', '', d.offer); FITS.push([e, maxW, size]); return e; }
+function put(main, style, child, a, delay, dur) { const w = h('div', 'abs', style); w.appendChild(child); main.appendChild(w); if (a) anim(w, a, delay, dur); return w; }
+function msg(d, A, main, top, gap, size, offerTop, offerSize) {
+  d.lines.forEach((l, i) => put(main, `left:40px;right:40px;top:${top + i * gap}px;text-align:center`, L(l, size, 980), lineAnim(A, i), 1.3 + i * .25));
+  if (d.offer) put(main, `left:40px;right:40px;top:${offerTop}px;text-align:center`, O(d, offerSize, 900), A.offer, 2);
+}
+function scatter(main, P, r, A, spots, size, names) {
+  spots.forEach(([x, y], i) => {
+    const inner = h('div', 'loop bob', `animation-delay:-${(r() * 3).toFixed(2)}s;animation-duration:${(2.6 + r() * 1.6).toFixed(2)}s`, badge(names[i % names.length], size, i % 2 ? '#ffffff' : P.hl, P.shadow));
+    put(main, `left:${x - size / 2}px;top:${y - size / 2}px`, inner, A.deco, .9 + i * .12, .8);
+  });
+}
+
+const LAYOUTS = {
+  // Round spotlight holding the illustration, an orbit of icon badges, title underneath.
+  spotlight(d, P, A, r, main, icons) {
+    const ring = h('div', 'abs', 'left:240px;top:250px;width:600px;height:600px;border-radius:50%;' +
+      `background:${P.dark ? 'rgba(255,255,255,.14)' : 'rgba(255,255,255,.7)'};border:10px solid ${P.hl};box-shadow:0 0 0 18px ${P.dark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.05)'}`);
+    anim(ring, 'pop', .2, 1); main.appendChild(ring);
+    main.appendChild(h('div', 'abs', `left:180px;top:190px;width:720px;height:720px;border-radius:50%;border:4px dashed ${P.ink};opacity:.4`));
+    put(main, 'left:290px;top:360px', h('div', '', '', heroSvg(d.hero, P, r, 500)), A.hero, .5, 1.1);
+    const spots = [0, 1, 2, 3, 4, 5].map(i => { const a = -Math.PI / 2 + (i + .5) * Math.PI / 3; return [540 + 345 * Math.cos(a), 560 + 345 * Math.sin(a)]; });
+    scatter(main, P, r, A, spots, 104, icons);
+    put(main, 'left:30px;right:30px;top:905px;text-align:center', T(d, d.lang === 'en' ? 124 : 130, 1000), A.title, .3, 1);
+    put(main, 'left:40px;right:40px;top:1066px;text-align:center', S(d, 48, 980), A.sub, .8);
+    msg(d, A, main, 1132, 56, 40, 1254, 34);
+  },
+  // Big illustration, then the title on a tilted arrow banner.
+  banner(d, P, A, r, main, icons) {
+    put(main, 'left:200px;top:226px', h('div', '', '', heroSvg(d.hero, P, r, 680)), A.hero, .3, 1.1);
+    scatter(main, P, r, A, [[110, 330], [970, 330], [120, 640], [960, 650]], 112, icons);
+    const back = h('div', 'abs', `left:-60px;top:790px;width:1120px;height:170px;background:${P.b};transform:rotate(-7deg);clip-path:polygon(0 0,90% 0,100% 50%,90% 100%,0 100%,6% 50%)`);
+    anim(back, 'fromL', .2, .8); main.appendChild(back);
+    const band = h('div', 'abs', `left:-20px;top:760px;width:1100px;height:210px;transform:rotate(-4deg)`,
+      `<div style="width:100%;height:100%;background:${P.shadow};clip-path:polygon(0 0,91% 0,100% 50%,91% 100%,0 100%,5% 50%);transform:translateY(12px)"></div>` +
+      `<div style="position:absolute;inset:0;background:${P.hl};clip-path:polygon(0 0,91% 0,100% 50%,91% 100%,0 100%,5% 50%)"></div>`);
+    anim(band, 'fromR', .1, .8); main.appendChild(band);
+    const w = put(main, 'left:60px;width:900px;top:770px;text-align:center;transform:rotate(-4deg)',
+      T({ ...d, fx: 'fx0' }, d.lang === 'en' ? 116 : 124, 840, `color:${P.hlInk};text-shadow:0 6px 0 ${P.shadow}`));
+    anim(w.firstChild, A.title, .6, 1);
+    put(main, 'left:40px;right:40px;top:1010px;text-align:center', S(d, 50, 980), A.sub, 1);
+    msg(d, A, main, 1086, 58, 42, 1232, 36);
+  },
+  // Title on top, illustration, then message and offer as icon cards.
+  cards(d, P, A, r, main, icons) {
+    put(main, 'left:30px;right:30px;top:200px;text-align:center', T(d, d.lang === 'en' ? 116 : 124, 1000), A.title, .2, 1);
+    put(main, 'left:40px;right:40px;top:356px;text-align:center', S(d, 46, 980), A.sub, .6);
+    put(main, 'left:310px;top:430px', h('div', '', '', heroSvg(d.hero, P, r, 460)), A.hero, .5, 1.1);
+    scatter(main, P, r, A, [[160, 560], [920, 560]], 130, icons);
+    const items = [...d.lines, ...(d.offer ? [d.offer] : [])];
+    items.forEach((text, i) => {
+      const hot = d.offer && i === items.length - 1;
+      const card = h('div', 'abs', `left:56px;right:56px;top:${800 + i * 170}px;height:144px;border-radius:72px;display:flex;align-items:center;gap:22px;padding:0 36px 0 18px;` +
+        `background:${hot ? P.hl : '#ffffff'};color:${hot ? P.hlInk : '#1b1b1b'};box-shadow:0 10px 0 ${P.shadow}`, badge(icons[(i + 3) % icons.length], 108, hot ? '#ffffff' : P.hl, P.shadow));
+      card.appendChild(L(text, 40, 790, 'color:inherit')); main.appendChild(card);
+      anim(card, i % 2 ? 'fromR' : 'fromL', 1.1 + i * .3);
+    });
+  },
+  // Title, illustration and numbered hexagon steps.
+  steps(d, P, A, r, main, icons) {
+    put(main, 'left:30px;right:30px;top:200px;text-align:center', T(d, d.lang === 'en' ? 116 : 124, 1000), A.title, .2, 1);
+    put(main, 'left:40px;right:40px;top:356px;text-align:center', S(d, 46, 980), A.sub, .6);
+    put(main, 'left:255px;top:430px', h('div', '', '', heroSvg(d.hero, P, r, 570)), A.hero, .5, 1.1);
+    const items = [...d.lines, ...(d.offer ? [d.offer] : [])];
+    const cols = [P.hl, P.b, P.title === P.ink ? P.shadow : P.title], w = 1000 / items.length;
+    items.forEach((text, i) => {
+      const x = 40 + i * w;
+      const col = h('div', 'abs ctr', `left:${x}px;top:888px;width:${w}px`,
+        `<svg width="170" height="190" viewBox="0 0 170 190"><path d="M85 8 L160 50 V140 L85 182 L10 140 V50 Z" fill="${cols[i % 3]}" stroke="${P.shadow}" stroke-width="7" stroke-linejoin="round"/>
+        <text x="85" y="78" text-anchor="middle" font-family="Montserrat" font-weight="900" font-size="44" fill="#fff" stroke="${P.shadow}" stroke-width="2.5" paint-order="stroke">0${i + 1}</text>
+        <g transform="translate(53,90)">${ICONS[icons[(i + 2) % icons.length]]()}</g></svg>`);
+      const t = txt('div', 'line', `display:block;white-space:normal;width:${w - 34}px;margin:10px auto 0;line-height:1.28;max-height:230px`, text);
+      FITS.push([t, 0, 40, 230]);
+      col.appendChild(t); main.appendChild(col); anim(col, A.line === 'alt' ? 'pop' : A.line, 1.1 + i * .3);
+      if (i < items.length - 1) main.appendChild(h('div', 'abs', `left:${x + w - 12}px;top:972px;width:24px;height:24px;border-radius:50%;background:${P.ink};opacity:.55`));
+    });
+  },
+  // Starburst badge with the title, icon satellites joined by dashed lines.
+  burst(d, P, A, r, main, icons) {
+    let pts = ''; const N = 22;
+    for (let i = 0; i < N * 2; i++) { const a = i / (N * 2) * Math.PI * 2, rr = i % 2 ? 310 : 350; pts += `${(540 + rr * Math.cos(a)).toFixed(1)},${(650 + rr * .82 * Math.sin(a)).toFixed(1)} `; }
+    const sats = [[140, 300], [940, 300], [90, 680], [990, 680], [170, 1000], [910, 1000]];
+    const lines = sats.map(([x, y]) => `<path d="M540 650 Q${(x + 540) / 2} ${(y + 650) / 2 - 80} ${x} ${y}" fill="none" stroke="${P.ink}" stroke-width="4" stroke-dasharray="14 12" opacity=".55"/>`).join('');
+    const svg = h('div', 'abs', 'left:0;top:0', `<svg width="1080" height="1340">${lines}<polygon points="${pts}" fill="${P.shadow}" transform="translate(12,16)"/><polygon points="${pts}" fill="${P.hl}" stroke="${P.c2}" stroke-width="6"/></svg>`);
+    anim(svg, 'pop', .2, 1); main.appendChild(svg);
+    put(main, 'left:385px;top:376px', h('div', '', '', heroSvg(d.hero, P, r, 310)), A.hero, .5, 1);
+    scatter(main, P, r, A, sats, 124, icons);
+    put(main, 'left:220px;width:640px;top:612px;text-align:center', T({ ...d, fx: 'fx0' }, d.lang === 'en' ? 100 : 108, 600, `color:${P.hlInk};text-shadow:0 5px 0 ${P.shadow}`), A.title, .6, 1);
+    put(main, 'left:230px;width:620px;top:760px;text-align:center', S(d, 36, 560, `color:${P.hlInk}`), A.sub, 1);
+    msg(d, A, main, 1080, 58, 42, 1228, 36);
+  },
+  // Editorial: left-aligned headline, colour bar, illustration on a big circle to the right.
+  magazine(d, P, A, r, main, icons) {
+    const blob = h('div', 'abs', `left:500px;top:400px;width:600px;height:600px;border-radius:50%;background:${P.hl};opacity:.9`); anim(blob, 'pop', .2, 1); main.appendChild(blob);
+    put(main, 'left:50px;right:30px;top:196px', T(d, d.lang === 'en' ? 136 : 144, 980), A.title, .2, 1);
+    const bar_ = h('div', 'abs', `left:62px;top:396px;width:260px;height:16px;border-radius:8px;background:${P.hl}`); anim(bar_, 'wipe', .7, .8); main.appendChild(bar_);
+    put(main, 'left:62px;right:40px;top:428px', S(d, 50, 960), A.sub, .7);
+    put(main, 'left:510px;top:500px', h('div', '', '', heroSvg(d.hero, P, r, 560)), A.hero, .5, 1.1);
+    scatter(main, P, r, A, [[130, 620], [320, 700], [140, 800]], 118, icons);
+    d.lines.forEach((l, i) => put(main, `left:50px;top:${1010 + i * 100}px;max-width:980px;padding:8px 24px 2px;border-left:12px solid ${i % 2 ? P.b : P.hl};` +
+      `background:${P.dark ? 'rgba(0,0,0,.35)' : 'rgba(255,255,255,.8)'};border-radius:0 16px 16px 0`, L(l, 40, 920), A.line === 'alt' ? 'fromL' : A.line, 1.2 + i * .25));
+    if (d.offer) put(main, 'left:50px;top:1222px', O(d, 34, 940), A.offer, 2);
+  },
+  // Coloured top block with a wavy edge, illustration sitting on the wave.
+  wave(d, P, A, r, main, icons) {
+    let wv = 'M0 0 H1080 V740'; for (let x = 1080; x >= 0; x -= 30) wv += ` L${x} ${(740 + 40 * Math.sin(x / 110)).toFixed(1)}`; wv += ' Z';
+    const top = h('div', 'abs', 'left:0;top:0', `<svg width="1080" height="900"><path d="${wv}" fill="${P.shadow}" transform="translate(0,22)"/><path d="${wv}" fill="${P.hl}"/></svg>`);
+    anim(top, 'fade', 0, .6); main.appendChild(top);
+    const fx = d.fx === 'fx3' || d.fx === 'fx2' ? 'fx0' : d.fx;
+    put(main, 'left:30px;right:30px;top:214px;text-align:center', T({ ...d, fx }, d.lang === 'en' ? 120 : 128, 1000, `color:${P.hlInk};-webkit-text-stroke-color:${P.shadow}`), A.title, .2, 1);
+    put(main, 'left:40px;right:40px;top:372px;text-align:center', S(d, 46, 980, `color:${P.hlInk}`), A.sub, .6);
+    put(main, 'left:270px;top:460px', h('div', '', '', heroSvg(d.hero, P, r, 540)), A.hero, .5, 1.1);
+    scatter(main, P, r, A, [[130, 590], [950, 590]], 140, icons);
+    msg(d, A, main, 1000, 64, 44, 1170, 38);
+  },
+};
+const LAYOUT_NAMES = Object.keys(LAYOUTS);
+
+/* ---------- Headers ---------- */
+function header(d, P, A, kind, onBlock) {
+  const head = document.getElementById('head');
+  const ink = onBlock ? P.hlInk : P.ink;
+  const pill = `<div class="brandpill" style="${onBlock ? `background:${P.hlInk};color:${P.hl}` : ''}">CHHATRAPATI BULLION</div>`;
+  if (kind === 0) {
+    head.innerHTML = `<div class="ctr" style="padding-top:34px">${pill}<div class="bless" style="margin-top:10px;color:${ink}"></div><div class="datechip" style="margin-top:6px;color:${ink};border-color:${ink}"></div></div>`;
+  } else if (kind === 1) {
+    head.innerHTML = `<div style="height:92px;background:${onBlock ? P.shadow : P.hl};display:flex;align-items:center;justify-content:center;padding-top:6px"><div class="bless" style="color:${onBlock ? '#fff' : P.hlInk}"></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 44px 0"><div style="font-family:Montserrat;font-weight:800;font-size:26px;letter-spacing:6px;color:${ink}">CHHATRAPATI BULLION</div><div class="datechip" style="color:${ink};border-color:${ink}"></div></div>`;
+  } else {
+    head.innerHTML = `<div style="display:flex;align-items:center;gap:26px;padding:34px 48px 0"><div class="mono" style="${onBlock ? `background:${P.hlInk};color:${P.hl}` : ''}"></div>
+      <div><div style="font-family:Montserrat;font-weight:800;font-size:28px;letter-spacing:7px;color:${ink}">CHHATRAPATI BULLION</div><div class="bless" style="color:${ink}"></div><div class="datechip" style="margin-top:4px;color:${ink};border-color:${ink}"></div></div></div>`;
+  }
+  head.querySelectorAll('.bless').forEach(e => e.textContent = d.shop.blessing);
+  head.querySelectorAll('.datechip').forEach(e => e.textContent = d.date_label);
+  head.querySelectorAll('.mono').forEach(e => e.textContent = { gu: 'છ', hi: 'छ', en: 'C' }[d.lang]);
+  anim(head, A.head, 0, .8);
+}
+
+/* ---------- Info panel (same facts every day, four looks) ---------- */
+function panel(d, P, A, kind) {
+  const p = document.getElementById('panel');
+  p.className = 'p' + kind;
+  p.style.setProperty('--panel', P.panel); p.style.setProperty('--pAcc', P.pAcc); p.style.setProperty('--pAcc2', P.pAcc2);
+  p.style.setProperty('--pInk', kind === 0 ? '#1b1b1b' : '#ffffff'); p.style.setProperty('--pChipInk', P.panel);
+  const bg = p.querySelector('.pbg'); bg.innerHTML = '';
+  if (kind === 1) {
+    let wv = 'M0 60'; for (let x = 0; x <= 1080; x += 30) wv += ` L${x} ${(40 + 22 * Math.sin(x / 80)).toFixed(1)}`; wv += ' V575 H0 Z';
+    bg.innerHTML = `<svg width="1080" height="575"><path d="${wv}" fill="${P.pAcc}" transform="translate(0,-12)"/><path d="${wv}" fill="${P.panel}"/></svg>`;
+  }
+  if (kind === 2) bg.innerHTML = '<div class="notch" style="left:-27px"></div><div class="notch" style="right:-27px"></div>';
   document.getElementById('shop').textContent = d.shop.name;
   document.getElementById('trade').textContent = d.shop.line1 + '  •  ' + d.shop.line2;
   document.getElementById('addrtext').textContent = d.shop.addr;
-  document.getElementById('phones').innerHTML = PHONE + d.mobiles.map(m => `<span>${m}</span>`).join('<span class="sep">|</span>');
+  const PH = '<svg class="ico" viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>';
+  document.getElementById('phones').innerHTML = (kind === 0 || kind === 3)
+    ? PH + d.mobiles.map(m => `<span class="chip">${m}</span>`).join('')
+    : PH + d.mobiles.map(m => `<span>${m}</span>`).join('<span style="opacity:.55">|</span>');
   document.getElementById('office').innerHTML = `<span>${d.labels.office}: <span class="num">${d.landlines.join(', ')}</span></span><span>•</span><span>${d.shop.owner}</span>`;
   const b = d.bank;
-  document.getElementById('bank').innerHTML = [
-    ['GSTIN', b.gst], ['BANK', b.bank], ['A/C NO', b.account], ['BRANCH', b.branch], ['IFSC', b.ifsc], ['NAME', b.name],
-  ].map(([k, v]) => `<div class="kv"><b>${k}</b>${v}</div>`).join('');
+  document.getElementById('bank').innerHTML = [['GSTIN', b.gst], ['BANK', b.bank], ['A/C NO', b.account], ['BRANCH', b.branch], ['IFSC', b.ifsc], ['NAME', b.name]]
+    .map(([k, v]) => `<div class="kv"><b>${k}</b>${v}</div>`).join('');
+  anim(p, A.panel, .15, 1);
+}
 
-  const rand = rng(d.seed || 7);
-  let sp = '';
-  for (let i = 0; i < 26; i++) {
-    // Keep sparkles in the side margins and around the illustration, away from the text.
-    const side = rand() < .5 ? 50 + rand() * 110 : 920 + rand() * 110;
-    const y = 60 + rand() * 1260, inHero = y > 690 && y < 1080;
-    const x = inHero ? 60 + rand() * 960 : side, s = 10 + rand() * 20;
-    sp += `<div class="spark" style="left:${x}px;top:${y}px;width:${s}px;height:${s}px;animation-delay:-${(rand() * 2.4).toFixed(2)}s">${STAR}</div>`;
-  }
-  document.getElementById('sparks').innerHTML = sp;
+window.render = async (d) => {
+  const g = d.design, r = rng(d.seed * 7 + 13);
+  const P = PALETTES[g.palette % PALETTES.length];
+  const A = ANIMS[g.anim % ANIMS.length];
+  const layout = LAYOUT_NAMES[g.layout % LAYOUT_NAMES.length];
+  const [fam, wt] = FONTS[d.lang][g.font % FONTS[d.lang].length];
+  document.body.className = d.lang + ' L-' + layout;
+  const root = document.documentElement.style;
+  for (const k of ['bg', 'bg2', 'ink', 'title', 'shadow', 'b', 'c2', 'hl', 'hlInk']) root.setProperty('--' + k, P[k]);
+  root.setProperty('--disp', `"${fam}", "Poppins", sans-serif`); root.setProperty('--dispw', wt);
+  let fx = ['fx0', 'fx1', 'fx2', 'fx3'][g.fx % 4];
+  if (fx === 'fx2' && !P.gold) fx = P.dark ? 'fx0' : 'fx1';
+  const hero = (HERO_SETS[d.decor] || HERO_SETS.coins)[g.hero % 6];
+  d = { ...d, fx, hero };
 
-  // Measure only after the web fonts are in, or the fitted sizes are wrong.
+  document.getElementById('motif').innerHTML = MOTIFS[g.bg % MOTIFS.length](P.m, r);
+  const icons = ICON_NAMES.filter(n => n !== 'diya' || d.decor === 'diyas' || d.decor === 'both').sort(() => r() - .5);
+  const main = document.getElementById('main'); main.innerHTML = ''; FITS.length = 0;
+  LAYOUTS[layout](d, P, A, r, main, icons);
+  header(d, P, A, g.header % 3, layout === 'wave');
+  panel(d, P, A, g.panel % 4);
+  main.querySelectorAll('.offer').forEach(o => { o.style.animation = 'pulse 1.6s 3s ease-in-out infinite'; });
+
   document.body.offsetHeight;
   await document.fonts.ready;
-  // Measure in the settled state: entrance animations scale and space the text.
-  window.seek(6000);
-  fit(document.getElementById('title'), d.style === 'minimal' ? 880 : 960, d.title_size || (d.lang === 'en' ? 120 : 140));
-  for (const el of document.querySelectorAll('.line')) fit(el, 940, d.style === 'arch' ? 38 : 46);
-  fit(offer, 940, 38);
-  fit(document.getElementById('shop'), 900, d.lang === 'en' ? 70 : 74);
-  fit(document.getElementById('trade'), 900, 30);
-  fit(document.getElementById('addrtext'), 870, 27);
-  fit(document.getElementById('phones'), 920, 35);
-  fit(document.getElementById('office'), 920, 26);
-  return true;
+  window.seek(6000);  // measure the settled layout, not mid-animation
+  for (const [el, w, size, boxH] of FITS) { if (boxH) fitBox(el, boxH, size); else fit(el, w, size); }
+  fit(document.getElementById('shop'), 940, d.lang === 'en' ? 70 : 76);
+  fit(document.getElementById('trade'), 940, 30);
+  fit(document.getElementById('addr'), 940, 27);
+  fit(document.getElementById('phones'), 960, 34);
+  fit(document.getElementById('office'), 940, 26);
+  return { layout, palette: g.palette % PALETTES.length, font: fam, hero, fx };
 };
 
 window.seek = (ms) => {
