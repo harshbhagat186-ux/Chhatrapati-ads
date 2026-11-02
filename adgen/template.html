@@ -118,6 +118,100 @@ body.en #mono { font-family: "Cinzel"; font-weight: 700; padding-top: 0; }
 @keyframes zoomIn { from { opacity: 0; transform: scale(.82); } to { opacity: 1; transform: none; } }
 @keyframes pop { 0% { opacity: 0; transform: scale(.7); } 70% { transform: scale(1.06); } 100% { opacity: 1; transform: none; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(80px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Rotating styles (body.s-*) : the default rules above are "royal" ---------- */
+#toran, #arch { display: none; position: absolute; }
+@keyframes slideRight { from { opacity: 0; transform: translateX(-120px); } to { opacity: 1; transform: none; } }
+@keyframes slideLeft { from { opacity: 0; transform: translateX(120px); } to { opacity: 1; transform: none; } }
+@keyframes drop { 0% { opacity: 0; transform: translateY(-160px); } 70% { transform: translateY(10px); } 100% { opacity: 1; transform: none; } }
+@keyframes swing { 0%, 100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
+@keyframes archIn { from { opacity: 0; transform: scaleY(.6); } to { opacity: 1; transform: none; } }
+@keyframes spread { from { opacity: 0; letter-spacing: 30px; } to { opacity: 1; } }
+
+/* Ivory: light paper, maroon ink, gold-bar pyramid, text slides in from the side. */
+body.s-ivory { --cream: #4a0d12; --gold-flat: #9b6a17;
+  --gold: linear-gradient(180deg, #c48a23 0%, #8a5a10 45%, #b98022 70%, #6e440a 100%); }
+body.s-ivory #bg { background: radial-gradient(ellipse 80% 45% at 50% 42%, #fffaf0 0%, #f6e8cc 60%, #e9d3a8 100%); animation: none; }
+body.s-ivory #pattern { opacity: .16; filter: hue-rotate(-30deg) saturate(2) brightness(.45); }
+body.s-ivory #grain { opacity: .05; mix-blend-mode: multiply; }
+body.s-ivory .frame { border-color: rgba(110, 20, 28, .7); }
+body.s-ivory .frame.inner { border-color: rgba(155, 106, 23, .5); }
+body.s-ivory .corner g { stroke: #7a1420; } body.s-ivory .corner path[fill], body.s-ivory .corner circle { fill: #7a1420; }
+body.s-ivory #bless { color: #5a1a1a; } body.s-ivory #date { color: #7a1420; }
+body.s-ivory #mono { color: #fff4d6; background: linear-gradient(180deg, #8a1a24, #4a0a10); }
+body.s-ivory #title { filter: drop-shadow(0 3px 2px rgba(120, 60, 0, .25)); animation-name: slideRight; }
+body.s-ivory #en { color: #7a1420; animation-name: slideLeft; }
+body.s-ivory #divider g { stroke: #7a1420; } body.s-ivory #divider [fill] { fill: #7a1420; }
+body.s-ivory .line { color: #3d0a0e; text-shadow: none; }
+body.s-ivory #offer { background: linear-gradient(180deg, #8a1a24, #5a0b14); color: #ffe9b0; }
+body.s-ivory #panel { background: linear-gradient(180deg, #6b0f1a, #3d070d); border-color: #c9962e; }
+body.s-ivory #panel { --cream: #fdf3dc; --gold-flat: #f2cf7a;
+  --gold: linear-gradient(180deg, #fff3c4 0%, #f5d27a 40%, #d4a23c 70%, #f7dc8e 100%); }
+body.s-ivory .spark path { fill: #c48a23; }
+
+/* Arch: temple-arch window holding the illustration, title below it, curtain-like reveal. */
+body.s-arch #arch { display: block; left: 170px; top: 312px; width: 740px; height: 610px; border-radius: 390px 390px 24px 24px;
+  background: radial-gradient(ellipse 70% 60% at 50% 55%, rgba(255, 214, 140, .35), rgba(0, 0, 0, .25));
+  border: 3px solid #e9c46a; box-shadow: 0 0 0 10px rgba(233, 196, 106, .18), 0 30px 60px rgba(0,0,0,.45), inset 0 0 60px rgba(0,0,0,.35);
+  transform-origin: 50% 100%; animation: archIn 1.2s .2s both; }
+body.s-arch #pattern { opacity: .08; }
+body.s-arch #hero { top: 420px; transform-origin: 50% 100%; } body.s-arch #hero svg { transform: scale(.92); transform-origin: 50% 100%; }
+body.s-arch #titlewrap { top: 992px; }
+body.s-arch #title { animation-name: drop; }
+body.s-arch #en { font-size: 52px; }
+body.s-arch #divider { display: none; }
+body.s-arch #msg { top: 1212px; }
+body.s-arch .line { font-size: 38px; line-height: 1.22; }
+body.s-arch #offer { position: absolute; left: 50%; top: -350px; transform: translateX(-50%); animation: none; opacity: 1; }
+body.s-arch #head { top: 56px; }
+
+/* Silver: steel and charcoal, silver foil lettering, silver coins and bars. */
+body.s-silver { --cream: #eef2f7; --gold-flat: #c9d2dd;
+  --gold: linear-gradient(180deg, #ffffff 0%, #dfe5ec 30%, #9aa6b4 58%, #eef2f6 80%, #8792a0 100%); }
+body.s-silver #bg { background: radial-gradient(ellipse 70% 40% at 50% 42%, rgba(160, 190, 230, .25), transparent 70%),
+  radial-gradient(ellipse 120% 80% at 50% 30%, #2c3a4c 0%, #0a0e14 78%); }
+body.s-silver #pattern { filter: grayscale(1) brightness(1.6); }
+body.s-silver .frame { border-color: rgba(200, 210, 222, .75); } body.s-silver .frame.inner { border-color: rgba(200, 210, 222, .3); }
+body.s-silver .corner g { stroke: #c9d2dd; } body.s-silver .corner path[fill], body.s-silver .corner circle { fill: #c9d2dd; }
+body.s-silver #date { color: #c9d2dd; } body.s-silver #mono { color: #2b3440; }
+body.s-silver #divider g { stroke: #c9d2dd; } body.s-silver #divider [fill] { fill: #c9d2dd; }
+body.s-silver #offer { color: #1d2530; }
+body.s-silver #panel { border-color: rgba(200, 210, 222, .7); background: linear-gradient(180deg, rgba(8, 12, 18, .8), rgba(8, 12, 18, .92)); }
+body.s-silver .icon path { fill: #c9d2dd; }
+body.s-silver .spark path { fill: #e6eef8; }
+body.s-silver #hero { animation-name: zoomIn; animation-duration: 1.6s; }
+
+/* Festive: bright magenta-to-saffron sky, swinging marigold toran, rangoli wheel. */
+body.s-festive #bg { background: radial-gradient(ellipse 70% 40% at 50% 45%, rgba(255, 220, 120, .35), transparent 70%),
+  linear-gradient(170deg, #7b0f4f 0%, #b0242f 48%, #d8641a 100%); }
+body.s-festive #pattern { opacity: .2; }
+body.s-festive #toran { display: block; left: 0; top: 0; width: 1080px; height: 150px; transform-origin: 50% 0; animation: swing 4s ease-in-out infinite; }
+body.s-festive .frame, body.s-festive .frame.inner, body.s-festive .corner { display: none; }
+body.s-festive #head { top: 178px; }
+body.s-festive #mono { display: none; }
+body.s-festive #brand { margin-top: 0; }
+body.s-festive #titlewrap { top: 352px; }
+body.s-festive #title { filter: drop-shadow(0 5px 0 rgba(90, 10, 30, .65)); animation-name: pop; }
+body.s-festive #en { color: #fff3c4; }
+body.s-festive #hero { top: 672px; }
+body.s-festive #panel { background: rgba(40, 4, 18, .86); }
+
+/* Minimal: flat black, left-aligned editorial type, single large coin, info set as clean lines. */
+body.s-minimal #bg { background: radial-gradient(ellipse 60% 35% at 70% 50%, rgba(233, 196, 106, .12), transparent 70%), #0b0a09; animation: none; }
+body.s-minimal #pattern, body.s-minimal #sparks, body.s-minimal .frame.inner, body.s-minimal .corner { display: none; }
+body.s-minimal .frame { inset: 34px; border-width: 1px; border-color: rgba(233, 196, 106, .45); border-radius: 0; }
+body.s-minimal #head { left: 90px; right: 90px; text-align: left; display: grid; grid-template-columns: auto 1fr; column-gap: 24px; align-items: center; }
+body.s-minimal #mono { grid-row: span 3; margin: 0; width: 110px; height: 110px; }
+body.s-minimal #brand, body.s-minimal #bless, body.s-minimal #date { margin-top: 4px; padding-left: 0; }
+body.s-minimal #titlewrap { top: 330px; left: 90px; right: 90px; text-align: left; }
+body.s-minimal #title { animation-name: spread; animation-duration: 1.4s; }
+body.s-minimal #en { text-align: left; }
+body.s-minimal #divider { margin-left: 0; width: 360px; }
+body.s-minimal #hero { top: 650px; }
+body.s-minimal #msg { left: 90px; right: 90px; text-align: left; }
+body.s-minimal .line { text-shadow: none; animation-name: slideRight; }
+body.s-minimal #offer { border-radius: 0; background: none; color: var(--gold-flat); box-shadow: none; border: 2px solid var(--gold-flat); padding: 10px 30px 6px; }
+body.s-minimal #panel { left: 70px; right: 70px; border-radius: 0; background: none; border: none; border-top: 2px solid rgba(233, 196, 106, .8); box-shadow: none; }
 </style>
 </head>
 <body>
@@ -125,6 +219,8 @@ body.en #mono { font-family: "Cinzel"; font-weight: 700; padding-top: 0; }
   <div id="bg"></div>
   <svg id="pattern" width="1080" height="1920"></svg>
   <svg id="grain" width="1080" height="1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+  <div id="arch"></div>
+  <svg id="toran" viewBox="0 0 1080 150"></svg>
   <div id="sparks"></div>
   <div class="frame"></div><div class="frame inner"></div>
   <svg class="corner tl" viewBox="0 0 120 120"><g fill="none" stroke="#e9c46a" stroke-width="2"><path d="M12 70 V12 H70"/><path d="M22 52 Q22 22 52 22"/><circle cx="12" cy="12" r="5" fill="#e9c46a"/><path d="M30 40 q10 -10 20 0 q-10 10 -20 0z" fill="#e9c46a" stroke="none"/></g></svg>
@@ -211,8 +307,46 @@ const DIYA_DEFS = `<defs>
   <clipPath id="bigcoin"><circle cx="540" cy="190" r="150"/></clipPath>
 </defs>`;
 
-function heroSvg(decor) {
+function barPyramid() {
+  let s = '';
+  const w = 230, h = 92;
+  [[4, 330], [3, 232], [2, 134], [1, 36]].forEach(([n, y]) => {
+    for (let i = 0; i < n; i++) s += bar(540 - (n * (w - 12)) / 2 + i * (w - 12), y, w, h);
+  });
+  return s;
+}
+
+function toranSvg() {
+  // Marigold garland with mango leaves hanging along the top edge.
+  let s = '<path d="M0 24 Q270 70 540 24 Q810 70 1080 24" fill="none" stroke="#2f7d32" stroke-width="6"/>';
+  for (let i = 0; i <= 26; i++) {
+    const x = i * (1080 / 26), t = (x % 540) / 540, y = 24 + 46 * 4 * t * (1 - t) * .5 + 10;
+    const len = i % 2 ? 4 : 6;
+    for (let k = 0; k < len; k++) {
+      const col = k % 2 ? '#ffb300' : '#ff7b00';
+      s += `<circle cx="${x}" cy="${y + k * 17}" r="10" fill="${col}" stroke="#c45500" stroke-width="1.5"/>`;
+    }
+    if (i % 2 === 0) s += `<path d="M${x} ${y + len * 17} q-14 22 0 44 q14 -22 0 -44z" fill="#3c9a3f" stroke="#1f5e22" stroke-width="1.5"/>`;
+  }
+  return s;
+}
+
+function heroSvg(decor, style) {
   let s = DIYA_DEFS;
+  // Regular-day illustrations change with the style; festival diyas stay.
+  if (decor === 'coins' || decor === 'plain') {
+    if (style === 'ivory') return `<svg width="1080" height="430" viewBox="0 0 1080 430">${s + barPyramid()}</svg>`;
+    if (style === 'silver') {
+      s += stack(250, 360, 92, 8, true) + stack(830, 360, 92, 5, true) + bar(330, 330, 160, 72) + bar(590, 330, 160, 72);
+      s += coin(540, 190, 150, true, true) + `<g clip-path="url(#bigcoin)"><rect class="coinshine" x="470" y="0" width="70" height="400" fill="rgba(255,255,255,.5)" transform="skewX(-20)"/></g>`;
+      return `<svg width="1080" height="430" viewBox="0 0 1080 430">${s}</svg>`;
+    }
+    if (style === 'minimal') {
+      s += coin(700, 200, 190, false, true) + stack(330, 380, 110, 6, true);
+      return `<svg width="1080" height="430" viewBox="0 0 1080 430">${s}</svg>`;
+    }
+    if (style === 'arch') decor = 'plain';
+  }
   const shine = `<g clip-path="url(#bigcoin)"><rect class="coinshine" x="470" y="0" width="70" height="400" fill="rgba(255,255,255,.45)" transform="skewX(-20)"/></g>`;
   if (decor === 'coins') {
     s += stack(250, 360, 92, 7, true) + stack(830, 360, 92, 7, false) + bar(330, 330, 160, 72) + bar(590, 330, 160, 72);
@@ -259,7 +393,8 @@ function fit(el, maxWidth, size) {
 }
 
 window.render = async (d) => {
-  document.body.className = d.lang;
+  document.body.className = d.lang + ' s-' + (d.style || 'royal');
+  document.getElementById('toran').innerHTML = toranSvg();
   const r = document.documentElement.style;
   r.setProperty('--bg1', d.palette.bg1); r.setProperty('--bg2', d.palette.bg2); r.setProperty('--glow', d.palette.glow);
   document.getElementById('pattern').innerHTML = patternSvg();
@@ -268,7 +403,7 @@ window.render = async (d) => {
   document.getElementById('date').textContent = d.date_label;
   document.getElementById('titletext').textContent = d.title;
   document.getElementById('en').textContent = d.en;
-  document.getElementById('hero').innerHTML = heroSvg(d.decor);
+  document.getElementById('hero').innerHTML = heroSvg(d.decor, d.style || 'royal');
   document.getElementById('lines').innerHTML = d.lines.map(l => `<div class="line"></div>`).join('');
   [...document.querySelectorAll('.line')].forEach((el, i) => { el.textContent = d.lines[i]; });
   const offer = document.getElementById('offer');
@@ -297,8 +432,10 @@ window.render = async (d) => {
   // Measure only after the web fonts are in, or the fitted sizes are wrong.
   document.body.offsetHeight;
   await document.fonts.ready;
-  fit(document.getElementById('title'), 960, d.title_size || (d.lang === 'en' ? 120 : 140));
-  for (const el of document.querySelectorAll('.line')) fit(el, 940, 46);
+  // Measure in the settled state: entrance animations scale and space the text.
+  window.seek(6000);
+  fit(document.getElementById('title'), d.style === 'minimal' ? 880 : 960, d.title_size || (d.lang === 'en' ? 120 : 140));
+  for (const el of document.querySelectorAll('.line')) fit(el, 940, d.style === 'arch' ? 38 : 46);
   fit(offer, 940, 38);
   fit(document.getElementById('shop'), 900, d.lang === 'en' ? 70 : 74);
   fit(document.getElementById('trade'), 900, 30);

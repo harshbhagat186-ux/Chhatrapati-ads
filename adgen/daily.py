@@ -23,6 +23,9 @@ PALETTES = {
     (190, 90, 10): ("#7a3a06", "#1c0b02"),  # saffron
     (30, 40, 120): ("#13306e", "#040b1e"),  # navy
 }
+# Looks defined in template.html. Each day moves one step through this list and each language
+# is offset by two, so no two days in a row (and no two languages on one day) share a look.
+STYLES = ["royal", "ivory", "silver", "festive", "arch", "minimal"]
 REEL_SECONDS = 8
 
 
@@ -79,13 +82,14 @@ def main():
     music.write(REEL_SECONDS, wav, seed=int(day.replace("-", "")) + (SLOTS[slot][4] if slot else 0))
     n = SLOTS[slot][4] if slot else 0
     for entry in (slot_plan(day, slot) if slot else plan(day)):
-        for lang, lname in LANGS:
+        for li, (lang, lname) in enumerate(LANGS):
             n += 1
             when = datetime.strptime(entry["date"], "%Y-%m-%d")
             bg1, bg2 = PALETTES.get(tuple(entry["theme"]["inner"]), PALETTES[(150, 30, 20)])
             # English pages keep their texts under "en_page" ("en" is the English subtitle of the other pages).
             text = entry["en_page"] if lang == "en" else entry[lang]
-            spec = {"lang": lang, "title": text["title"], "en": text.get("subtitle", entry["en"]), "lines": text["lines"],
+            style = STYLES[(datetime.strptime(day, "%Y-%m-%d").toordinal() + 2 * li + (n - 1) // 3) % len(STYLES)]
+            spec = {"lang": lang, "style": style, "title": text["title"], "en": text.get("subtitle", entry["en"]), "lines": text["lines"],
                     "offer": text.get("offer", ""), "decor": entry["decor"],
                     "date_label": f"{when.day:02d} · {when.strftime('%B').upper()} · {when.year}",
                     "palette": {"bg1": bg1, "bg2": bg2, "glow": "rgba(255,170,60,.30)"},

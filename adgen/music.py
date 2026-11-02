@@ -14,9 +14,11 @@ def bell(f, dur=2.5):
     return sum(a*np.sin(2*np.pi*f*m*t)*np.exp(-t*(1.5+m*.8)) for m, a in parts)
 def track(dur, seed=0):
     n = int(dur*SR); out = np.zeros(n + SR*3)
-    sa = 261.63  # C
+    # Key and tempo change from day to day along with the melody.
+    sa = [261.63, 293.66, 246.94, 233.08][(seed // 3) % 4]
+    beat = [0.7, 0.6, 0.8][(seed // 12) % 3]
     # drone: Pa Sa Sa Sa(low) plucks repeating
-    for k, t0 in enumerate(np.arange(0, dur, 0.5)):
+    for k, t0 in enumerate(np.arange(0, dur, beat * 5 / 7)):
         f = [sa*1.5/2, sa, sa, sa/2][k % 4]
         s = tone(f, 1.6, (1, .6, .45, .3, .2, .1)) * np.exp(-np.arange(int(1.6*SR))/SR*1.2) * 0.10
         i = int(t0*SR); out[i:i+len(s)] += s
@@ -32,8 +34,8 @@ def track(dur, seed=0):
     while t0 < dur - 1:
         for note, d in phrase:
             if t0 >= dur - 0.8: break
-            s = tone(sa*r[note]*2, d*0.7+0.15, (1, .3, .08), vib=3) * env(int((d*0.7+0.15)*SR), .06, .15) * 0.16
-            i = int(t0*SR); out[i:i+len(s)] += s; t0 += d*0.7
+            s = tone(sa*r[note]*2, d*beat+0.15, (1, .3, .08), vib=3) * env(int((d*beat+0.15)*SR), .06, .15) * 0.16
+            i = int(t0*SR); out[i:i+len(s)] += s; t0 += d*beat
     for t0 in [0.0, dur/2, dur-1.6]:
         s = bell(sa*4)*0.22; i = int(t0*SR); out[i:i+len(s)] += s
     # simple reverb
