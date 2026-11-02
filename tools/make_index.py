@@ -45,13 +45,21 @@ def title_for(name):
     return " ".join(words).strip().capitalize() or name
 
 
+def versioned(name, asset_id):
+    stem, ext = name.rsplit(".", 1)
+    return f"{stem}.{asset_id}.{ext}"
+
+
 def main(repo):
     days, app = [], None
     for rel in releases(repo):
         if rel.get("draft"):
             continue
         tag = rel["tag_name"]
-        assets = {a["name"]: a["browser_download_url"] for a in rel["assets"]}
+        # The asset id changes whenever a file is re-uploaded (e.g. a day remade in a new design).
+        # Putting it in the URL and the file name makes the app drop its cached copy of the old one.
+        assets = {a["name"]: f'{a["browser_download_url"]}?v={a["id"]}' for a in rel["assets"]}
+        ids = {a["name"]: a["id"] for a in rel["assets"]}
         if tag == "app":
             apk = next((u for n, u in assets.items() if n.endswith(".apk")), None)
             m = re.search(r"versionCode:\s*(\d+)", rel.get("body") or "")
@@ -67,10 +75,10 @@ def main(repo):
                 continue
             if low.endswith(".mp4"):
                 thumb = assets.get(name.rsplit(".", 1)[0] + ".thumb.jpg", "")
-                videos.append({"type": "video", "file": name, "title": title_for(name),
+                videos.append({"type": "video", "file": versioned(name, ids[name]), "title": title_for(name),
                                "url": assets[name], "thumb": thumb})
             elif low.endswith(PHOTO_EXT):
-                photos.append({"type": "photo", "file": name, "title": title_for(name),
+                photos.append({"type": "photo", "file": versioned(name, ids[name]), "title": title_for(name),
                                "url": assets[name], "thumb": assets[name]})
         if photos or videos:
             days.append({"date": tag, "items": photos + videos})
