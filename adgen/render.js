@@ -12,8 +12,9 @@ async function main() {
   const [specPath, photo, reel, wav, seconds = '8'] = process.argv.slice(2);
   const spec = JSON.parse(fs.readFileSync(specPath, 'utf8'));
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
-  await page.goto('file://' + path.join(__dirname, 'template.html'));
+  const [W, H] = spec.size || [1080, 1920];
+  const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
+  await page.goto('file://' + path.join(__dirname, spec.template || 'template.html'));
   await page.evaluate((d) => window.render(d), spec);
   await page.evaluate(() => document.fonts.ready);
 

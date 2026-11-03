@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!--
+  Daily "special" banner (1920x1080), in the style of the shop's own printed banner: Ganesh, gold and silver,
+  jewellery busts, diamonds, marble, a red-and-gold name plate, numbers on the right and a navy address strip.
+  spec.design.look picks the marble tint, plate colour, font and which side holds the gold, so it changes daily.
+-->
+<style>
+@font-face { font-family: "BalooBhai"; src: url("fonts/BalooBhai2.ttf"); font-weight: 400 800; }
+@font-face { font-family: "Baloo"; src: url("fonts/Baloo2.ttf"); font-weight: 400 800; }
+@font-face { font-family: "AnekGu"; src: url("fonts/AnekGujarati.ttf"); font-weight: 100 800; font-stretch: 75% 125%; }
+@font-face { font-family: "AnekHi"; src: url("fonts/AnekDevanagari.ttf"); font-weight: 100 800; font-stretch: 75% 125%; }
+@font-face { font-family: "MuktaVaani"; src: url("fonts/MuktaVaani-ExtraBold.ttf"); font-weight: 800; }
+@font-face { font-family: "Mukta"; src: url("fonts/Mukta-ExtraBold.ttf"); font-weight: 800; }
+@font-face { font-family: "SansGu"; src: url("fonts/HindVadodara-Bold.ttf"); font-weight: 700; }
+@font-face { font-family: "SansHi"; src: url("fonts/Hind-Bold.ttf"); font-weight: 700; }
+@font-face { font-family: "Poppins"; src: url("fonts/Poppins-SemiBold.ttf"); font-weight: 600; }
+@font-face { font-family: "Poppins"; src: url("fonts/Poppins-ExtraBold.ttf"); font-weight: 800; }
+@font-face { font-family: "Playfair"; src: url("fonts/PlayfairDisplay.ttf"); font-weight: 400 900; }
+@font-face { font-family: "Cinzel"; src: url("fonts/Cinzel.ttf"); font-weight: 400 900; }
+@font-face { font-family: "Montserrat"; src: url("fonts/Montserrat.ttf"); font-weight: 100 900; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: #fff; }
+body { font-family: var(--body); font-weight: 700; }
+body.gu { --body: "SansGu", "Poppins", sans-serif; }
+body.hi { --body: "SansHi", "Poppins", sans-serif; }
+body.en { --body: "Poppins", sans-serif; }
+.abs { position: absolute; }
+#marble { position: absolute; inset: 0; }
+img { position: absolute; display: block; }
+
+/* Layered display text: a thick outlined copy underneath, a gradient-filled copy on top. */
+.dual { position: absolute; white-space: nowrap; font-family: var(--disp); font-weight: var(--dispw); line-height: 1.2; text-align: center; }
+.dual span { display: block; padding: .2em .1em .05em; }
+.dual .under { position: absolute; inset: 0; color: transparent; }
+.dual .over { position: relative; -webkit-background-clip: text; background-clip: text; color: transparent; }
+#owner .under { -webkit-text-stroke: 16px #fff6d8; filter: drop-shadow(0 6px 4px rgba(90, 20, 0, .45)); }
+#owner .over { background-image: linear-gradient(180deg, #ff4a3d 0%, #d4141c 45%, #8e0610 100%); }
+#shop .under { -webkit-text-stroke: 14px #5a0a06; filter: drop-shadow(0 8px 6px rgba(0,0,0,.5)); }
+#shop .over { background-image: linear-gradient(180deg, #fffbe0 0%, #ffe680 30%, #f2b632 58%, #fff0a8 80%, #c98612 100%), linear-gradient(transparent, transparent); }
+#shop .shine { position: absolute; inset: 0; -webkit-background-clip: text; background-clip: text; color: transparent;
+  background-image: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.95) 50%, transparent 60%); background-size: 300% 100%; background-repeat: no-repeat;
+  animation: shine 3s 1.6s infinite both; }
+@keyframes shine { 0% { background-position: 150% 0; } 50%, 100% { background-position: -60% 0; } }
+
+#bless { left: 0; width: 1920px; top: 22px; text-align: center; font-size: 40px; color: var(--navy); }
+#phones { position: absolute; top: 46px; width: 400px; font-family: "Montserrat"; font-weight: 800; color: var(--navy); border-left: 5px solid var(--plate1); padding-left: 24px; }
+#phones .row { display: flex; gap: 8px; font-size: 42px; line-height: 1.22; white-space: nowrap; }
+#phones .k { width: 112px; color: var(--plate1); }
+#trade { left: 0; width: 1920px; top: 630px; text-align: center; font-size: 66px; color: var(--navy); white-space: nowrap; text-shadow: 0 3px 0 rgba(255,255,255,.8); }
+#ribbon { left: 660px; width: 600px; top: 726px; height: 100px; }
+#ribbontext { left: 0; width: 1920px; top: 736px; text-align: center; font-size: 50px; color: #fff; white-space: nowrap; text-shadow: 0 3px 4px rgba(0,0,0,.4); }
+#greet { left: 0; width: 1920px; top: 846px; text-align: center; white-space: nowrap; }
+#greet span { display: inline-block; font-size: 38px; padding: 6px 34px 2px; border-radius: 40px; color: var(--plate2); background: linear-gradient(180deg, #fff7d6, #f3d27a);
+  border: 3px solid #b8862b; box-shadow: 0 6px 14px rgba(0,0,0,.18); }
+#bank { left: 0; width: 1920px; top: 918px; height: 48px; display: flex; align-items: center; justify-content: center; gap: 30px;
+  font-family: "Montserrat"; font-weight: 700; font-size: 23px; color: var(--navy); background: rgba(255,246,214,.96); border-radius: 26px 26px 0 0; left: 40px !important; width: 1840px !important; box-shadow: 0 -4px 14px rgba(0,0,0,.12); white-space: nowrap; }
+#bank b { color: var(--plate1); font-weight: 800; letter-spacing: 1px; margin-right: 6px; }
+#strip { left: 0; width: 1920px; top: 972px; height: 108px; }
+#addr { left: 0; width: 1920px; top: 984px; height: 90px; display: flex; align-items: center; justify-content: center; font-size: 52px; color: #fff; white-space: nowrap; }
+#addr .city { color: #ffcf3a; margin-left: .25em; }
+
+@keyframes pop { 0% { opacity: 0; transform: scale(.5); } 70% { opacity: 1; transform: scale(1.05); } 100% { opacity: 1; transform: none; } }
+@keyframes fromL { from { opacity: 0; transform: translateX(-500px); } to { opacity: 1; transform: none; } }
+@keyframes fromR { from { opacity: 0; transform: translateX(500px); } to { opacity: 1; transform: none; } }
+@keyframes rise { from { opacity: 0; transform: translateY(80px); } to { opacity: 1; transform: none; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-120px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes glow { 0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 200, 80, 0)); } 50% { filter: drop-shadow(0 0 22px rgba(255, 200, 80, .9)); } }
+@keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+@keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.3) rotate(0); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }
+.spark { position: absolute; width: 46px; height: 46px; animation: twinkle 1.8s ease-in-out infinite; }
+</style>
+</head>
+<body>
+<svg id="marble" width="1920" height="1080"></svg>
+<div id="stage"></div>
+
+<script>
+function rng(seed) { seed = (Math.abs(seed) % 2147483646) + 1; return () => (seed = (seed * 16807) % 2147483647) / 2147483647; }
+// Marble tint, name plate colours, navy tone.
+const LOOKS = [
+  { m1: '#fffdf8', m2: '#efe6d6', vein: '#c9b48a', plate1: '#c0141c', plate2: '#6e0409', navy: '#13216a' },
+  { m1: '#fff7f2', m2: '#f3dcd2', vein: '#c99b86', plate1: '#9e0c3a', plate2: '#4f0420', navy: '#2a0f4f' },
+  { m1: '#fbfbfd', m2: '#dfe3ea', vein: '#9aa3b4', plate1: '#0f3a8a', plate2: '#06173f', navy: '#0b1d4d' },
+  { m1: '#fffbea', m2: '#f2e2b4', vein: '#c4a35a', plate1: '#0d6b45', plate2: '#043222', navy: '#0b3b2a' },
+  { m1: '#fdf9ff', m2: '#e8ddf2', vein: '#b49ac8', plate1: '#5b1a8f', plate2: '#2a0748', navy: '#24104a' },
+  { m1: '#fffaf3', m2: '#f0dfc6', vein: '#c7a06a', plate1: '#b3360b', plate2: '#5a1503', navy: '#3a1405' },
+];
+const FONTS = {
+  gu: [['BalooBhai', 800], ['AnekGu', 800], ['MuktaVaani', 800]],
+  hi: [['Baloo', 800], ['AnekHi', 800], ['Mukta', 800]],
+  en: [['Cinzel', 900], ['Playfair', 900], ['Poppins', 800]],
+};
+const STAR = '<svg viewBox="0 0 24 24"><path fill="#fffbe6" d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>';
+
+function marble(L, r) {
+  const veins = Array.from({ length: 9 }, () => {
+    let x = r() * 1920, y = -50, d = `M${x} ${y}`;
+    for (let k = 0; k < 9; k++) { x += (r() - .35) * 320; y += 140; d += ` Q${x + (r() - .5) * 200} ${y - 70} ${x} ${y}`; }
+    return `<path d="${d}" stroke="${L.vein}" stroke-width="${(1 + r() * 3).toFixed(1)}" fill="none" opacity="${(.25 + r() * .35).toFixed(2)}" filter="url(#rough)"/>`;
+  }).join('');
+  return `<defs><radialGradient id="mg" cx="50%" cy="40%" r="80%"><stop offset="0" stop-color="${L.m1}"/><stop offset="1" stop-color="${L.m2}"/></radialGradient>
+    <filter id="cloud"><feTurbulence type="fractalNoise" baseFrequency=".004 .009" numOctaves="4" seed="${Math.floor(r() * 99)}"/><feColorMatrix values="0 0 0 0 .55  0 0 0 0 .48  0 0 0 0 .38  0 0 0 .5 0"/></filter>
+    <filter id="rough"><feTurbulence baseFrequency=".02" numOctaves="2" seed="${Math.floor(r() * 99)}"/><feDisplacementMap in="SourceGraphic" scale="30"/></filter>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="rgba(255,226,140,.65)"/><stop offset="1" stop-color="rgba(255,226,140,0)"/></radialGradient></defs>
+    <rect width="1920" height="1080" fill="url(#mg)"/><rect width="1920" height="1080" filter="url(#cloud)" opacity=".35"/>${veins}
+    <ellipse cx="960" cy="470" rx="900" ry="380" fill="url(#glow)"/>`;
+}
+
+function plate(L) {
+  // Name plate with pointed ends, double gold frame and a deep gradient centre.
+  const p = (i) => `M${120 - i} ${30 + i} H${1180 + i} Q${1220 + i} ${30 + i} ${1235 + i} 70 L${1290 + i} 150 L${1235 + i} 230 Q${1220 + i} ${270 - i} ${1180 + i} ${270 - i} H${120 - i} Q${80 - i} ${270 - i} ${65 - i} 230 L${10 - i} 150 L${65 - i} 70 Q${80 - i} ${30 + i} ${120 - i} ${30 + i} Z`;
+  return `<svg width="1300" height="300" viewBox="0 0 1300 300" style="overflow:visible"><defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff4b8"/><stop offset=".35" stop-color="#e8b03a"/><stop offset=".6" stop-color="#9c6510"/><stop offset=".85" stop-color="#f7d66e"/><stop offset="1" stop-color="#b07a18"/></linearGradient>
+    <radialGradient id="red" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="${L.plate1}"/><stop offset="1" stop-color="${L.plate2}"/></radialGradient></defs>
+    <path d="${p(0)}" transform="translate(0,14)" fill="rgba(0,0,0,.28)"/>
+    <path d="${p(0)}" fill="url(#gold)"/><path d="${p(-14)}" fill="url(#red)" stroke="#ffe08a" stroke-width="3"/><path d="${p(-24)}" fill="none" stroke="url(#gold)" stroke-width="4"/>
+    <circle cx="40" cy="150" r="12" fill="url(#gold)"/><circle cx="1260" cy="150" r="12" fill="url(#gold)"/></svg>`;
+}
+
+function ribbon(L) {
+  return `<svg width="600" height="100" viewBox="0 0 600 100" style="overflow:visible"><defs><linearGradient id="rb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${L.plate1}"/><stop offset="1" stop-color="${L.plate2}"/></linearGradient></defs>
+    <path d="M-60 22 H40 V92 H-60 L-30 57 Z" fill="${L.plate2}"/><path d="M660 22 H560 V92 H660 L630 57 Z" fill="${L.plate2}"/>
+    <rect x="0" y="6" width="600" height="80" rx="10" fill="url(#rb)" stroke="url(#gold)" stroke-width="5"/>
+    <g fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round">
+      <path d="M-90 47 C-140 10 -190 80 -240 47 M-150 47 c -10 -30 30 -40 30 -10"/><path d="M690 47 C740 10 790 80 840 47 M750 47 c 10 -30 -30 -40 -30 -10"/></g></svg>`;
+}
+
+function strip(L) {
+  return `<svg width="1920" height="108"><defs><linearGradient id="nv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${L.navy}"/><stop offset="1" stop-color="#050a26"/></linearGradient></defs>
+    <rect width="1920" height="108" fill="url(#gold)"/><rect y="7" width="1920" height="94" fill="url(#nv)"/>
+    <g fill="#f3c54a"><path d="M60 54 l22 -30 l22 30 l-22 30 z"/><path d="M1816 54 l22 -30 l22 30 l-22 30 z"/></g></svg>`;
+}
+
+function textWidth(el) { const r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().width; }
+function fitWidth(el, maxW, size, target = el) {
+  el.style.fontSize = size + 'px';
+  while (textWidth(target) > maxW && size > 14) { size -= 2; el.style.fontSize = size + 'px'; }
+}
+
+window.render = async (d) => {
+  const r = rng(d.seed * 11 + 5), L = LOOKS[d.design.look % LOOKS.length];
+  const [fam, wt] = FONTS[d.lang][d.design.font % 3];
+  const flip = d.design.flip % 2 === 1;   // gold on the right, silver on the left
+  document.body.className = d.lang;
+  const root = document.documentElement.style;
+  root.setProperty('--disp', `"${fam}", "Poppins", sans-serif`); root.setProperty('--dispw', wt);
+  for (const k of ['plate1', 'plate2', 'navy']) root.setProperty('--' + k, L[k]);
+  document.getElementById('marble').innerHTML = marble(L, r);
+
+  const X = (x, w) => (flip ? 1920 - x - w : x);   // mirror horizontally when flipped
+  const S = document.getElementById('stage');
+  const add = (html) => { S.insertAdjacentHTML('beforeend', html); return S.lastElementChild; };
+  const anim = (el, name, delay, dur = 1) => { el.style.animation = `${name} ${dur}s cubic-bezier(.2,.8,.25,1) ${delay}s both`; return el; };
+  const sideIn = (left) => ((left !== flip) ? 'fromL' : 'fromR');
+
+  // Ganesh at the top corner, with a soft golden halo.
+  add(`<div class="abs" style="left:${X(0, 420)}px;top:-10px;width:420px;height:440px;background:radial-gradient(circle at 50% 45%, rgba(255,214,120,.7), transparent 65%)"></div>`);
+  anim(add(`<img src="special/ganesh.png" style="left:${X(40, 340)}px;top:6px;height:460px">`), 'drop', .1, 1.1);
+
+  // Gold side: bars, coins and bangles, gold necklace bust.
+  anim(add(`<img src="special/goldpile.png" style="left:${X(-20, 340)}px;top:448px;height:540px;${flip ? 'transform:scaleX(-1)' : ''}">`), sideIn(true), .4);
+  anim(add(`<img src="special/goldbust.png" style="left:${X(200, 360)}px;top:560px;height:350px">`), sideIn(true), .6);
+  anim(add(`<img src="special/goldcoins.png" style="left:${X(540, 150)}px;top:840px;height:78px">`), 'pop', 1.4, .7);
+  // Silver side: bars, diamond necklace bust, ring and diamonds.
+  anim(add(`<img src="special/silverbars.png" style="left:${X(1560, 380)}px;top:300px;height:250px;${flip ? 'transform:scaleX(-1)' : ''}">`), sideIn(false), .4);
+  anim(add(`<img src="special/silverbust.png" style="left:${X(1500, 420)}px;top:520px;height:330px">`), sideIn(false), .6);
+  anim(add(`<img src="special/diamonds.png" style="left:${X(1300, 520)}px;top:772px;height:150px">`), 'pop', 1.2, .8);
+
+  // Text block (centre).
+  const bless = add('<div id="bless" class="abs"></div>'); bless.textContent = d.shop.blessing; anim(bless, 'fade', .2);
+  const owner = add(`<div id="owner" class="dual" style="left:${flip ? 520 : 400}px;width:1000px;top:58px"><span class="under"></span><span class="over"></span></div>`);
+  owner.querySelectorAll('span').forEach(s => s.textContent = d.shop.owner); anim(owner, 'pop', .3, 1);
+  const ph = add(`<div id="phones" style="left:${flip ? 60 : 1490}px;${flip ? 'border-left:none;border-right:5px solid var(--plate1);padding-left:0;padding-right:24px;text-align:right' : ''}"></div>`);
+  ph.innerHTML = [['Ph. :', d.landlines[0]], [':', d.landlines[1]], ['M. :', d.mobiles[0]], [':', d.mobiles[1]], [':', d.mobiles[2]]]
+    .map(([k, v]) => `<div class="row" style="${flip ? 'justify-content:flex-end' : ''}"><span class="k" style="text-align:right">${k}</span><span>${v}</span></div>`).join('');
+  anim(ph, flip ? 'fromL' : 'fromR', .5);
+
+  const pl = add(`<div class="abs" style="left:310px;top:300px">${plate(L)}</div>`); anim(pl, 'pop', .7, 1);
+  pl.firstElementChild.style.animation = 'glow 2.6s 2s ease-in-out infinite';
+  const shop = add('<div id="shop" class="dual" style="left:380px;width:1160px;top:330px"><span class="under"></span><span class="over"></span><span class="shine"></span></div>');
+  shop.querySelectorAll('span').forEach(s => s.textContent = d.shop.name); anim(shop, 'pop', 1, 1);
+
+  const trade = add('<div id="trade" class="abs"></div>'); trade.textContent = d.shop.line1; anim(trade, 'rise', 1.4);
+  anim(add(`<div id="ribbon" class="abs">${ribbon(L)}</div>`), 'pop', 1.7, .8);
+  const rt = add('<div id="ribbontext" class="abs"></div>'); rt.textContent = d.shop.line2; anim(rt, 'pop', 1.8, .8);
+  const greet = add('<div id="greet" class="abs"><span></span></div>'); greet.firstChild.textContent = d.greeting; anim(greet, 'rise', 2.1);
+
+  const b = d.bank;
+  const bank = add('<div id="bank" class="abs"></div>');
+  bank.innerHTML = [['GSTIN', b.gst], ['BANK', `${b.bank}, ${b.branch}`], ['A/C', b.account], ['IFSC', b.ifsc], ['NAME', b.name]].map(([k, v]) => `<span><b>${k}</b>${v}</span>`).join('');
+  anim(bank, 'fade', 2.3);
+  anim(add(`<div id="strip" class="abs">${strip(L)}</div>`), 'rise', .2);
+  const addr = add('<div id="addr" class="abs"><span class="t"></span><span class="city"></span></div>');
+  // Highlight the city (the last part of the address) like the printed banner.
+  const parts = d.shop.addr.replace(/[.।]$/, '').split(/,\s*/);
+  addr.querySelector('.t').textContent = parts.slice(0, -1).join(', ') + ',';
+  addr.querySelector('.city').textContent = parts[parts.length - 1] + '.';
+  anim(addr, 'rise', .3);
+
+  // Sparkles on the metals.
+  const spots = [[X(120, 0), 560], [X(300, 0), 700], [X(470, 0), 640], [X(1650, 0), 380], [X(1720, 0), 640], [X(1420, 0), 800], [X(1600, 0), 820], [X(250, 0), 860]];
+  spots.forEach(([x, y], i) => { const s = add(`<div class="spark" style="left:${x - 23}px;top:${y - 23}px;animation-delay:-${(r() * 1.8).toFixed(2)}s;animation-duration:${(1.4 + r()).toFixed(2)}s">${STAR}</div>`); });
+
+  document.body.offsetHeight;
+  await document.fonts.ready;
+  window.seek(6000);
+  fitWidth(owner, 980, d.lang === 'en' ? 120 : 150, owner.querySelector('.over'));
+  fitWidth(shop, 1080, d.lang === 'en' ? 120 : 160, shop.querySelector('.over'));
+  fitWidth(trade, 820, 66, trade);
+  fitWidth(rt, 540, 50, rt);
+  fitWidth(greet, 1000, 38, greet.firstChild);
+  fitWidth(addr, 1640, 52, addr);
+  fitWidth(bank, 1780, 23, bank);
+  // Keep the owner's name and the shop name vertically centred in their boxes after shrinking.
+  return true;
+};
+
+window.seek = (ms) => { for (const a of document.getAnimations()) { a.pause(); a.currentTime = ms; } };
+</script>
+</body>
+</html>

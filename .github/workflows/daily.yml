@@ -20,6 +20,10 @@ on:
         description: "Make the Good evening ad"
         type: boolean
         default: false
+      special:
+        description: "Make only the special banner"
+        type: boolean
+        default: false
       replace:
         description: "Remove that day's existing files first (use after a design change)"
         type: boolean
@@ -43,6 +47,7 @@ jobs:
           INPUT_DATE: ${{ inputs.date }}
           INPUT_EVENING: ${{ inputs.evening }}
           INPUT_AFTERNOON: ${{ inputs.afternoon }}
+          INPUT_SPECIAL: ${{ inputs.special }}
           SCHEDULE: ${{ github.event.schedule }}
         run: |
           day="${INPUT_DATE:-$(TZ=Asia/Kolkata date +%F)}"
@@ -51,6 +56,7 @@ jobs:
           slot=""
           if [ "$INPUT_EVENING" = "true" ]; then slot="--evening"; fi
           if [ "$INPUT_AFTERNOON" = "true" ]; then slot="--afternoon"; fi
+          if [ "$INPUT_SPECIAL" = "true" ]; then slot="--special"; fi
           echo "SLOT=$slot" >> "$GITHUB_ENV"
           if [ -n "$SCHEDULE" ]; then
             names="$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$day" --jq '.assets[].name' 2>/dev/null || true)"
@@ -86,7 +92,7 @@ jobs:
             gh release upload "$DAY" "${files[@]}" --clobber
           else
             gh release create "$DAY" "${files[@]}" --title "Chhatrapati Bullion ads $DAY" \
-              --notes "Ads for $DAY: photos and reels, 1080x1920, Gujarati and Hindi." --latest=false
+              --notes "Ads for $DAY: photos and reels (1080x1920) in Gujarati, Hindi and English, plus a 1920x1080 special banner." --latest=false
           fi
       - name: Refresh index.json
         if: env.SKIP != '1'

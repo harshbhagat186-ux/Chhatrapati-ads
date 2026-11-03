@@ -1,6 +1,7 @@
 """Makes one day's ads: a festival greeting if the date is in calendar.json, else the weekday's regular ad.
 
-Usage: python3 daily.py [YYYY-MM-DD] [out_dir] [--afternoon | --evening]   (date defaults to today in India)
+Usage: python3 daily.py [YYYY-MM-DD] [out_dir] [--afternoon | --evening | --special]   (date defaults to today in India)
+--special makes only the day's special banner (photo10/reel10, landscape).
 --afternoon / --evening make that greeting instead (numbered from 11 / 21 so they sit after the morning files).
 Writes <out_dir>/<date>/ with 1080x1920 photos and 8 s animated reels with music, in Gujarati, Hindi and English.
 Needs node + playwright (Chromium) and ffmpeg; the design lives in template.html and changes every day (see DESIGN).
@@ -72,6 +73,23 @@ def render(spec, photo, reel, wav):
                     "-vf", "scale=540:-2", "-q:v", "4", str(reel.with_suffix(".thumb.jpg"))], check=True)
 
 
+def special(day, out, wav):
+    """The day's one special banner (1920x1080, landscape) in the style of the shop's printed banner.
+    Language rotates Gujarati, Hindi, English; colours, font and which side holds the gold change daily."""
+    d = datetime.strptime(day, "%Y-%m-%d")
+    o = d.toordinal()
+    lang, lname = LANGS[o % 3]
+    entry = plan(day)[0]
+    title = (entry["en_page"] if lang == "en" else entry[lang])["title"]
+    spec = {"template": "special.html", "size": [1920, 1080], "lang": lang,
+            "design": {"look": o % 6, "font": (o // 3) % 3, "flip": o % 2},
+            "greeting": f"{title}  •  {d.day:02d} · {d.strftime('%B').upper()} · {d.year}",
+            "shop": SHOP[lang], "mobiles": MOBILES, "landlines": LANDLINES, "bank": BANK, "seed": o}
+    photo = out / f"photo10-special-banner-{lname}.jpg"
+    render(spec, photo, out / f"reel10-special-banner-{lname}.mp4", wav)
+    print(photo)
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     slot = next((a[2:] for a in sys.argv[1:] if a[2:] in SLOTS), None)
@@ -82,6 +100,11 @@ def main():
     wav = out / "music.wav"
     music.write(REEL_SECONDS, wav, seed=int(day.replace("-", "")) + (SLOTS[slot][4] if slot else 0))
     n = SLOTS[slot][4] if slot else 0
+    if not slot:
+        special(day, out, wav)
+    if "--special" in sys.argv:   # only the special banner (e.g. to add it to a day already made)
+        wav.unlink()
+        return
     for entry in (slot_plan(day, slot) if slot else plan(day)):
         for li, (lang, lname) in enumerate(LANGS):
             n += 1
