@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T02:23:45Z",
+ "updated": "2026-11-03T10:52:19Z",
  "days": [
   {
    "date": "2026-11-03",
@@ -26,6 +26,13 @@
      "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-03/photo03-good-morning-english.jpg?v=703958416"
     },
     {
+     "type": "photo",
+     "file": "photo10-special-banner-gujarati.705263628.jpg",
+     "title": "Special banner gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-03/photo10-special-banner-gujarati.jpg?v=705263628",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-03/photo10-special-banner-gujarati.jpg?v=705263628"
+    },
+    {
      "type": "video",
      "file": "reel01-good-morning-gujarati.703958417.mp4",
      "title": "Good morning gujarati",
@@ -45,6 +52,13 @@
      "title": "Good morning english",
      "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-03/reel03-good-morning-english.mp4?v=703958428",
      "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-03/reel03-good-morning-english.thumb.jpg?v=703958431"
+    },
+    {
+     "type": "video",
+     "file": "reel10-special-banner-gujarati.705263619.mp4",
+     "title": "Special banner gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-03/reel10-special-banner-gujarati.mp4?v=705263619",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-03/reel10-special-banner-gujarati.thumb.jpg?v=705263620"
     }
    ]
   },
