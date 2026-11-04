@@ -1,6 +1,109 @@
 {
- "updated": "2026-11-03T10:52:19Z",
+ "updated": "2026-11-04T02:24:11Z",
  "days": [
+  {
+   "date": "2026-11-04",
+   "items": [
+    {
+     "type": "photo",
+     "file": "photo01-good-morning-gujarati.707927488.jpg",
+     "title": "Good morning gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo01-good-morning-gujarati.jpg?v=707927488",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo01-good-morning-gujarati.jpg?v=707927488"
+    },
+    {
+     "type": "photo",
+     "file": "photo02-good-morning-hindi.707927476.jpg",
+     "title": "Good morning hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo02-good-morning-hindi.jpg?v=707927476",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo02-good-morning-hindi.jpg?v=707927476"
+    },
+    {
+     "type": "photo",
+     "file": "photo03-good-morning-english.707927481.jpg",
+     "title": "Good morning english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo03-good-morning-english.jpg?v=707927481",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo03-good-morning-english.jpg?v=707927481"
+    },
+    {
+     "type": "photo",
+     "file": "photo04-dhanteras-gujarati.707927486.jpg",
+     "title": "Dhanteras gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo04-dhanteras-gujarati.jpg?v=707927486",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo04-dhanteras-gujarati.jpg?v=707927486"
+    },
+    {
+     "type": "photo",
+     "file": "photo05-dhanteras-hindi.707927483.jpg",
+     "title": "Dhanteras hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo05-dhanteras-hindi.jpg?v=707927483",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo05-dhanteras-hindi.jpg?v=707927483"
+    },
+    {
+     "type": "photo",
+     "file": "photo06-dhanteras-english.707927526.jpg",
+     "title": "Dhanteras english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo06-dhanteras-english.jpg?v=707927526",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo06-dhanteras-english.jpg?v=707927526"
+    },
+    {
+     "type": "photo",
+     "file": "photo10-special-banner-hindi.707927527.jpg",
+     "title": "Special banner hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo10-special-banner-hindi.jpg?v=707927527",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/photo10-special-banner-hindi.jpg?v=707927527"
+    },
+    {
+     "type": "video",
+     "file": "reel01-good-morning-gujarati.707927528.mp4",
+     "title": "Good morning gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel01-good-morning-gujarati.mp4?v=707927528",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel01-good-morning-gujarati.thumb.jpg?v=707927532"
+    },
+    {
+     "type": "video",
+     "file": "reel02-good-morning-hindi.707927533.mp4",
+     "title": "Good morning hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel02-good-morning-hindi.mp4?v=707927533",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel02-good-morning-hindi.thumb.jpg?v=707927554"
+    },
+    {
+     "type": "video",
+     "file": "reel03-good-morning-english.707927556.mp4",
+     "title": "Good morning english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel03-good-morning-english.mp4?v=707927556",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel03-good-morning-english.thumb.jpg?v=707927560"
+    },
+    {
+     "type": "video",
+     "file": "reel04-dhanteras-gujarati.707927558.mp4",
+     "title": "Dhanteras gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel04-dhanteras-gujarati.mp4?v=707927558",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel04-dhanteras-gujarati.thumb.jpg?v=707927564"
+    },
+    {
+     "type": "video",
+     "file": "reel05-dhanteras-hindi.707927580.mp4",
+     "title": "Dhanteras hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel05-dhanteras-hindi.mp4?v=707927580",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel05-dhanteras-hindi.thumb.jpg?v=707927597"
+    },
+    {
+     "type": "video",
+     "file": "reel06-dhanteras-english.707927607.mp4",
+     "title": "Dhanteras english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel06-dhanteras-english.mp4?v=707927607",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel06-dhanteras-english.thumb.jpg?v=707927609"
+    },
+    {
+     "type": "video",
+     "file": "reel10-special-banner-hindi.707927610.mp4",
+     "title": "Special banner hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel10-special-banner-hindi.mp4?v=707927610",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-04/reel10-special-banner-hindi.thumb.jpg?v=707927626"
+    }
+   ]
+  },
   {
    "date": "2026-11-03",
    "items": [
