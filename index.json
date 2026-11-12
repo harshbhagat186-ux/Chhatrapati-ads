@@ -1,6 +1,109 @@
 {
- "updated": "2026-11-11T03:31:39Z",
+ "updated": "2026-11-12T02:30:50Z",
  "days": [
+  {
+   "date": "2026-11-12",
+   "items": [
+    {
+     "type": "photo",
+     "file": "photo01-good-morning-gujarati.737751392.jpg",
+     "title": "Good morning gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo01-good-morning-gujarati.jpg?v=737751392",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo01-good-morning-gujarati.jpg?v=737751392"
+    },
+    {
+     "type": "photo",
+     "file": "photo02-good-morning-hindi.737751382.jpg",
+     "title": "Good morning hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo02-good-morning-hindi.jpg?v=737751382",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo02-good-morning-hindi.jpg?v=737751382"
+    },
+    {
+     "type": "photo",
+     "file": "photo03-good-morning-english.737751381.jpg",
+     "title": "Good morning english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo03-good-morning-english.jpg?v=737751381",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo03-good-morning-english.jpg?v=737751381"
+    },
+    {
+     "type": "photo",
+     "file": "photo04-labh-pancham-gujarati.737751386.jpg",
+     "title": "Labh pancham gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo04-labh-pancham-gujarati.jpg?v=737751386",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo04-labh-pancham-gujarati.jpg?v=737751386"
+    },
+    {
+     "type": "photo",
+     "file": "photo05-labh-pancham-hindi.737751384.jpg",
+     "title": "Labh pancham hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo05-labh-pancham-hindi.jpg?v=737751384",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo05-labh-pancham-hindi.jpg?v=737751384"
+    },
+    {
+     "type": "photo",
+     "file": "photo06-labh-pancham-english.737751418.jpg",
+     "title": "Labh pancham english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo06-labh-pancham-english.jpg?v=737751418",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo06-labh-pancham-english.jpg?v=737751418"
+    },
+    {
+     "type": "photo",
+     "file": "photo10-special-banner-gujarati.737751420.jpg",
+     "title": "Special banner gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo10-special-banner-gujarati.jpg?v=737751420",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/photo10-special-banner-gujarati.jpg?v=737751420"
+    },
+    {
+     "type": "video",
+     "file": "reel01-good-morning-gujarati.737751421.mp4",
+     "title": "Good morning gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel01-good-morning-gujarati.mp4?v=737751421",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel01-good-morning-gujarati.thumb.jpg?v=737751427"
+    },
+    {
+     "type": "video",
+     "file": "reel02-good-morning-hindi.737751425.mp4",
+     "title": "Good morning hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel02-good-morning-hindi.mp4?v=737751425",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel02-good-morning-hindi.thumb.jpg?v=737751441"
+    },
+    {
+     "type": "video",
+     "file": "reel03-good-morning-english.737751440.mp4",
+     "title": "Good morning english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel03-good-morning-english.mp4?v=737751440",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel03-good-morning-english.thumb.jpg?v=737751446"
+    },
+    {
+     "type": "video",
+     "file": "reel04-labh-pancham-gujarati.737751450.mp4",
+     "title": "Labh pancham gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel04-labh-pancham-gujarati.mp4?v=737751450",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel04-labh-pancham-gujarati.thumb.jpg?v=737751468"
+    },
+    {
+     "type": "video",
+     "file": "reel05-labh-pancham-hindi.737751483.mp4",
+     "title": "Labh pancham hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel05-labh-pancham-hindi.mp4?v=737751483",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel05-labh-pancham-hindi.thumb.jpg?v=737751488"
+    },
+    {
+     "type": "video",
+     "file": "reel06-labh-pancham-english.737751491.mp4",
+     "title": "Labh pancham english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel06-labh-pancham-english.mp4?v=737751491",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel06-labh-pancham-english.thumb.jpg?v=737751497"
+    },
+    {
+     "type": "video",
+     "file": "reel10-special-banner-gujarati.737751502.mp4",
+     "title": "Special banner gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel10-special-banner-gujarati.mp4?v=737751502",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-12/reel10-special-banner-gujarati.thumb.jpg?v=737751512"
+    }
+   ]
+  },
   {
    "date": "2026-11-11",
    "items": [
