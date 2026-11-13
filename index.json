@@ -1,6 +1,109 @@
 {
- "updated": "2026-11-12T02:30:50Z",
+ "updated": "2026-11-13T02:25:16Z",
  "days": [
+  {
+   "date": "2026-11-13",
+   "items": [
+    {
+     "type": "photo",
+     "file": "photo01-good-morning-gujarati.741947501.jpg",
+     "title": "Good morning gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo01-good-morning-gujarati.jpg?v=741947501",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo01-good-morning-gujarati.jpg?v=741947501"
+    },
+    {
+     "type": "photo",
+     "file": "photo02-good-morning-hindi.741947507.jpg",
+     "title": "Good morning hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo02-good-morning-hindi.jpg?v=741947507",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo02-good-morning-hindi.jpg?v=741947507"
+    },
+    {
+     "type": "photo",
+     "file": "photo03-good-morning-english.741947503.jpg",
+     "title": "Good morning english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo03-good-morning-english.jpg?v=741947503",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo03-good-morning-english.jpg?v=741947503"
+    },
+    {
+     "type": "photo",
+     "file": "photo04-labh-pancham-gujarati.741947510.jpg",
+     "title": "Labh pancham gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo04-labh-pancham-gujarati.jpg?v=741947510",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo04-labh-pancham-gujarati.jpg?v=741947510"
+    },
+    {
+     "type": "photo",
+     "file": "photo05-labh-pancham-hindi.741947511.jpg",
+     "title": "Labh pancham hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo05-labh-pancham-hindi.jpg?v=741947511",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo05-labh-pancham-hindi.jpg?v=741947511"
+    },
+    {
+     "type": "photo",
+     "file": "photo06-labh-pancham-english.741947537.jpg",
+     "title": "Labh pancham english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo06-labh-pancham-english.jpg?v=741947537",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo06-labh-pancham-english.jpg?v=741947537"
+    },
+    {
+     "type": "photo",
+     "file": "photo10-special-banner-hindi.741947540.jpg",
+     "title": "Special banner hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo10-special-banner-hindi.jpg?v=741947540",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/photo10-special-banner-hindi.jpg?v=741947540"
+    },
+    {
+     "type": "video",
+     "file": "reel01-good-morning-gujarati.741947542.mp4",
+     "title": "Good morning gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel01-good-morning-gujarati.mp4?v=741947542",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel01-good-morning-gujarati.thumb.jpg?v=741947543"
+    },
+    {
+     "type": "video",
+     "file": "reel02-good-morning-hindi.741947547.mp4",
+     "title": "Good morning hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel02-good-morning-hindi.mp4?v=741947547",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel02-good-morning-hindi.thumb.jpg?v=741947583"
+    },
+    {
+     "type": "video",
+     "file": "reel03-good-morning-english.741947596.mp4",
+     "title": "Good morning english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel03-good-morning-english.mp4?v=741947596",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel03-good-morning-english.thumb.jpg?v=741947591"
+    },
+    {
+     "type": "video",
+     "file": "reel04-labh-pancham-gujarati.741947598.mp4",
+     "title": "Labh pancham gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel04-labh-pancham-gujarati.mp4?v=741947598",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel04-labh-pancham-gujarati.thumb.jpg?v=741947604"
+    },
+    {
+     "type": "video",
+     "file": "reel05-labh-pancham-hindi.741947618.mp4",
+     "title": "Labh pancham hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel05-labh-pancham-hindi.mp4?v=741947618",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel05-labh-pancham-hindi.thumb.jpg?v=741947622"
+    },
+    {
+     "type": "video",
+     "file": "reel06-labh-pancham-english.741947625.mp4",
+     "title": "Labh pancham english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel06-labh-pancham-english.mp4?v=741947625",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel06-labh-pancham-english.thumb.jpg?v=741947629"
+    },
+    {
+     "type": "video",
+     "file": "reel10-special-banner-hindi.741947627.mp4",
+     "title": "Special banner hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel10-special-banner-hindi.mp4?v=741947627",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-13/reel10-special-banner-hindi.thumb.jpg?v=741947656"
+    }
+   ]
+  },
   {
    "date": "2026-11-12",
    "items": [
