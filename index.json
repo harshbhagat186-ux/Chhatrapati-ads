@@ -1,6 +1,67 @@
 {
- "updated": "2026-11-13T02:25:16Z",
+ "updated": "2026-11-14T02:25:45Z",
  "days": [
+  {
+   "date": "2026-11-14",
+   "items": [
+    {
+     "type": "photo",
+     "file": "photo01-labh-pancham-gujarati.746008452.jpg",
+     "title": "Labh pancham gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/photo01-labh-pancham-gujarati.jpg?v=746008452",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/photo01-labh-pancham-gujarati.jpg?v=746008452"
+    },
+    {
+     "type": "photo",
+     "file": "photo02-labh-pancham-hindi.746008458.jpg",
+     "title": "Labh pancham hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/photo02-labh-pancham-hindi.jpg?v=746008458",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/photo02-labh-pancham-hindi.jpg?v=746008458"
+    },
+    {
+     "type": "photo",
+     "file": "photo03-labh-pancham-english.746008457.jpg",
+     "title": "Labh pancham english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/photo03-labh-pancham-english.jpg?v=746008457",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/photo03-labh-pancham-english.jpg?v=746008457"
+    },
+    {
+     "type": "photo",
+     "file": "photo10-special-banner-english.746008459.jpg",
+     "title": "Special banner english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/photo10-special-banner-english.jpg?v=746008459",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/photo10-special-banner-english.jpg?v=746008459"
+    },
+    {
+     "type": "video",
+     "file": "reel01-labh-pancham-gujarati.746008455.mp4",
+     "title": "Labh pancham gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/reel01-labh-pancham-gujarati.mp4?v=746008455",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/reel01-labh-pancham-gujarati.thumb.jpg?v=746008493"
+    },
+    {
+     "type": "video",
+     "file": "reel02-labh-pancham-hindi.746008494.mp4",
+     "title": "Labh pancham hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/reel02-labh-pancham-hindi.mp4?v=746008494",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/reel02-labh-pancham-hindi.thumb.jpg?v=746008496"
+    },
+    {
+     "type": "video",
+     "file": "reel03-labh-pancham-english.746008497.mp4",
+     "title": "Labh pancham english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/reel03-labh-pancham-english.mp4?v=746008497",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/reel03-labh-pancham-english.thumb.jpg?v=746008498"
+    },
+    {
+     "type": "video",
+     "file": "reel10-special-banner-english.746008520.mp4",
+     "title": "Special banner english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/reel10-special-banner-english.mp4?v=746008520",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-14/reel10-special-banner-english.thumb.jpg?v=746008522"
+    }
+   ]
+  },
   {
    "date": "2026-11-13",
    "items": [
