@@ -65,7 +65,7 @@ jobs:
           echo "SLOT=$slot" >> "$GITHUB_ENV"
           if [ -n "$SCHEDULE" ]; then
             names="$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$day" --jq '.assets[].name' 2>/dev/null || true)"
-            want="good-morning\\|photo1-"; [ -n "$slot" ] && want="good-${slot#--}"
+            want="photo01-\\|good-morning\\|photo1-"; [ -n "$slot" ] && want="good-${slot#--}"
             if echo "$names" | grep -q "$want"; then
               echo "SKIP=1" >> "$GITHUB_ENV"
               echo "$day ${slot:-morning} already published"
