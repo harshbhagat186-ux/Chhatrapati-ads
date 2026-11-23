@@ -51,14 +51,21 @@ def slot_plan(day, slot):
     return [entry]
 
 
-def plan(day):
+def late_slot(day, now):
+    """If today's ads are being made late (GitHub sometimes starts the morning run hours late), the regular
+    greeting follows the clock: Good Afternoon from 12 noon, Good Evening from 5 PM India time."""
+    if day != now.strftime("%Y-%m-%d"):
+        return None
+    return "evening" if now.hour >= 17 else "afternoon" if now.hour >= 12 else None
+
+
+def plan(day, late=None):
     """Today's festival (or the weekday's regular ad), plus festivals of the next 2 days so they can go out early."""
     cal = json.loads((HERE / "calendar.json").read_text())
     d = datetime.strptime(day, "%Y-%m-%d")
     fest = [f for f in cal["festivals"] if f["date"] == day]
     if not fest:
-        entry = dict(cal["daily"][d.weekday()], date=day, slug="good-morning")
-        fest = [entry]
+        fest = slot_plan(day, late) if late else [dict(cal["daily"][d.weekday()], date=day, slug="good-morning")]
     soon = {(d + timedelta(days=k)).strftime("%Y-%m-%d") for k in (1, 2)}
     return fest + [f for f in cal["festivals"] if f["date"] in soon]
 
@@ -73,13 +80,13 @@ def render(spec, photo, reel, wav):
                     "-vf", "scale=540:-2", "-q:v", "4", str(reel.with_suffix(".thumb.jpg"))], check=True)
 
 
-def special(day, out, wav):
+def special(day, out, wav, late=None):
     """The day's one special banner (1920x1080, landscape) in the style of the shop's printed banner.
     Language rotates Gujarati, Hindi, English; colours, font and which side holds the gold change daily."""
     d = datetime.strptime(day, "%Y-%m-%d")
     o = d.toordinal()
     lang, lname = LANGS[o % 3]
-    entry = plan(day)[0]
+    entry = plan(day, late)[0]
     title = (entry["en_page"] if lang == "en" else entry[lang])["title"]
     spec = {"template": "special.html", "size": [1920, 1080], "lang": lang,
             "design": {"look": o % 6, "font": (o // 3) % 3, "flip": o % 2},
@@ -100,12 +107,13 @@ def main():
     wav = out / "music.wav"
     music.write(REEL_SECONDS, wav, seed=int(day.replace("-", "")) + (SLOTS[slot][4] if slot else 0))
     n = SLOTS[slot][4] if slot else 0
+    late = None if slot else late_slot(day, ist)
     if not slot:
-        special(day, out, wav)
+        special(day, out, wav, late)
     if "--special" in sys.argv:   # only the special banner (e.g. to add it to a day already made)
         wav.unlink()
         return
-    for entry in (slot_plan(day, slot) if slot else plan(day)):
+    for entry in (slot_plan(day, slot) if slot else plan(day, late)):
         for li, (lang, lname) in enumerate(LANGS):
             n += 1
             when = datetime.strptime(entry["date"], "%Y-%m-%d")
