@@ -1,6 +1,67 @@
 {
- "updated": "2026-11-23T06:02:42Z",
+ "updated": "2026-11-24T01:10:43Z",
  "days": [
+  {
+   "date": "2026-11-24",
+   "items": [
+    {
+     "type": "photo",
+     "file": "photo01-dev-diwali-gujarati.785194871.jpg",
+     "title": "Dev diwali gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/photo01-dev-diwali-gujarati.jpg?v=785194871",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/photo01-dev-diwali-gujarati.jpg?v=785194871"
+    },
+    {
+     "type": "photo",
+     "file": "photo02-dev-diwali-hindi.785194873.jpg",
+     "title": "Dev diwali hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/photo02-dev-diwali-hindi.jpg?v=785194873",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/photo02-dev-diwali-hindi.jpg?v=785194873"
+    },
+    {
+     "type": "photo",
+     "file": "photo03-dev-diwali-english.785194875.jpg",
+     "title": "Dev diwali english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/photo03-dev-diwali-english.jpg?v=785194875",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/photo03-dev-diwali-english.jpg?v=785194875"
+    },
+    {
+     "type": "photo",
+     "file": "photo10-special-banner-gujarati.785194872.jpg",
+     "title": "Special banner gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/photo10-special-banner-gujarati.jpg?v=785194872",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/photo10-special-banner-gujarati.jpg?v=785194872"
+    },
+    {
+     "type": "video",
+     "file": "reel01-dev-diwali-gujarati.785194874.mp4",
+     "title": "Dev diwali gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/reel01-dev-diwali-gujarati.mp4?v=785194874",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/reel01-dev-diwali-gujarati.thumb.jpg?v=785194888"
+    },
+    {
+     "type": "video",
+     "file": "reel02-dev-diwali-hindi.785194892.mp4",
+     "title": "Dev diwali hindi",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/reel02-dev-diwali-hindi.mp4?v=785194892",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/reel02-dev-diwali-hindi.thumb.jpg?v=785194893"
+    },
+    {
+     "type": "video",
+     "file": "reel03-dev-diwali-english.785194896.mp4",
+     "title": "Dev diwali english",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/reel03-dev-diwali-english.mp4?v=785194896",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/reel03-dev-diwali-english.thumb.jpg?v=785194895"
+    },
+    {
+     "type": "video",
+     "file": "reel10-special-banner-gujarati.785194908.mp4",
+     "title": "Special banner gujarati",
+     "url": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/reel10-special-banner-gujarati.mp4?v=785194908",
+     "thumb": "https://github.com/harshbhagat186-ux/Chhatrapati-ads/releases/download/2026-11-24/reel10-special-banner-gujarati.thumb.jpg?v=785194911"
+    }
+   ]
+  },
   {
    "date": "2026-11-23",
    "items": [
